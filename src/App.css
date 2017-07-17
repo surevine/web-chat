@@ -1,0 +1,74 @@
+.App {
+
+}
+
+.App-logo {
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 70px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.roomTopic {
+  background-color: #ccc;
+  padding: 10px;
+}
+
+.MessageList {
+  width: 80%;
+  float: left;
+  text-align: left;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.Message .chat,
+.Message .status,
+.Message .topic {
+  display: block;
+  margin: 5px 10px;
+  padding: 5px 10px;
+  font-size: 10px;
+  border-radius: 5px;
+}
+
+.Message .chat {
+  background-color: lightblue;
+  font-size: 14px;
+}
+
+.Message .chat.self {
+  background-color: lightgreen;
+}
+
+.Message .status {
+  background-color: #eee;
+}
+
+.Message .topic {
+  background-color: lightcyan;
+}
+
+.ParticipantList {
+  width: 20%;
+  float: left;
+}
+
+.MessageForm {
+  clear: both;
+  border: solid 1px red;
+}
+
+#message {
+  width: 400px;
+  padding: 10px;
+  font-size: 16px;
+}
