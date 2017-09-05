@@ -1,74 +1,222 @@
-.App {
-
+body {
+  overflow: hidden;
+  height: 100%;
+  /* font-family:  */
 }
 
-.App-logo {
-  height: 80px;
+/* General */
+
+.iconButton {
+  cursor: pointer;
+}
+
+/* App */
+
+.App {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  height: 100vh;
 }
 
 .App-header {
-  background-color: #222;
+  grid-row: 1;
   height: 70px;
-  padding: 20px;
   color: white;
+  background-color: #2e2e4f;
 }
 
-.App-intro {
-  font-size: large;
-}
-
-.roomTopic {
-  background-color: #ccc;
-  padding: 10px;
-}
-
-.MessageList {
-  width: 80%;
+.App-header h2 {
   float: left;
-  text-align: left;
-  height: 400px;
+}
+
+.Sidebar {
+  display: grid;
+  grid-template-rows: 70px auto;
+  grid-column: 1;
+  background-color: #3d3d5d;
+  /* #363656 */
+}
+
+.RoomList {
+  grid-row: 2;
+}
+
+.RoomList h3 {
+  margin: 10px;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.RoomList ul {
+  list-style: none;
+  margin: 10px;
+  padding: 0;
+}
+
+.main {
+  display: grid;
+  grid-template-rows: 70px auto;
+
+  grid-column: 2;
+  /* background-color: #DDDEF6; */
+  background-color: #eeeff7; 
+
+}
+
+/* Rooms */
+
+.Room {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 70px auto;
+  height: 100vh;
+}
+
+.Room.sidebar {
+  grid-template-columns: 65% 35%;
+}
+
+#roomHeader {
+  grid-row: 1;
+  grid-column: span 2;
+  height: 70px;
+  padding: 0 20px;
+  background-color: #585886;
+  /* -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,50);
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,50); */
+
+  display: grid;
+  grid-template-columns: 75% 25%;
+}
+
+#roomHeader .info {
+  grid-column: 1
+}
+
+#roomHeader .actions {
+  grid-column: 2;
+
+  color: white;
+
+  user-select: none;
+}
+
+#roomHeader h3 {
+  color: #fff;
+  font-weight: normal;
+  margin: 10px 0;
+}
+
+#roomHeader .topic {
+  color: #cac8ee;
+  font-style: italic;
+  margin: 0;
+}
+
+.roomContent {
+
+  display: grid;
+  grid-template-rows: auto 60px;
+
+  grid-row: 2;
   overflow-y: scroll;
 }
 
-.Message .chat,
-.Message .status,
-.Message .topic {
-  display: block;
-  margin: 5px 10px;
-  padding: 5px 10px;
-  font-size: 10px;
-  border-radius: 5px;
+/* Room Sidebar */
+
+.roomSidebar {
+  grid-column: 2;
+
+  padding: 10px 20px;
+  overflow-y: scroll;
+}
+
+.closeSidebar {
+  float: right;
+  font-size: 20px;
+}
+
+/* Messages */
+
+.MessageList {
+  grid-row: 1;
+  grid-column: 1;
+
+  text-align: left;
+  overflow-y: scroll;
+  padding: 0;
+}
+
+.Message {
+  padding: 10px 20px;
+}
+
+.Message:hover {
+  /* background-color: #eee; */
 }
 
 .Message .chat {
-  background-color: lightblue;
   font-size: 14px;
+  color: #333;
 }
 
-.Message .chat.self {
-  background-color: lightgreen;
+.Message .chat .author {
+  font-weight: bold;
 }
 
-.Message .status {
-  background-color: #eee;
+.Message .chat time {
+  cursor: default;
+  margin-left: 8px;
+  font-size: 12px;
+  color: #999;
 }
 
-.Message .topic {
-  background-color: lightcyan;
+.Message p {
+  margin-top: 6px;
+  margin-bottom: 0;
 }
+
+/* Participants List */
 
 .ParticipantList {
-  width: 20%;
-  float: left;
+
 }
+
+.ParticipantList ul {
+  list-style-type: none;
+  margin: 0;
+}
+
+.presenceIcon {
+  margin-right: 8px;
+  font-size: 12px;
+}
+
+
+
+.presenceIcon.available { color: green; }
+.presenceIcon.dnd { color: red; }
+.presenceIcon.away { color: orange; }
+
+/* Message Form */
 
 .MessageForm {
-  clear: both;
-  border: solid 1px red;
+  grid-row: 2;
+  padding: 0 10px;
+  height: 60px;
 }
 
-#message {
-  width: 400px;
+.MessageForm #sendMessage {
+  width: calc(100% - 40px);
   padding: 10px;
+  height: 24px;
   font-size: 16px;
+  color: #333;
+  border: solid 2px #ccc;
+  border-radius: 6px;
+}
+
+.MessageForm #sendMessage:focus {
+  border: solid 2px #999;
+  outline: none;
 }

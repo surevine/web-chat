@@ -1,15 +1,23 @@
+import orderBy from "lodash/orderBy";
+import differenceBy from "lodash/differenceBy";
+
 import { makeConstant } from "./_helpers";
 
 const constant = makeConstant("jchat/muc");
 
-export const JOIN_ROOM = constant("JOIN_ROOM");
+export const CURRENT_ROOM = constant("CURRENT_ROOM");
 export const TOPIC_UPDATED = constant("TOPIC_UPDATED");
 export const PRESENCE_AVAILABLE = constant("PRESENCE_AVAILABLE");
 export const PRESENCE_UNAVAILABLE = constant("PRESENCE_UNAVAILABLE");
 
-export const joinRoom = jid => ({
-  type: JOIN_ROOM,
-  payload: jid
+// TODO rework this to be under rooms...
+// TODO showRoom
+export const currentRoom = (jid, nickname) => ({
+    type: CURRENT_ROOM,
+    payload: {
+        jid,
+        nickname
+    }
 });
 
 export const topicUpdated = message => ({
@@ -17,7 +25,6 @@ export const topicUpdated = message => ({
   payload: message
 });
 
-// TODO should this be combined into a single receivedPresence?!
 export const receivedPresenceAvailable = presence => ({
   type: PRESENCE_AVAILABLE,
   payload: presence
@@ -30,7 +37,9 @@ export const receivedPresenceUnavailable = presence => ({
 
 const initialState = {
     jid: "",
+    title: "",
     topic: "",
+    nickname: "",
     members: []
 }
 
@@ -38,16 +47,15 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    case JOIN_ROOM: {
+    case CURRENT_ROOM: {
 
-        // TODO actually join the room here?!
-
-        const jid = action.payload;
+        // TODO parse out title
 
         return {
             ...state,
-            jid: jid
-        }
+            jid: action.payload.jid,
+            nickname: action.payload.nickname
+        } 
 
     }
 
@@ -66,9 +74,28 @@ export default (state = initialState, action) => {
 
         const presence = action.payload;
 
+        let show = presence.type;
+        if(presence.show) {
+            show = presence.show
+        }
+
+        let status = "";
+        if(presence.status) {
+            status = presence.status;
+        }
+
+        var roomMembers = differenceBy(state.members, [{ 'resource': presence.from.resource }], 'resource');
+
+        roomMembers.push({
+            resource: presence.from.resource, 
+            role: presence.muc.role,
+            presence: show,
+            status: status
+        });
+
         return {
             ...state,
-            members: [...state.members, { resource: presence.from.resource, role: presence.muc.role }]
+            members: orderBy(roomMembers, ['resource'], ['asc'])
         };
         
     }

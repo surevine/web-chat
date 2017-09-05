@@ -4,9 +4,15 @@ import Message from './Message';
 
 class MessageList extends React.Component {
 
+    componentDidUpdate(prev, props) {
+        // scroll message list to bottom
+        var messageList = document.getElementById('messageList');
+        messageList.scrollTop = messageList.scrollHeight;
+    }
+
     render() {
         return (
-        <div className="MessageList">
+        <div id="messageList" className="MessageList">
             { this.props.messages ? (
                 <div>
                     { this.props.messages.map(message => (

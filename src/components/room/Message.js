@@ -1,4 +1,7 @@
 import React from 'react';
+import Moment from 'react-moment';
+import ReactTooltip from 'react-tooltip'
+import Highlighter from 'react-highlight-words';
 
 class Message extends React.Component {
 
@@ -23,7 +26,16 @@ class Message extends React.Component {
         return (
             <div className={"chat " + (isSelf ? 'self' : '')}>
                 <span className="author">{this.props.message.from.resource}</span>
-                <p>{this.props.message.body}</p>
+                <Moment format="h:mm A" data-tip={this.props.message.time}>{this.props.message.time}</Moment>
+                <ReactTooltip effect="solid" delayShow={300} offset={{right: 20}} />
+                {/* <p>{this.props.message.body}</p> */}
+                <p>
+                    <Highlighter
+                    highlightClassName='highlight'
+                    searchWords={['surevine']}
+                    textToHighlight={this.props.message.body}
+                    />
+                </p>
             </div>
         );
     }

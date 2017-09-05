@@ -1,17 +1,16 @@
 import React from 'react';
 
-class EnterRoomForm extends React.Component {
+import history from '../../history';
 
-    static contextTypes = {
-        router: React.PropTypes.object
-    }
+class EnterRoomForm extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
         let jid = this._roomJid.value;
         this._roomJid.value = '';
 
-        this.context.router.history.push('/room/' + jid)
+        // TODO set the jid in state!
+        history.push('/room/' + jid)
     };
 
     render() {

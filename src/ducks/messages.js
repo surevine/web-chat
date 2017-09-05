@@ -1,15 +1,20 @@
+import uniqBy from "lodash/uniqBy";
 import { makeConstant } from "./_helpers";
 
 const constant = makeConstant("jchat/messages");
 
 export const RECEIVED_MESSAGE = constant("RECEIVED_MESSAGE");
+export const SEND_MESSAGE = constant("SEND_MESSAGE");
 
 export const receivedMessage = msg => ({
   type: RECEIVED_MESSAGE,
   payload: msg
 });
 
-// TODO initial state
+export const sendMessage = msg => ({
+  type: SEND_MESSAGE,
+  payload: msg
+});
 
 // reducer
 export default (state = {}, action) => {
@@ -18,13 +23,39 @@ export default (state = {}, action) => {
     case RECEIVED_MESSAGE: {
 
       const msg = action.payload;
+      const peerJid = msg.from.bare;
+      const peer = state[peerJid] || {
+        jid: peerJid,
+        messages: []
+      };
 
-      // TODO ensure its MUC etc
+      if(state[peer.jid] && state[peer.jid].messages) {
 
-      // TODO maybe index by room
-      // TODO handle the type of message (status etc)
+        var currentMessages = state[peer.jid].messages;
+        currentMessages.push(msg);
 
-      return [...state, msg];
+        return {
+          ...state,
+          [peer.jid]: {
+            ...peer,
+            messages: uniqBy(currentMessages, 'id')
+          }
+        };
+
+      } else {
+
+        return {
+          ...state,
+          [peer.jid]: {
+            ...peer,
+            messages: [
+                ...peer.messages,
+                msg
+              ]
+          }
+        };
+
+      }
 
     }
 
