@@ -11,6 +11,7 @@ import {
   AUTH_ERRORS,
   authenticated
 } from "../../ducks/client";
+import { getBookmarks } from "../../ducks/bookmarks";
 import deserializeWithBuffers from "../../lib/deserialize-with-buffers";
 
 import { makeChannel } from "../_helpers";
@@ -60,12 +61,11 @@ function* tryConnect(client, initialCredentials) {
 
     if (result.success) {
 
-
-      // TODO need to trigger bookmark loading...
-
-
       yield put(authenticated(client.jid));
       errorChannel.close();
+
+      yield put(getBookmarks());
+
       if (saveOnSuccess) {
         yield call(saveLoginDetails, client);
       }

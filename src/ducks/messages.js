@@ -29,6 +29,8 @@ export default (state = {}, action) => {
         messages: []
       };
 
+      console.log(msg)
+
       if(state[peer.jid] && state[peer.jid].messages) {
 
         var currentMessages = state[peer.jid].messages;

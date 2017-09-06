@@ -12,20 +12,6 @@ function* runLoop(client) {
 
   while (true) {
     try {
-    //   yield [
-    //     analytics(client),
-    //     clientSaga(client),
-    //     nodes(client),
-        // discussions(client),
-    //     subscriptions(client),
-    //     newDiscussion(client),
-    //     users(client),
-    //     me(client),
-    //     notifications(client),
-    //     messages(client),
-    //     mam(client),
-    //     requests(client)
-    //   ];
         yield [
             bookmarks(client),
             clientSaga(client),

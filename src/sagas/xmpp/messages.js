@@ -14,7 +14,18 @@ function* watchForMessages(client) {
     },
     groupchat: (emit, msg) => {
       emit(msg);
-    }
+    },
+    'muc:subject': (emit, msg) => {
+      emit(msg);
+    },
+    'muc:join': (emit, msg) => {
+      console.log(msg)
+      // emit(msg);
+    },
+    'muc:leave': (emit, msg) => {
+      console.log(msg)
+      // emit(msg);
+    },
   });
 
   yield takeEvery(channel, function* eachMessage(msg) {

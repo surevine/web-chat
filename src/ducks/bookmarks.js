@@ -5,7 +5,7 @@ const constant = makeConstant("jchat/bookmarks");
 export const GET_BOOKMARKS = constant("GET_BOOKMARKS");
 export const RECEIVED_BOOKMARKS = constant("RECEIVED_BOOKMARKS");
 
-export const getBookmarks = ({
+export const getBookmarks = () => ({
   type: GET_BOOKMARKS,
   payload: null
 });
@@ -19,17 +19,21 @@ const initialState = {};
 
 // reducer
 export default (state = initialState, action) => {
+
   switch (action.type) {
 
     case RECEIVED_BOOKMARKS: {
 
-      console.log("IN RECEIVED BOOKMARKS ACTION!!!")
+      if(action.payload) {
 
-        // TODO parse out title
+        return {
+          ...state, conferences: action.payload.privateStorage.bookmarks.conferences
+        };
 
-        return [
-            ...state, action.payload
-        ];
+        // return [
+        //     ...state, action.payload.privateStorage.bookmarks.conferences
+        // ];
+      }
 
     }
 
