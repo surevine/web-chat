@@ -1,4 +1,4 @@
-import { take, put } from "redux-saga/effects";
+import { takeLatest, put } from "redux-saga/effects";
 
 import {
   JOIN_ROOM,
@@ -8,23 +8,17 @@ import { currentRoom } from "../../ducks/muc";
 
 function* joinRoom(client) {
 
-    while(true) {
+  yield takeLatest(JOIN_ROOM, function* joinRoom(action) {
 
-        const { payload } = yield take(JOIN_ROOM);
+    // TODO joinRoom doesn't return result...
+    yield client.joinRoom(action.payload.jid, action.payload.nickname);
 
-        // TODO HAVE THIS ON ACTION!
-        let nickname = "JonnyHeaveyyy"
+    yield put(currentRoom(action.payload.jid, action.payload.nickname));
 
-        // retrieve nickanme from somewhere... ACTION?!
-        // TODO joinRoom doesn't return result...
-        yield client.joinRoom(payload.jid, nickname);
+    // TODO handle if not successful?
+    yield put(joinedRoom(action.payload.jid));
 
-        yield put(currentRoom(payload.jid, nickname));
-
-        // TODO handle if not successful?
-        yield put(joinedRoom(payload.jid));
-
-    }
+  });
 
 }
 

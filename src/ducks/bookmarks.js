@@ -2,8 +2,20 @@ import { makeConstant } from "./_helpers";
 
 const constant = makeConstant("jchat/bookmarks");
 
+export const ADD_BOOKMARK = constant("ADD_BOOKMARK");
+export const REMOVE_BOOKMARK = constant("REMOVE_BOOKMARK");
 export const GET_BOOKMARKS = constant("GET_BOOKMARKS");
 export const RECEIVED_BOOKMARKS = constant("RECEIVED_BOOKMARKS");
+
+export const addBookmark = jid => ({
+  type: ADD_BOOKMARK,
+  payload: jid
+});
+
+export const removeBookmark = jid => ({
+  type: REMOVE_BOOKMARK,
+  payload: jid
+});
 
 export const getBookmarks = () => ({
   type: GET_BOOKMARKS,
@@ -23,18 +35,12 @@ export default (state = initialState, action) => {
   switch (action.type) {
 
     case RECEIVED_BOOKMARKS: {
-
       if(action.payload) {
-
         return {
           ...state, conferences: action.payload.privateStorage.bookmarks.conferences
         };
-
-        // return [
-        //     ...state, action.payload.privateStorage.bookmarks.conferences
-        // ];
       }
-
+      break;
     }
 
     default:

@@ -16,14 +16,14 @@ function* watchForMessages(client) {
       emit(msg);
     },
     'muc:subject': (emit, msg) => {
-      emit(msg);
+      // emit(msg);
     },
     'muc:join': (emit, msg) => {
-      console.log(msg)
+      // console.log(msg)
       // emit(msg);
     },
     'muc:leave': (emit, msg) => {
-      console.log(msg)
+      // console.log(msg)
       // emit(msg);
     },
   });

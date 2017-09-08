@@ -18,6 +18,14 @@ class RoomHeader extends React.Component {
                     <a className="participantsMenu iconButton" onClick={this.props.toggleParticipants}>
                         { this.props.members.length } <FontAwesome name='user-o' />
                     </a>
+                    {/* TODO need to render filled version if sorted... */}
+                    <a className="bookmarkMenu iconButton" onClick={this.props.toggleBookmark}>
+                        {this.props.bookmarked ? (
+                            <FontAwesome name='bookmark' />
+                        ) : (
+                            <FontAwesome name='bookmark-o' />
+                        )}
+                    </a>
                 </div>
             </div>
         );

@@ -1,21 +1,46 @@
-import { call, take, put } from "redux-saga/effects";
+import { call, take, takeLatest, put } from "redux-saga/effects";
 
 import {
+  ADD_BOOKMARK,
+  REMOVE_BOOKMARK,
   GET_BOOKMARKS,
   receivedBookmarks
 } from "../../ducks/bookmarks";
 
-function* getBookmarks(client) {
+function* fetchBookmarks(client) {
 
-      yield take(GET_BOOKMARKS);
+  const bookmarks = yield call([client, client.getBookmarks]);
 
-      const bookmarks = yield call([client, client.getBookmarks]);
-      yield put(receivedBookmarks(bookmarks));
+  yield put(receivedBookmarks(bookmarks));
 
-      return;
+  return;
 
 }
 
+function* watchGetBookmarks(client) {
+    yield takeLatest(GET_BOOKMARKS, fetchBookmarks, client);
+}
+
+function* addBookmark(client) {
+  while(true) {
+    const { payload } = yield take(ADD_BOOKMARK);
+    const result = yield call([client, client.addBookmark], {
+      jid: payload
+    });
+  
+    yield fetchBookmarks(client);
+  }
+}
+
+function* removeBookmark(client) {
+  while(true) {
+    const { payload } = yield take(REMOVE_BOOKMARK);
+    const result = yield call([client, client.removeBookmark], payload);
+
+    yield fetchBookmarks(client);
+  }
+}
+
 export default function*(client) {
-  yield [getBookmarks(client)];
+  yield [watchGetBookmarks(client), addBookmark(client), removeBookmark(client)];
 }

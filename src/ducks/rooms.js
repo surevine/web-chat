@@ -5,9 +5,9 @@ const constant = makeConstant("jchat/rooms");
 export const JOIN_ROOM = constant("JOIN_ROOM");
 export const JOINED_ROOM = constant("JOINED_ROOM");
 
-export const joinRoom = jid => ({
+export const joinRoom = (jid, nickname) => ({
   type: JOIN_ROOM,
-  payload: { jid }
+  payload: { jid, nickname }
 });
 
 export const joinedRoom = jid => ({

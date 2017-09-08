@@ -6,8 +6,9 @@ import { receivedMessage } from '../ducks/messages';
 import { topicUpdated, receivedPresenceAvailable, receivedPresenceUnavailable } from '../ducks/muc';
 
 import { joinRoom } from '../ducks/rooms';
+import { addBookmark, removeBookmark } from '../ducks/bookmarks';
 
-import { getRoomMessages } from '../selectors';
+import { getRoomMessages, isRoomBookmarked } from '../selectors';
 
 import RoomHeader from '../components/room/RoomHeader';
 import MessageList from '../components/room/MessageList';
@@ -29,9 +30,14 @@ class Room extends React.Component {
 
     componentDidMount() {
 
+        console.log('component did mount');
+
         // TODO we need to refactor this - don't use state like this... get from currentRoom in store?
         if(this.state.roomJid) {
-            this.props.joinRoom(this.state.roomJid);
+
+            console.log(this.props)
+
+            this.props.joinRoom(this.state.roomJid, this.props.nickname);
         } else {
             // TODO error
         }
@@ -39,11 +45,40 @@ class Room extends React.Component {
     }
 
     componentWillUnmount() {
+
+        console.log('component will unmount');
+
         // Client.leaveRoom(this.state.roomJid);
         // TODO clear state?
     }
 
-    componentWillUpdate() {
+    componentWillUpdate(nextProps, nextState) {
+
+        // console.log('component will update')
+
+        if(nextProps.match.params.jid !== this.state.roomJid) {
+            // console.log('room has changed, need to join... ' + nextProps.match.params.jid);
+
+            // this.props.joinRoom(nextProps.match.params.jid);
+
+            // this.setState(function(prevState, props) {
+            //     return {
+            //         ...prevState,
+            //         roomJid: nextProps.match.params.jid
+            //     };
+            // });
+
+        } else {
+            // console.log('but room hasnt changed')
+        }
+
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+
+        // console.log('component did update!')
+
+        
 
     }
 
@@ -53,15 +88,17 @@ class Room extends React.Component {
 
             <RoomHeader 
                 jid={this.props.jid} 
+                bookmarked={this.props.bookmarked}
                 topic={this.props.topic} 
                 members={this.props.members}
+                toggleBookmark={this.toggleBookmark}
                 toggleParticipants={this.toggleParticipants} />
 
             <div className="roomContent">
 
                 <MessageList currentNickname={this.state.nickname} messages={this.props.messages}></MessageList>
 
-                <MessageForm roomJid={this.state.roomJid}></MessageForm>
+                <MessageForm roomJid={this.props.jid}></MessageForm>
 
             </div>
 
@@ -90,6 +127,15 @@ class Room extends React.Component {
         })
     };
 
+    toggleBookmark = e => {
+        e.preventDefault();
+        if(this.props.bookmarked) {
+            this.props.removeBookmark(this.props.jid);
+        } else {
+            this.props.addBookmark(this.props.jid);
+        }
+    };
+
     toggleParticipants = e => {
         e.preventDefault();
         this.setState(function(prevState, props) {
@@ -99,15 +145,14 @@ class Room extends React.Component {
                 showParticipantsList: !prevState.showParticipantsList
             };
         });
-
-        
     };
 
 }
 
-// TODO remove hardcoding of roomjid!
 const mapStateToProps = (state, props) => ({
   jid: state.muc.jid,
+  nickname: state.user.nickname,
+  bookmarked: isRoomBookmarked(state, { roomJid: state.muc.jid }),
   messages: getRoomMessages(state, { roomJid: state.muc.jid }),
   topic: state.muc.topic,
   members: state.muc.members
@@ -115,7 +160,9 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    joinRoom: (jid) => dispatch(joinRoom(jid)),
+    addBookmark: (jid) => dispatch(addBookmark(jid)),
+    removeBookmark: (jid) => dispatch(removeBookmark(jid)),
+    joinRoom: (jid, nickname) => dispatch(joinRoom(jid, nickname)),
     receivedMessage: (msg) => dispatch(receivedMessage(msg)),
     topicUpdated: (msg) => dispatch(topicUpdated(msg)),
     receivedPresenceAvailable: (presence) => dispatch(receivedPresenceAvailable(presence)),

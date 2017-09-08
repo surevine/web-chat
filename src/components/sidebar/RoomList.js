@@ -8,7 +8,7 @@ class RoomList extends React.Component {
     render() {
         return (
         <div className="RoomList">
-            <h3>Rooms</h3>
+            <h3>Bookmarked Rooms</h3>
             
             { this.props.bookmarks.conferences ? (
                 <ul>
@@ -21,6 +21,9 @@ class RoomList extends React.Component {
                 <div>Loading...</div>
             )}
 
+            <h3>Recent Rooms</h3>
+            <p>TODO</p>
+
         </div>
         );
     }
@@ -32,9 +35,7 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, props) => {
-  return {
-    // getBookmarks: () => dispatch(getBookmarks),
-  };
+  return {};
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomList);
