@@ -3,12 +3,11 @@ import { connect } from "react-redux";
 import FontAwesome from 'react-fontawesome';
 
 import { receivedMessage } from '../ducks/messages';
-import { topicUpdated, receivedPresenceAvailable, receivedPresenceUnavailable } from '../ducks/muc';
-
-import { joinRoom } from '../ducks/rooms';
+import { receivedPresenceAvailable, receivedPresenceUnavailable } from '../ducks/presence';
+import { joinRoom, topicUpdated, currentRoom } from '../ducks/rooms';
 import { addBookmark, removeBookmark } from '../ducks/bookmarks';
 
-import { getRoomMessages, isRoomBookmarked } from '../selectors';
+import { getRoomInfo, getRoomMessages, getRoomMembers, isRoomBookmarked, getCurrentRoomJid } from '../selectors';
 
 import RoomHeader from '../components/room/RoomHeader';
 import MessageList from '../components/room/MessageList';
@@ -19,8 +18,6 @@ class Room extends React.Component {
 
     constructor(props) {
         super(props);
-
-        // TODO have currentRoom action that sets current in state...
         this.state = {
             roomJid: props.match.params.jid,
             showRoomSidebar: false,
@@ -30,24 +27,17 @@ class Room extends React.Component {
 
     componentDidMount() {
 
-        console.log('component did mount');
-
-        // TODO we need to refactor this - don't use state like this... get from currentRoom in store?
         if(this.state.roomJid) {
 
-            console.log(this.props)
+            // TODO check that we've not already joined!
 
             this.props.joinRoom(this.state.roomJid, this.props.nickname);
-        } else {
-            // TODO error
+            this.props.currentRoom(this.state.roomJid, this.props.nickname);
         }
 
     }
 
     componentWillUnmount() {
-
-        console.log('component will unmount');
-
         // Client.leaveRoom(this.state.roomJid);
         // TODO clear state?
     }
@@ -56,27 +46,29 @@ class Room extends React.Component {
 
         // console.log('component will update')
 
+        // console.log('componentWillUpdate');
+
         if(nextProps.match.params.jid !== this.state.roomJid) {
-            // console.log('room has changed, need to join... ' + nextProps.match.params.jid);
 
-            // this.props.joinRoom(nextProps.match.params.jid);
+            // console.log('URL jid changed: ' + this.state.roomJid + ' --> ' + nextProps.match.params.jid)
 
-            // this.setState(function(prevState, props) {
-            //     return {
-            //         ...prevState,
-            //         roomJid: nextProps.match.params.jid
-            //     };
-            // });
+            this.setState(function(prevState, props) {
+                return {
+                    ...prevState,
+                    roomJid: nextProps.match.params.jid
+                };
+            });
 
-        } else {
-            // console.log('but room hasnt changed')
+            this.props.joinRoom(nextProps.match.params.jid, this.props.nickname);
+            // this.props.currentRoom(this.state.roomJid, this.props.nickname);
+
         }
 
     }
 
     componentDidUpdate(prevProps, prevState) {
 
-        // console.log('component did update!')
+        // console.log('componentDidUpdate')
 
         
 
@@ -87,9 +79,9 @@ class Room extends React.Component {
         <div className={"Room" + (this.state.showRoomSidebar ? ' sidebar' : '')}>
 
             <RoomHeader 
-                jid={this.props.jid} 
+                jid={this.props.room.jid} 
                 bookmarked={this.props.bookmarked}
-                topic={this.props.topic} 
+                topic={this.props.room.topic} 
                 members={this.props.members}
                 toggleBookmark={this.toggleBookmark}
                 toggleParticipants={this.toggleParticipants} />
@@ -98,7 +90,7 @@ class Room extends React.Component {
 
                 <MessageList currentNickname={this.state.nickname} messages={this.props.messages}></MessageList>
 
-                <MessageForm roomJid={this.props.jid}></MessageForm>
+                <MessageForm roomJid={this.props.room.jid}></MessageForm>
 
             </div>
 
@@ -130,9 +122,9 @@ class Room extends React.Component {
     toggleBookmark = e => {
         e.preventDefault();
         if(this.props.bookmarked) {
-            this.props.removeBookmark(this.props.jid);
+            this.props.removeBookmark(this.props.room.jid);
         } else {
-            this.props.addBookmark(this.props.jid);
+            this.props.addBookmark(this.props.room.jid);
         }
     };
 
@@ -150,18 +142,20 @@ class Room extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  jid: state.muc.jid,
+  room: getRoomInfo(state, { roomJid: props.match.params.jid }),
   nickname: state.user.nickname,
-  bookmarked: isRoomBookmarked(state, { roomJid: state.muc.jid }),
-  messages: getRoomMessages(state, { roomJid: state.muc.jid }),
-  topic: state.muc.topic,
-  members: state.muc.members
+  bookmarked: isRoomBookmarked(state, { roomJid: props.match.params.jid }),
+  messages: getRoomMessages(state, { roomJid: props.match.params.jid }),
+  members: getRoomMembers(state, { roomJid: props.match.params.jid })
 });
+
+// TODO above replace members with getRoomMembers selector
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
     addBookmark: (jid) => dispatch(addBookmark(jid)),
     removeBookmark: (jid) => dispatch(removeBookmark(jid)),
+    currentRoom: (jid, nickname) => dispatch(currentRoom(jid, nickname)),
     joinRoom: (jid, nickname) => dispatch(joinRoom(jid, nickname)),
     receivedMessage: (msg) => dispatch(receivedMessage(msg)),
     topicUpdated: (msg) => dispatch(topicUpdated(msg)),

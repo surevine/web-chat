@@ -4,7 +4,7 @@ import bookmarks from '../ducks/bookmarks';
 import client from '../ducks/client';
 import rooms from '../ducks/rooms';
 import messages from '../ducks/messages';
-import muc from '../ducks/muc';
+import presence from '../ducks/presence';
 import user from '../ducks/user';
 
 export default combineReducers({
@@ -12,6 +12,6 @@ export default combineReducers({
   client,
   rooms,
   messages,
-  muc,
+  presence,
   user
 });

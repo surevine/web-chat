@@ -1,25 +1,8 @@
 import { takeEvery, put } from "redux-saga/effects";
 
-import { topicUpdated, receivedPresenceAvailable, receivedPresenceUnavailable } from "../../ducks/muc";
+import { receivedPresenceAvailable, receivedPresenceUnavailable } from "../../ducks/presence";
 
 import { makeChannel } from "../_helpers";
-
-function* watchForTopic(client) {
-
-  const channel = makeChannel(client, {
-    message: (emit, msg) => {
-      emit(msg);
-    },
-  });
-
-  yield takeEvery(channel, function* eachMessage(msg) {
-
-    if(msg.subject) {
-        yield put(topicUpdated(msg));
-    }
-
-  });
-}
 
 function* watchForPresence(client) {
 
@@ -48,5 +31,5 @@ function* watchForPresence(client) {
 }
 
 export default function*(client) {
-  yield [watchForTopic(client), watchForPresence(client)];
+  yield [watchForPresence(client)];
 }

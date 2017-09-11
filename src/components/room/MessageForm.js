@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { getCurrentRoomJid } from '../../selectors';
+
 import { sendMessage } from '../../ducks/messages';
 
 class MessageForm extends React.Component {
@@ -38,7 +40,7 @@ class MessageForm extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  roomJid: state.muc.jid,
+  roomJid: getCurrentRoomJid(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => {

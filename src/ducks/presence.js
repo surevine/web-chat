@@ -3,27 +3,10 @@ import differenceBy from "lodash/differenceBy";
 
 import { makeConstant } from "./_helpers";
 
-const constant = makeConstant("jchat/muc");
+const constant = makeConstant("jchat/presence");
 
-export const CURRENT_ROOM = constant("CURRENT_ROOM");
-export const TOPIC_UPDATED = constant("TOPIC_UPDATED");
 export const PRESENCE_AVAILABLE = constant("PRESENCE_AVAILABLE");
 export const PRESENCE_UNAVAILABLE = constant("PRESENCE_UNAVAILABLE");
-
-// TODO rework this to be under rooms...
-// TODO showRoom
-export const currentRoom = (jid, nickname) => ({
-    type: CURRENT_ROOM,
-    payload: {
-        jid,
-        nickname
-    }
-});
-
-export const topicUpdated = message => ({
-  type: TOPIC_UPDATED,
-  payload: message
-});
 
 export const receivedPresenceAvailable = presence => ({
   type: PRESENCE_AVAILABLE,
@@ -35,44 +18,20 @@ export const receivedPresenceUnavailable = presence => ({
   payload: presence
 });
 
-const initialState = {
-    jid: "",
-    title: "",
-    topic: "",
-    nickname: "",
-    members: []
-}
+const initialState = {}
 
 // reducer
 export default (state = initialState, action) => {
   switch (action.type) {
 
-    case CURRENT_ROOM: {
-
-        // TODO parse out title
-
-        return {
-            ...state,
-            jid: action.payload.jid,
-            nickname: action.payload.nickname
-        } 
-
-    }
-
-    case TOPIC_UPDATED: {
-
-        const message = action.payload;
-
-        return {
-            ...state,
-            topic: message.subject
-        }
-
-    }
-
     case PRESENCE_AVAILABLE: {
 
         const presence = action.payload;
+        const peerJid = presence.from.bare;
+        const peer = state[peerJid] || {
+            jid: peerJid,
+            members: []
+        };
 
         let show = presence.type;
         if(presence.show) {
@@ -82,6 +41,45 @@ export default (state = initialState, action) => {
         let status = "";
         if(presence.status) {
             status = presence.status;
+        }
+
+
+        if(state[peer.jid] && state[peer.jid].members) {
+
+            var currentMembers = differenceBy(state[peer.jid].members, [{ 'resource': presence.from.resource }], 'resource');
+
+            currentMembers.push({
+                resource: presence.from.resource, 
+                role: presence.muc.role,
+                presence: show,
+                status: status
+            });
+
+            return {
+                ...state,
+                [peer.jid]: {
+                ...peer,
+                members: orderBy(currentMembers, ['resource'], ['asc'])
+                }
+            };
+
+        } else {
+
+            return {
+                ...state,
+                [peer.jid]: {
+                ...peer,
+                members: [
+                    ...peer.members,
+                    {
+                        resource: presence.from.resource, 
+                        role: presence.muc.role,
+                        presence: show,
+                        status: status
+                    }
+                ]}
+            };
+
         }
 
         var roomMembers = differenceBy(state.members, [{ 'resource': presence.from.resource }], 'resource');
@@ -103,15 +101,22 @@ export default (state = initialState, action) => {
     case PRESENCE_UNAVAILABLE: {
 
         const presence = action.payload;
+        const peerJid = presence.from.bare;
+        const peer = state[peerJid];
 
-        let currentMembers = state.members;
+        // TODO ensure collection exists...
+        let currentMembers = peer.members;
+        
         let remainingMembers = currentMembers.filter((member) => {
             return member.resource !== presence.from.resource;
         });
 
         return {
             ...state,
-            members: remainingMembers
+            [peer.jid]: {
+                ...peer,
+                members: remainingMembers
+            }
         };
 
     }

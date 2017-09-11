@@ -12,7 +12,9 @@ class RoomList extends React.Component {
             
             { this.props.bookmarks.conferences ? (
                 <ul>
-                    { this.props.bookmarks.conferences.map(room => (
+                    { this.props.bookmarks.conferences
+                        .sort((a, b) => a.jid.bare > b.jid.bare)
+                        .map(room => (
                         <li key={room.jid.bare}><Link to={`/room/` + room.jid.bare}>#{room.jid.local}</Link></li>
                     ))}
                 </ul>
