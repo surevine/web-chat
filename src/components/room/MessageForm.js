@@ -13,6 +13,7 @@ class MessageForm extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
+
         let msg = this._message.value;
 
         if(msg && msg.length > 0) {

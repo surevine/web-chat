@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import ReactTooltip from 'react-tooltip'
 import FontAwesome from 'react-fontawesome';
 
 class RoomHeader extends React.Component {
@@ -24,6 +24,9 @@ class RoomHeader extends React.Component {
                         ) : (
                             <FontAwesome name='bookmark-o' />
                         )}
+                    </a>
+                    <a className="leaveRoom iconButton" onClick={this.props.leaveRoom}>
+                        <FontAwesome name='sign-out' />
                     </a>
                     {/* TODO leave room */}
                 </div>

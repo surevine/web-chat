@@ -2,12 +2,19 @@ import React from 'react';
 import { connect } from "react-redux";
 import FontAwesome from 'react-fontawesome';
 
+import history from '../history';
+
 import { receivedMessage } from '../ducks/messages';
 import { receivedPresenceAvailable, receivedPresenceUnavailable } from '../ducks/presence';
-import { joinRoom, topicUpdated, currentRoom } from '../ducks/rooms';
+import { joinRoom, topicUpdated, currentRoom, leaveRoom } from '../ducks/rooms';
 import { addBookmark, removeBookmark } from '../ducks/bookmarks';
 
-import { getRoomInfo, getRoomMessages, getRoomMembers, isRoomBookmarked, getCurrentRoomJid } from '../selectors';
+import { 
+    getRoomInfo, 
+    getRoomMessages, 
+    getRoomMembers, 
+    isRoomBookmarked, 
+    getCurrentRoomJid } from '../selectors';
 
 import RoomHeader from '../components/room/RoomHeader';
 import MessageList from '../components/room/MessageList';
@@ -43,14 +50,9 @@ class Room extends React.Component {
     }
 
     componentWillUpdate(nextProps, nextState) {
-
-        // console.log('component will update')
-
-        // console.log('componentWillUpdate');
-
         if(nextProps.match.params.jid !== this.state.roomJid) {
 
-            // console.log('URL jid changed: ' + this.state.roomJid + ' --> ' + nextProps.match.params.jid)
+            // TODO also need to change the isCurrent?!
 
             this.setState(function(prevState, props) {
                 return {
@@ -58,20 +60,9 @@ class Room extends React.Component {
                     roomJid: nextProps.match.params.jid
                 };
             });
-
             this.props.joinRoom(nextProps.match.params.jid, this.props.nickname);
-            // this.props.currentRoom(this.state.roomJid, this.props.nickname);
-
+            this.props.currentRoom(nextProps.match.params.jid, this.props.nickname);
         }
-
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-
-        // console.log('componentDidUpdate')
-
-        
-
     }
 
     render() {
@@ -84,7 +75,8 @@ class Room extends React.Component {
                 topic={this.props.room.topic} 
                 members={this.props.members}
                 toggleBookmark={this.toggleBookmark}
-                toggleParticipants={this.toggleParticipants} />
+                toggleParticipants={this.toggleParticipants}
+                leaveRoom={this.leaveRoom} />
 
             <div className="roomContent">
 
@@ -139,17 +131,21 @@ class Room extends React.Component {
         });
     };
 
+    leaveRoom = e => {
+        e.preventDefault();
+        this.props.leaveRoom(this.state.roomJid, this.props.nickname);
+        history.push('/');
+    }
+
 }
 
 const mapStateToProps = (state, props) => ({
   room: getRoomInfo(state, { roomJid: props.match.params.jid }),
-  nickname: state.user.nickname,
+  nickname: state.user.nickname, // TODO make this select from state what the nick should be...
   bookmarked: isRoomBookmarked(state, { roomJid: props.match.params.jid }),
   messages: getRoomMessages(state, { roomJid: props.match.params.jid }),
   members: getRoomMembers(state, { roomJid: props.match.params.jid })
 });
-
-// TODO above replace members with getRoomMembers selector
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
@@ -157,6 +153,7 @@ const mapDispatchToProps = (dispatch, props) => {
     removeBookmark: (jid) => dispatch(removeBookmark(jid)),
     currentRoom: (jid, nickname) => dispatch(currentRoom(jid, nickname)),
     joinRoom: (jid, nickname) => dispatch(joinRoom(jid, nickname)),
+    leaveRoom: (jid, nickname) => dispatch(leaveRoom(jid)),
     receivedMessage: (msg) => dispatch(receivedMessage(msg)),
     topicUpdated: (msg) => dispatch(topicUpdated(msg)),
     receivedPresenceAvailable: (presence) => dispatch(receivedPresenceAvailable(presence)),

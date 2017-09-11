@@ -1,19 +1,19 @@
 import findIndex from "lodash/findIndex";
+import findKey from "lodash/findKey";
 
 export const getAuthenticated = state => state.client.authenticated;
 
 export const getCurrentRoomJid = (state) => {
 
-  let index = findIndex(state.rooms, function(room) {
+  let jid = findKey(state.rooms, function(room) {
     return room.isCurrent === true;
   });
 
-  if(state.rooms[index]) {
-    return state.rooms[index].jid;
-  } else {
-    return "";
+  if(jid) {
+    return jid;
   }
-
+  
+  return "";
 }
 
 export const getRoomInfo = (state, { roomJid }) => {

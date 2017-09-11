@@ -7,7 +7,10 @@ body {
 /* General */
 
 .iconButton {
+  display: block;
+  float: left;
   cursor: pointer;
+  margin: 10px;
 }
 
 /* App */
@@ -51,6 +54,23 @@ body {
   list-style: none;
   margin: 10px;
   padding: 0;
+}
+
+.RoomList ul li {
+  margin-bottom: 5px;
+}
+
+.RoomList ul li a {
+  text-decoration: none;
+  color: #cac8ee;
+}
+
+.RoomList ul li a:hover {
+  color: #fefefe;
+}
+
+.RoomList ul li a span {
+  margin-right: 4px;
 }
 
 .main {
