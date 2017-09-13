@@ -63,38 +63,23 @@ export default (state = initialState, action) => {
                 }
             };
 
-        } else {
-
-            return {
-                ...state,
-                [peer.jid]: {
-                ...peer,
-                members: [
-                    ...peer.members,
-                    {
-                        resource: presence.from.resource, 
-                        role: presence.muc.role,
-                        presence: show,
-                        status: status
-                    }
-                ]}
-            };
-
         }
-
-        var roomMembers = differenceBy(state.members, [{ 'resource': presence.from.resource }], 'resource');
-
-        roomMembers.push({
-            resource: presence.from.resource, 
-            role: presence.muc.role,
-            presence: show,
-            status: status
-        });
 
         return {
             ...state,
-            members: orderBy(roomMembers, ['resource'], ['asc'])
+            [peer.jid]: {
+            ...peer,
+            members: [
+                ...peer.members,
+                {
+                    resource: presence.from.resource, 
+                    role: presence.muc.role,
+                    presence: show,
+                    status: status
+                }
+            ]}
         };
+
         
     }
 

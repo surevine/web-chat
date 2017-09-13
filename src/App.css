@@ -1,7 +1,7 @@
 body {
   overflow: hidden;
   height: 100%;
-  /* font-family:  */
+  font-family: 'Roboto', sans-serif;
 }
 
 /* General */
@@ -25,7 +25,7 @@ body {
   grid-row: 1;
   height: 70px;
   color: white;
-  background-color: #2e2e4f;
+  background-color: #18202E;
 }
 
 .App-header h2 {
@@ -36,33 +36,36 @@ body {
   display: grid;
   grid-template-rows: 70px auto;
   grid-column: 1;
-  background-color: #3d3d5d;
+  background-color: #262E3E;
   /* #363656 */
 }
 
 .RoomList {
   grid-row: 2;
+
+  padding: 0 10px;
 }
 
 .RoomList h3 {
-  margin: 10px;
-  font-size: 14px;
+  margin: 30px 10px 10px 10px;
+  font-size: 12px;
   text-transform: uppercase;
+  color: #ffffff;
 }
 
 .RoomList ul {
   list-style: none;
-  margin: 10px;
+  margin: 10px 20px;
   padding: 0;
 }
 
 .RoomList ul li {
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .RoomList ul li a {
   text-decoration: none;
-  color: #cac8ee;
+  color: #8190B0;
 }
 
 .RoomList ul li a:hover {
@@ -78,9 +81,8 @@ body {
   grid-template-rows: 70px auto;
 
   grid-column: 2;
-  /* background-color: #DDDEF6; */
-  background-color: #eeeff7; 
 
+  background-color: #f0f0f0; 
 }
 
 /* Rooms */
@@ -101,7 +103,7 @@ body {
   grid-column: span 2;
   height: 70px;
   padding: 0 20px;
-  background-color: #585886;
+  background-color: #343C4B;
   /* -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,50);
   box-shadow: 0 2px 4px 0 rgba(0,0,0,50); */
 
@@ -128,7 +130,7 @@ body {
 }
 
 #roomHeader .topic {
-  color: #cac8ee;
+  color: #8190B0;
   font-style: italic;
   margin: 0;
 }
@@ -149,11 +151,14 @@ body {
 
   padding: 10px 20px;
   overflow-y: scroll;
+
+  background-color: #ffffff;
+  border-left: solid 1px #D7D7D7;
 }
 
 .closeSidebar {
   float: right;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 /* Messages */
@@ -168,7 +173,7 @@ body {
 }
 
 .Message {
-  padding: 10px 20px;
+  padding: 0 20px;
 }
 
 .Message:hover {
@@ -176,6 +181,7 @@ body {
 }
 
 .Message .chat {
+  padding: 10px 0;
   font-size: 14px;
   color: #333;
 }
@@ -194,6 +200,15 @@ body {
 .Message p {
   margin-top: 6px;
   margin-bottom: 0;
+}
+
+.Message .topic, 
+.Message .presence,
+.Message .join {
+  text-align: center;
+  font-size: 14px;
+  font-style: italic;
+  color: #999;
 }
 
 /* Participants List */

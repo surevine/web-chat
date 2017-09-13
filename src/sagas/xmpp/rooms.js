@@ -1,9 +1,6 @@
 import { takeEvery, takeLatest, put } from "redux-saga/effects";
 
 import { makeChannel } from "../_helpers";
-
-import { topicUpdated } from "../../ducks/rooms";
-
 import { addRecentRoom, getRecentRooms } from '../../localStorage';
 
 import {
@@ -11,17 +8,15 @@ import {
   JOINED_ROOM,
   joinedRoom,
   LEAVE_ROOM,
-  LEFT_ROOM,
   leftRoom
 } from "../../ducks/rooms";
-import { currentRoom } from "../../ducks/rooms";
 import { setRecentRooms } from "../../ducks/local";
+import { topicUpdated } from "../../ducks/rooms";
 
 function* joinRoom(client) {
 
   yield takeLatest(JOIN_ROOM, function* joinRoom(action) {
 
-    // TODO joinRoom doesn't return result...
     yield client.joinRoom(action.payload.jid, action.payload.nickname);
 
     // TODO handle if not successful?
@@ -66,13 +61,13 @@ function* watchJoinedRoom(client) {
 
 function* watchForTopic(client) {
   
-    const channel = makeChannel(client, {
-      message: (emit, msg) => {
+    const topicChannel = makeChannel(client, {
+      'muc:subject': (emit, msg) => {
         emit(msg);
       },
     });
   
-    yield takeEvery(channel, function* eachMessage(msg) {
+    yield takeEvery(topicChannel, function* eachMessage(msg) {
   
       if(msg.subject) {
           yield put(topicUpdated(msg));

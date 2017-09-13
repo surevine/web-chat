@@ -13,8 +13,7 @@ import {
     getRoomInfo, 
     getRoomMessages, 
     getRoomMembers, 
-    isRoomBookmarked, 
-    getCurrentRoomJid } from '../selectors';
+    isRoomBookmarked } from '../selectors';
 
 import RoomHeader from '../components/room/RoomHeader';
 import MessageList from '../components/room/MessageList';
@@ -35,10 +34,9 @@ class Room extends React.Component {
     componentDidMount() {
 
         if(this.state.roomJid) {
-
-            // TODO check that we've not already joined!
-
-            this.props.joinRoom(this.state.roomJid, this.props.nickname);
+            if(!this.props.rooms[this.state.roomJid]) {
+                this.props.joinRoom(this.state.roomJid, this.props.nickname);
+            }
             this.props.currentRoom(this.state.roomJid, this.props.nickname);
         }
 
@@ -60,7 +58,10 @@ class Room extends React.Component {
                     roomJid: nextProps.match.params.jid
                 };
             });
-            this.props.joinRoom(nextProps.match.params.jid, this.props.nickname);
+
+            if(!this.props.rooms[nextProps.match.params.jid]) {
+                this.props.joinRoom(nextProps.match.params.jid, this.props.nickname);
+            }
             this.props.currentRoom(nextProps.match.params.jid, this.props.nickname);
         }
     }
@@ -89,7 +90,7 @@ class Room extends React.Component {
             { this.state.showRoomSidebar && (
                 <div className="roomSidebar">
 
-                    <a className="closeSidebar iconButton" onClick={this.hideSidebar}>
+                    <a className="closeSidebar" onClick={this.hideSidebar}>
                         <FontAwesome name='close' />
                     </a>
 
@@ -141,6 +142,7 @@ class Room extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   room: getRoomInfo(state, { roomJid: props.match.params.jid }),
+  rooms: state.rooms,
   nickname: state.user.nickname, // TODO make this select from state what the nick should be...
   bookmarked: isRoomBookmarked(state, { roomJid: props.match.params.jid }),
   messages: getRoomMessages(state, { roomJid: props.match.params.jid }),

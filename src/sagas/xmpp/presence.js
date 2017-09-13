@@ -1,6 +1,8 @@
 import { takeEvery, put } from "redux-saga/effects";
+import md5 from "md5";
 
 import { receivedPresenceAvailable, receivedPresenceUnavailable } from "../../ducks/presence";
+import { receivedMessage } from "../../ducks/messages";
 
 import { makeChannel } from "../_helpers";
 
@@ -19,13 +21,16 @@ function* watchForPresence(client) {
 
     if(presence.type === 'available') {
         yield put(receivedPresenceAvailable(presence));
-        return;
+    } else if(presence.type === 'unavailable') {
+        yield put(receivedPresenceUnavailable(presence));
     }
 
-    if(presence.type === 'unavailable') {
-        yield put(receivedPresenceUnavailable(presence));
-        return;
-    }
+    // TODO ignore own presences for messages
+    // TODO fix this more properly
+    console.log(presence)
+    presence.id = md5(presence.from.resource + new Date());
+    yield put(receivedMessage(presence));
+    return;
 
   });
 }

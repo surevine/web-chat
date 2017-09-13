@@ -24,7 +24,7 @@ function* watchGetBookmarks(client) {
 function* addBookmark(client) {
   while(true) {
     const { payload } = yield take(ADD_BOOKMARK);
-    const result = yield call([client, client.addBookmark], {
+    yield call([client, client.addBookmark], {
       jid: payload
     });
   
@@ -35,7 +35,7 @@ function* addBookmark(client) {
 function* removeBookmark(client) {
   while(true) {
     const { payload } = yield take(REMOVE_BOOKMARK);
-    const result = yield call([client, client.removeBookmark], payload);
+    yield call([client, client.removeBookmark], payload);
 
     yield fetchBookmarks(client);
   }

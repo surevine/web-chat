@@ -1,6 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import ReactTooltip from 'react-tooltip'
 import FontAwesome from 'react-fontawesome';
 
 class RoomHeader extends React.Component {
@@ -16,7 +14,7 @@ class RoomHeader extends React.Component {
                 </div>
                 <div className="actions">
                     <a className="participantsMenu iconButton" onClick={this.props.toggleParticipants}>
-                        { this.props.members.length } <FontAwesome name='user-o' />
+                        <FontAwesome name='user-o' /> { this.props.members.length }
                     </a>
                     <a className="bookmarkMenu iconButton" onClick={this.props.toggleBookmark}>
                         {this.props.bookmarked ? (

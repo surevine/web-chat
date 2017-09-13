@@ -1,4 +1,5 @@
 import { call, take, takeEvery, put } from "redux-saga/effects";
+import md5 from "md5";
 
 import {
   receivedMessage,
@@ -16,16 +17,11 @@ function* watchForMessages(client) {
       emit(msg);
     },
     'muc:subject': (emit, msg) => {
+      // TODO resolve this more properly
+      // add in msg id for rendering key
+      msg.id = md5(msg.subject + msg.from.bare.toString() + msg.time);
       emit(msg);
-    },
-    'muc:join': (emit, msg) => {
-      // console.log(msg)
-      // emit(msg);
-    },
-    'muc:leave': (emit, msg) => {
-      // console.log(msg)
-      // emit(msg);
-    },
+    }
   });
 
   yield takeEvery(channel, function* eachMessage(msg) {
@@ -40,6 +36,8 @@ function* watchForMessages(client) {
         room: msg.type === "groupchat"
       })
     );
+
+    // TODO if groupchat message and NOT current room, show unread for the room
 
     // Scroll message pane to bottom
     // scrollMessageList();
