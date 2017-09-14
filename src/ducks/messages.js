@@ -44,9 +44,8 @@ export default (state = {}, action) => {
 
       } else {
 
-        // Skip initial presence messages
+        // Skip initial presence messages delivered when joining room
         if(msg.type === "available") {
-          console.log('skipping', msg.from.resource)
           return state;
         }
 

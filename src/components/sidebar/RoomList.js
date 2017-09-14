@@ -70,7 +70,11 @@ class RoomList extends React.Component {
                         .sort((a, b) => a > b)
                         .map(roomJid => (
                         <li key={roomJid}><Link to={`/room/` + roomJid} className={(this.isRoomActive(roomJid)) ? "active" : ""}>
-                            <span>#</span>{roomJid.substr(0, roomJid.indexOf('@'))}</Link>
+                            <span>#</span><span className="local">{roomJid.substr(0, roomJid.indexOf('@'))}</span>
+                            { this.isRoomUnread(roomJid) && (
+                                    <span className="unread badge">{this.getRoomUnread(roomJid)}</span>
+                                )}
+                            </Link>
                         </li>                        
                     ))}
                 </ul>
