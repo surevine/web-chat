@@ -39,10 +39,6 @@ function* watchForMessages(client) {
       })
     );
 
-
-    // TODO if groupchat message and NOT current room, show unread for the room
-    // msg.from.bare
-    // incrementUnreadMessageCount()
     yield put(incrementUnreadCount(msg.from.bare));
 
     // Scroll message pane to bottom

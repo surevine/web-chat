@@ -39,12 +39,13 @@ body {
   grid-column: 1;
   background-color: #262E3E;
   user-select: none;
+  overflow-y: scroll;
 }
 
 .RoomList {
   grid-row: 2;
-
   padding: 0 10px;
+  overflow-y: scroll;
 }
 
 .RoomList h3 {
@@ -94,7 +95,7 @@ body {
   text-align: center;
   white-space: nowrap;
   vertical-align: middle;
-  background-color: #3A465B;
+  background-color: #0084FF;
   border-radius: 10px;
 }
 

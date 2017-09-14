@@ -56,8 +56,9 @@ export const incrementUnreadCount = (jid) => ({
 });
 
 // reducer
-export default (state = [], action) => {
+export default (state = {}, action) => {
   switch (action.type) {
+    
 
     case JOINED_ROOM: {
       return {
@@ -80,60 +81,61 @@ export default (state = [], action) => {
 
     case TOPIC_UPDATED: {
 
-        const message = action.payload.message;
+      const message = action.payload.message;
 
-        // TODO ensure it exists
-        const room = state[message.from.bare];
+      // TODO ensure it exists
+      const room = state[message.from.bare];
 
-        return {
-            ...state,
-            [room.jid]: {
-              ...room,
-              topic: message.subject
-            }
-        }
-      }
-
-      case CURRENT_ROOM: {
-
-        const room = state[action.payload.jid];
-        if(!room) {
-          return state;
-        }
-
-        forEach(state, function(room) {
-          room.isCurrent = false;
-        });
-
-        return {
+      return {
           ...state,
           [room.jid]: {
             ...room,
-            isCurrent: true,
-            unreadMessageCount: 0
+            topic: message.subject
           }
-        };
+      }
+    }
 
+    case CURRENT_ROOM: {
+
+      const room = state[action.payload.jid];
+      if(!room) {
+        return state;
       }
 
-      case INCREMENT_UNREAD: {
+      forEach(state, function(room) {
+        room.isCurrent = false;
+      });
 
-        const room = state[action.payload.jid];
-        if(!room || room.isCurrent) {
-          return state;
+      return {
+        ...state,
+        [room.jid]: {
+          ...room,
+          isCurrent: true,
+          unreadMessageCount: 0
         }
+      };
 
-        let unreadCount = room.unreadMessageCount + 1;
+    }
 
-        return {
-          ...state,
-          [room.jid]: {
-            ...room,
-            unreadMessageCount: unreadCount
-          }
-        };
+    case INCREMENT_UNREAD: {
 
+      const room = state[action.payload.jid];
+      if(!room || room.isCurrent) {
+        return state;
       }
+
+      // TODO add upper limit - 99? - show 99+
+      let unreadCount = room.unreadMessageCount + 1;
+
+      return {
+        ...state,
+        [room.jid]: {
+          ...room,
+          unreadMessageCount: unreadCount
+        }
+      };
+
+    }
 
     default:
       return state;

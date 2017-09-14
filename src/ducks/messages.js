@@ -44,6 +44,12 @@ export default (state = {}, action) => {
 
       } else {
 
+        // Skip initial presence messages
+        if(msg.type === "available") {
+          console.log('skipping', msg.from.resource)
+          return state;
+        }
+
         return {
           ...state,
           [peer.jid]: {

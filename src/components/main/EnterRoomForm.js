@@ -13,7 +13,6 @@ class EnterRoomForm extends React.Component {
         // TODO set nickname to be used when joining!
 
         // Navigate to room
-        // TODO set in state / fire action to join the room?
         history.push('/room/' + jid);
     };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
-
 import { Link } from 'react-router-dom';
+import find from 'lodash/find';
 
 class RoomList extends React.Component {
 
@@ -10,6 +10,13 @@ class RoomList extends React.Component {
             return true;
         }
         return false;
+    }
+
+    // TODO replace this with state flag?
+    isRoomBookmarked(jid) {
+        return find(this.props.bookmarks.conferences, function(bookmark) {
+            return bookmark.jid.bare === jid
+        });
     }
 
     isRoomUnread(jid) {
@@ -26,6 +33,7 @@ class RoomList extends React.Component {
     }
 
     render() {
+        
         return (
         <div className="RoomList">
             <h3>Bookmarked Rooms</h3>
@@ -35,13 +43,12 @@ class RoomList extends React.Component {
                     { this.props.bookmarks.conferences
                         .sort((a, b) => a.jid.bare > b.jid.bare)
                         .map(room => (
-                        <li key={room.jid.bare}>
+                        <li key={"bookmark-" + room.jid.bare}>
                             <Link to={`/room/` + room.jid.bare} className={(this.isRoomActive(room.jid.bare)) ? "active" : ""}>
                                 <span>#</span><span className="local">{room.jid.local}</span>
                                 { this.isRoomUnread(room.jid.bare) && (
                                     <span className="unread badge">{this.getRoomUnread(room.jid.bare)}</span>
-                                )
-                                }
+                                )}
                                 {/* <span className="domain">@{room.jid.domain}</span> */}
                             </Link>
                         </li>
@@ -52,16 +59,19 @@ class RoomList extends React.Component {
                 <div>Loading...</div>
             )}
 
-            <h3>Recent Rooms</h3>
+            <h3>Rooms</h3>
 
-            {/* TODO ensure a room doesn't appear in both. Bookmark should take priority */}
-            {/* Move this to the join form page */}
-
-            { this.props.recentRooms ? (
+            { this.props.rooms ? (
                 <ul>
-                    { this.props.recentRooms
-                        .map(room => (
-                        <li key={room.jid.bare}><Link to={`/room/` + room.jid.bare}><span>#</span>{room.jid.local}</Link></li>
+                    { Object.keys(this.props.rooms)
+                        .filter(roomJid => {
+                            return !this.isRoomBookmarked(roomJid)
+                        })
+                        .sort((a, b) => a > b)
+                        .map(roomJid => (
+                        <li key={roomJid}><Link to={`/room/` + roomJid} className={(this.isRoomActive(roomJid)) ? "active" : ""}>
+                            <span>#</span>{roomJid.substr(0, roomJid.indexOf('@'))}</Link>
+                        </li>                        
                     ))}
                 </ul>
 
