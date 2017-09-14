@@ -4,6 +4,7 @@ import md5 from "md5";
 import {
   receivedMessage,
   SEND_MESSAGE } from "../../ducks/messages";
+import { incrementUnreadCount } from "../../ducks/rooms";
 
 import { makeChannel } from "../_helpers";
 
@@ -25,6 +26,7 @@ function* watchForMessages(client) {
   });
 
   yield takeEvery(channel, function* eachMessage(msg) {
+
     yield put(
       receivedMessage({
         ...msg,
@@ -37,7 +39,11 @@ function* watchForMessages(client) {
       })
     );
 
+
     // TODO if groupchat message and NOT current room, show unread for the room
+    // msg.from.bare
+    // incrementUnreadMessageCount()
+    yield put(incrementUnreadCount(msg.from.bare));
 
     // Scroll message pane to bottom
     // scrollMessageList();

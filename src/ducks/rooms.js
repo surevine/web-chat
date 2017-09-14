@@ -14,6 +14,8 @@ export const LEFT_ROOM = constant("LEFT_ROOM");
 export const TOPIC_UPDATED = constant("TOPIC_UPDATED");
 export const CURRENT_ROOM = constant("CURRENT_ROOM");
 
+export const INCREMENT_UNREAD = constant("INCREMENT_UNREAD");
+
 export const joinRoom = (jid, nickname) => ({
   type: JOIN_ROOM,
   payload: { jid, nickname }
@@ -48,6 +50,11 @@ export const currentRoom = (jid, nickname) => ({
   }
 });
 
+export const incrementUnreadCount = (jid) => ({
+  type: INCREMENT_UNREAD,
+  payload: { jid }
+});
+
 // reducer
 export default (state = [], action) => {
   switch (action.type) {
@@ -59,7 +66,8 @@ export default (state = [], action) => {
           jid: action.payload.jid,
           topic: "",
           nickname: action.payload.nickname,
-          isCurrent: false
+          isCurrent: false,
+          unreadMessageCount: 1
         }
       };
     }
@@ -101,7 +109,27 @@ export default (state = [], action) => {
           ...state,
           [room.jid]: {
             ...room,
-            isCurrent: true
+            isCurrent: true,
+            unreadMessageCount: 0
+          }
+        };
+
+      }
+
+      case INCREMENT_UNREAD: {
+
+        const room = state[action.payload.jid];
+        if(!room || room.isCurrent) {
+          return state;
+        }
+
+        let unreadCount = room.unreadMessageCount + 1;
+
+        return {
+          ...state,
+          [room.jid]: {
+            ...room,
+            unreadMessageCount: unreadCount
           }
         };
 

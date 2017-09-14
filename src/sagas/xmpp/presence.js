@@ -27,7 +27,7 @@ function* watchForPresence(client) {
 
     // TODO ignore own presences for messages
     // TODO fix this more properly
-    console.log(presence)
+    // console.log(presence)
     presence.id = md5(presence.from.resource + new Date());
     yield put(receivedMessage(presence));
     return;

@@ -26,6 +26,7 @@ body {
   height: 70px;
   color: white;
   background-color: #18202E;
+  user-select: none;
 }
 
 .App-header h2 {
@@ -37,7 +38,7 @@ body {
   grid-template-rows: 70px auto;
   grid-column: 1;
   background-color: #262E3E;
-  /* #363656 */
+  user-select: none;
 }
 
 .RoomList {
@@ -55,15 +56,13 @@ body {
 
 .RoomList ul {
   list-style: none;
-  margin: 10px 20px;
+  margin: 10px;
   padding: 0;
 }
 
-.RoomList ul li {
-  margin-bottom: 10px;
-}
-
 .RoomList ul li a {
+  display: block;
+  padding: 10px;
   text-decoration: none;
   color: #8190B0;
 }
@@ -72,8 +71,31 @@ body {
   color: #fefefe;
 }
 
+
+.RoomList ul li a.active {
+  border-radius: 4px;
+  background-color: #3A465B;
+  color: #ffffff;
+}
+
 .RoomList ul li a span {
   margin-right: 4px;
+}
+
+.badge {
+  float: right;
+  display: inline-block;
+  min-width: 10px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-color: #3A465B;
+  border-radius: 10px;
 }
 
 .main {
@@ -104,8 +126,7 @@ body {
   height: 70px;
   padding: 0 20px;
   background-color: #343C4B;
-  /* -webkit-box-shadow: 0 2px 4px 0 rgba(0,0,0,50);
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,50); */
+  user-select: none;
 
   display: grid;
   grid-template-columns: 75% 25%;
@@ -154,6 +175,8 @@ body {
 
   background-color: #ffffff;
   border-left: solid 1px #D7D7D7;
+
+  user-select: none;
 }
 
 .closeSidebar {
@@ -187,7 +210,7 @@ body {
 }
 
 .Message .chat .author {
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .Message .chat time {
@@ -200,6 +223,7 @@ body {
 .Message p {
   margin-top: 6px;
   margin-bottom: 0;
+  line-height: 22px;
 }
 
 .Message .topic, 
@@ -229,7 +253,7 @@ body {
 
 
 
-.presenceIcon.available { color: green; }
+.presenceIcon.available { color: #5CD068; }
 .presenceIcon.dnd { color: red; }
 .presenceIcon.away { color: orange; }
 

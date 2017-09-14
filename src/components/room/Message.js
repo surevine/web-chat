@@ -1,9 +1,14 @@
 import React from 'react';
 import Moment from 'react-moment';
+import momentjs from 'moment';
 import ReactTooltip from 'react-tooltip'
 import Highlighter from 'react-highlight-words';
 
 class Message extends React.Component {
+
+    formatMessageDateTime(time) {
+        return momentjs(time).format('Do MMM YYYY [at] h:mm A');
+    }
 
     renderMessage() {
 
@@ -23,7 +28,7 @@ class Message extends React.Component {
         return (
             <div className="chat">
                 <span className="author">{this.props.message.from.resource}</span>
-                <Moment format="h:mm A" data-tip={this.props.message.time}>{this.props.message.time}</Moment>
+                <Moment format="h:mm A" data-tip={this.formatMessageDateTime(this.props.message.time)}>{this.props.message.time}</Moment>
                 <ReactTooltip effect="solid" delayShow={300} offset={{right: 20}} />
                 <p>
                     <Highlighter
