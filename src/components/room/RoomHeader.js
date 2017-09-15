@@ -1,5 +1,6 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
+import ReactTooltip from 'react-tooltip'
 
 class RoomHeader extends React.Component {
 
@@ -13,20 +14,38 @@ class RoomHeader extends React.Component {
                     <p className="topic">{this.props.topic}</p>}
                 </div>
                 <div className="actions">
-                    <a className="participantsMenu iconButton" onClick={this.props.toggleParticipants}>
+                    <a className="participantsMenu iconButton" 
+                        onClick={this.props.toggleParticipants}
+                        data-offset="{'left': 2}"
+                        data-delay-show='100'
+                        data-tip="Room Members">
                         <FontAwesome name='user-o' /> { this.props.members.length }
                     </a>
-                    <a className="bookmarkMenu iconButton" onClick={this.props.toggleBookmark}>
+                    <a className="formsMenu iconButton"
+                        data-offset="{'left': 2}"
+                        data-delay-show='100'
+                        data-tip="Form Submissions">
+                        {/* TODO dynamic form submission count */}
+                        <FontAwesome name='file-text-o' /> 3
+                    </a>
+                    <a className="bookmarkMenu iconButton"
+                        onClick={this.props.toggleBookmark}
+                        data-offset="{'left': 2}"
+                        data-delay-show='100'
+                        data-tip={this.props.bookmarked ? "Unbookmark Room" : "Bookmark Room"}>
                         {this.props.bookmarked ? (
                             <FontAwesome name='bookmark' />
                         ) : (
                             <FontAwesome name='bookmark-o' />
                         )}
                     </a>
-                    <a className="leaveRoom iconButton" onClick={this.props.leaveRoom}>
+                    <a className="leaveRoom iconButton"
+                        onClick={this.props.leaveRoom}
+                        data-offset="{'left': 2}"
+                        data-delay-show='100'
+                        data-tip="Leave Room">
                         <FontAwesome name='sign-out' />
                     </a>
-                    {/* TODO leave room */}
                 </div>
             </div>
         );

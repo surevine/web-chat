@@ -6,7 +6,7 @@ import history from '../history';
 
 import { receivedMessage } from '../ducks/messages';
 import { receivedPresenceAvailable, receivedPresenceUnavailable } from '../ducks/presence';
-import { joinRoom, topicUpdated, currentRoom, leaveRoom } from '../ducks/rooms';
+import { joinRoom, topicUpdated, showRoom, hideRoom, leaveRoom } from '../ducks/rooms';
 import { addBookmark, removeBookmark } from '../ducks/bookmarks';
 
 import { 
@@ -37,14 +37,13 @@ class Room extends React.Component {
             if(!this.props.rooms[this.state.roomJid]) {
                 this.props.joinRoom(this.state.roomJid, this.props.nickname);
             }
-            this.props.currentRoom(this.state.roomJid, this.props.nickname);
+            this.props.showRoom(this.state.roomJid, this.props.nickname);
         }
 
     }
 
     componentWillUnmount() {
-        // Client.leaveRoom(this.state.roomJid);
-        // TODO clear state?
+        this.props.hideRoom(this.state.roomJid);
     }
 
     componentWillUpdate(nextProps, nextState) {
@@ -62,7 +61,7 @@ class Room extends React.Component {
             if(!this.props.rooms[nextProps.match.params.jid]) {
                 this.props.joinRoom(nextProps.match.params.jid, this.props.nickname);
             }
-            this.props.currentRoom(nextProps.match.params.jid, this.props.nickname);
+            this.props.showRoom(nextProps.match.params.jid, this.props.nickname);
         }
     }
 
@@ -153,7 +152,8 @@ const mapDispatchToProps = (dispatch, props) => {
   return {
     addBookmark: (jid) => dispatch(addBookmark(jid)),
     removeBookmark: (jid) => dispatch(removeBookmark(jid)),
-    currentRoom: (jid, nickname) => dispatch(currentRoom(jid, nickname)),
+    showRoom: (jid, nickname) => dispatch(showRoom(jid, nickname)),
+    hideRoom: (jid) => dispatch(hideRoom(jid)),
     joinRoom: (jid, nickname) => dispatch(joinRoom(jid, nickname)),
     leaveRoom: (jid, nickname) => dispatch(leaveRoom(jid)),
     receivedMessage: (msg) => dispatch(receivedMessage(msg)),

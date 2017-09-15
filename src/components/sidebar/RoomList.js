@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import find from 'lodash/find';
+import FontAwesome from 'react-fontawesome';
+import ReactTooltip from 'react-tooltip'
 
 class RoomList extends React.Component {
 
@@ -60,6 +62,15 @@ class RoomList extends React.Component {
             )}
 
             <h3>Rooms</h3>
+
+            <Link to='/' className="joinRoom iconButton"
+                data-offset="{'left': 2}"
+                data-delay-show='100'
+                data-tip="Join a room">
+                <FontAwesome name='plus-circle' />
+            </Link>
+
+            {/* TODO DRY... */}
 
             { this.props.rooms ? (
                 <ul>

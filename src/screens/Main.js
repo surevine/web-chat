@@ -9,7 +9,7 @@ class Home extends React.Component {
     render() {
         return (
         <div className="Home">
-            <h4>Enter Room</h4>
+            <h4>Join a room</h4>
             <EnterRoomForm />
 
             <h3>Recent Rooms</h3>

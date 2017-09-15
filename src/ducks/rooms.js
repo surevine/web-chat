@@ -12,7 +12,8 @@ export const LEAVE_ROOM = constant("LEAVE_ROOM");
 export const LEFT_ROOM = constant("LEFT_ROOM");
 
 export const TOPIC_UPDATED = constant("TOPIC_UPDATED");
-export const CURRENT_ROOM = constant("CURRENT_ROOM");
+export const SHOW_ROOM = constant("SHOW_ROOM");
+export const HIDE_ROOM = constant("HIDE_ROOM");
 
 export const INCREMENT_UNREAD = constant("INCREMENT_UNREAD");
 
@@ -42,12 +43,17 @@ export const topicUpdated = (message) => ({
   payload: { message }
 });
 
-export const currentRoom = (jid, nickname) => ({
-  type: CURRENT_ROOM,
+export const showRoom = (jid, nickname) => ({
+  type: SHOW_ROOM,
   payload: {
     jid,
     nickname
   }
+});
+
+export const hideRoom = (jid) => ({
+  type: HIDE_ROOM,
+  payload: { jid }
 });
 
 export const incrementUnreadCount = (jid) => ({
@@ -95,7 +101,7 @@ export default (state = {}, action) => {
       }
     }
 
-    case CURRENT_ROOM: {
+    case SHOW_ROOM: {
 
       const room = state[action.payload.jid];
       if(!room) {
@@ -112,6 +118,23 @@ export default (state = {}, action) => {
           ...room,
           isCurrent: true,
           unreadMessageCount: 0
+        }
+      };
+
+    }
+
+    case HIDE_ROOM: {
+
+      const room = state[action.payload.jid];
+      if(!room) {
+        return state;
+      }
+
+      return {
+        ...state,
+        [room.jid]: {
+          ...room,
+          isCurrent: false
         }
       };
 

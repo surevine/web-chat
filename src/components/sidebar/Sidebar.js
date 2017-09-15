@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
 
-import { Link } from 'react-router-dom';
-
 import UserInfo from '../header/UserInfo';
 import RoomList from './RoomList';
 
@@ -22,7 +20,6 @@ class Sidebar extends React.Component {
         <div className="Sidebar">
 
             <div className="App-header">
-                <h2><Link to={`/`}>JChat</Link></h2>
                 <UserInfo />
             </div>
 

@@ -99,6 +99,19 @@ body {
   border-radius: 10px;
 }
 
+.RoomList .iconButton {
+  color: #8190B0;
+}
+
+.RoomList .iconButton:hover {
+  color: #ffffff;
+}
+
+.RoomList .joinRoom {
+  float: right;
+  margin-top: -28px;
+}
+
 .main {
   display: grid;
   grid-template-rows: 70px auto;
@@ -158,10 +171,8 @@ body {
 }
 
 .roomContent {
-
   display: grid;
-  grid-template-rows: auto 60px;
-
+  grid-template-rows: auto 70px;
   grid-row: 2;
   overflow-y: scroll;
 }
@@ -183,6 +194,7 @@ body {
 .closeSidebar {
   float: right;
   font-size: 16px;
+  cursor: pointer;
 }
 
 /* Messages */
@@ -263,7 +275,7 @@ body {
 .MessageForm {
   grid-row: 2;
   padding: 0 10px;
-  height: 60px;
+  height: 70px;
 }
 
 .MessageForm #sendMessage {
