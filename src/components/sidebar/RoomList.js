@@ -5,6 +5,10 @@ import find from 'lodash/find';
 import FontAwesome from 'react-fontawesome';
 import ReactTooltip from 'react-tooltip';
 
+import { joinRoom } from '../../ducks/rooms';
+
+import history from '../../history';
+
 class RoomList extends React.Component {
 
     isRoomActive(jid) {
@@ -40,6 +44,19 @@ class RoomList extends React.Component {
         }
     }
 
+    goToRoom = (jid) => {
+
+        // Only join once
+        if(!this.props.rooms[jid] || !this.props.rooms[jid].joined) {
+
+            // TODO consider fallback global nickname OR saving nickname for bookmarks from previous session
+            this.props.joinRoom(jid, this.props.client.jid.local);
+
+        }
+
+        history.push('/room/' + jid);
+    };
+
     render() {
         
         return (
@@ -52,13 +69,13 @@ class RoomList extends React.Component {
                         .sort((a, b) => a.jid.bare > b.jid.bare)
                         .map(room => (
                         <li key={"bookmark-" + room.jid.bare}>
-                            <Link to={`/room/` + room.jid.bare} className={(this.isRoomActive(room.jid.bare)) ? "active" : ""}>
+                            <a onClick={() => this.goToRoom(room.jid.bare)} className={(this.isRoomActive(room.jid.bare)) ? "active" : ""}>
                                 <span>#</span><span className="local">{room.jid.local}</span>
                                 { this.isRoomUnread(room.jid.bare) && (
                                     <span className="unread badge">{this.getRoomUnread(room.jid.bare)}</span>
                                 )}
                                 {/* <span className="domain">@{room.jid.domain}</span> */}
-                            </Link>
+                            </a>
                         </li>
                     ))}
                 </ul>
@@ -86,12 +103,13 @@ class RoomList extends React.Component {
                         })
                         .sort((a, b) => a > b)
                         .map(roomJid => (
-                        <li key={roomJid}><Link to={`/room/` + roomJid} className={(this.isRoomActive(roomJid)) ? "active" : ""}>
-                            <span>#</span><span className="local">{roomJid.substr(0, roomJid.indexOf('@'))}</span>
-                            { this.isRoomUnread(roomJid) && (
+                        <li key={roomJid}>
+                            <a onClick={() => this.goToRoom(roomJid)} className={(this.isRoomActive(roomJid)) ? "active" : ""}>
+                                <span>#</span><span className="local">{roomJid.substr(0, roomJid.indexOf('@'))}</span>
+                                { this.isRoomUnread(roomJid) && (
                                     <span className="unread badge">{this.getRoomUnread(roomJid)}</span>
                                 )}
-                            </Link>
+                            </a>
                         </li>                        
                     ))}
                 </ul>
@@ -108,12 +126,15 @@ class RoomList extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   bookmarks: state.bookmarks,
+  client: state.client,
   rooms: state.rooms,
   recentRooms: state.local.recent
 });
 
 const mapDispatchToProps = (dispatch, props) => {
-  return {};
-};
+    return {
+      joinRoom: (jid, nickname) => dispatch(joinRoom(jid, nickname)),
+    };
+  };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomList);

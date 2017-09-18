@@ -37,9 +37,6 @@ class Room extends React.Component {
     componentDidMount() {
 
         if(this.state.roomJid) {
-            if(!this.props.rooms[this.state.roomJid]) {
-                this.props.joinRoom(this.state.roomJid, this.props.nickname);
-            }
             this.props.showRoom(this.state.roomJid, this.props.nickname);
         }
 
@@ -61,9 +58,6 @@ class Room extends React.Component {
                 };
             });
 
-            if(!this.props.rooms[nextProps.match.params.jid]) {
-                this.props.joinRoom(nextProps.match.params.jid, this.props.nickname);
-            }
             this.props.showRoom(nextProps.match.params.jid, this.props.nickname);
         }
     }

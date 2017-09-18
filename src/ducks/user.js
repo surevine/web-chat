@@ -12,7 +12,7 @@ export const setNickname = nickname => ({
 });
 
 const initialState = {
-    nickname: 'Jonny Heavey'
+    nickname: ''
 };
 
 // reducer

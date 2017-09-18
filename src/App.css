@@ -221,6 +221,11 @@ body {
   padding: 0;
 }
 
+.MessageList .Message:last-of-type .topic,
+.MessageList .Message:last-of-type .presence {
+  margin-bottom: 10px;
+}
+
 .Message {
   padding: 0 20px;
 }

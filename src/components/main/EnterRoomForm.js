@@ -1,6 +1,9 @@
 import React from 'react';
+import { connect } from "react-redux";
 
 import history from '../../history';
+
+import { joinRoom } from '../../ducks/rooms';
 
 class EnterRoomForm extends React.Component {
 
@@ -10,7 +13,12 @@ class EnterRoomForm extends React.Component {
         let jid = this._roomJid.value;
         this._roomJid.value = '';
 
-        // TODO set nickname to be used when joining!
+        let nickname = this._nickname.value;
+        if(!nickname) {
+            nickname = this.props.client.jid.local;
+        }
+
+        this.props.joinRoom(jid, nickname);
 
         // Navigate to room
         history.push('/room/' + jid);
@@ -30,4 +38,14 @@ class EnterRoomForm extends React.Component {
 
 }
 
-export default EnterRoomForm;
+const mapStateToProps = (state, props) => ({
+    client: state.client
+});
+  
+  const mapDispatchToProps = (dispatch, props) => {
+    return {
+      joinRoom: (jid, nickname) => dispatch(joinRoom(jid, nickname)),
+    };
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(EnterRoomForm);

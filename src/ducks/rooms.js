@@ -64,9 +64,11 @@ export const incrementUnreadCount = (jid) => ({
 // reducer
 export default (state = {}, action) => {
   switch (action.type) {
-    
 
-    case JOINED_ROOM: {
+    case JOIN_ROOM: {
+
+      // TODO check whether the room is already in state...
+
       return {
         ...state,
         [action.payload.jid]: {
@@ -74,7 +76,23 @@ export default (state = {}, action) => {
           topic: "",
           nickname: action.payload.nickname,
           isCurrent: false,
-          unreadMessageCount: 1
+          unreadMessageCount: 0,
+          joined: false
+        }
+      };
+
+    }
+
+    case JOINED_ROOM: {
+
+      // TODO ensure it exists
+      const room = state[action.payload.jid];
+
+      return {
+        ...state,
+        [room.jid]: {
+          ...room,
+          joined: true
         }
       };
     }

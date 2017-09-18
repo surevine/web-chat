@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
 
 import EnterRoomForm from '../components/main/EnterRoomForm';
 
@@ -12,7 +11,7 @@ class Home extends React.Component {
             <h4>Join a room</h4>
             <EnterRoomForm />
 
-            <h3>Recent Rooms</h3>
+            {/* <h3>Recent Rooms</h3>
             { this.props.recentRooms ? (
                 <ul>
                     { this.props.recentRooms
@@ -23,7 +22,7 @@ class Home extends React.Component {
 
             ) : (
                 <div>Loading...</div>
-            )}
+            )} */}
 
         </div>
         );
