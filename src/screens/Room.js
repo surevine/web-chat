@@ -12,12 +12,14 @@ import { addBookmark, removeBookmark } from '../ducks/bookmarks';
 import { 
     getRoomInfo, 
     getRoomMessages, 
-    getRoomMembers, 
+    getRoomMembers,
+    getRoomForms, 
     isRoomBookmarked } from '../selectors';
 
 import RoomHeader from '../components/room/RoomHeader';
 import MessageList from '../components/room/MessageList';
 import ParticipantList from '../components/room/ParticipantList';
+import FormsList from '../components/room/FormsList';
 import MessageForm from '../components/room/MessageForm';
 
 class Room extends React.Component {
@@ -27,7 +29,8 @@ class Room extends React.Component {
         this.state = {
             roomJid: props.match.params.jid,
             showRoomSidebar: false,
-            showParticipantsList: false
+            showParticipantsList: false,
+            showFormsList: false,
         };
     }
 
@@ -74,8 +77,10 @@ class Room extends React.Component {
                 bookmarked={this.props.bookmarked}
                 topic={this.props.room.topic} 
                 members={this.props.members}
+                forms={this.props.forms}
                 toggleBookmark={this.toggleBookmark}
                 toggleParticipants={this.toggleParticipants}
+                toggleForms={this.toggleForms}
                 leaveRoom={this.leaveRoom} />
 
             <div className="roomContent">
@@ -96,6 +101,10 @@ class Room extends React.Component {
                     { this.state.showParticipantsList && (
                         <ParticipantList members={this.props.members}></ParticipantList>
                     )}
+
+                    { this.state.showFormsList && (
+                        <FormsList forms={this.props.forms}></FormsList>
+                    )}
                 </div>
                 )}
             
@@ -107,7 +116,8 @@ class Room extends React.Component {
         e.preventDefault();
         this.setState({ 
             showRoomSidebar: false,
-            showParticipantsList: false
+            showParticipantsList: false,
+            showFormsList: false
         })
     };
 
@@ -122,11 +132,39 @@ class Room extends React.Component {
 
     toggleParticipants = e => {
         e.preventDefault();
+
         this.setState(function(prevState, props) {
+
+            // TODO refactor this...
+            let showSidebar = false;
+            if(!prevState.showParticipantsList) {
+                showSidebar = true;
+            }
+
             return {
                 ...prevState,
-                showRoomSidebar: !prevState.showRoomSidebar,
-                showParticipantsList: !prevState.showParticipantsList
+                showRoomSidebar: showSidebar,
+                showParticipantsList: !prevState.showParticipantsList,
+                showFormsList: false
+            };
+        });
+    };
+
+    toggleForms = e => {
+        e.preventDefault();
+        this.setState(function(prevState, props) {
+
+            // TODO refactor this...
+            let showSidebar = false;
+            if(!prevState.showFormsList) {
+                showSidebar = true;
+            }
+
+            return {
+                ...prevState,
+                showRoomSidebar: showSidebar,
+                showParticipantsList: false,
+                showFormsList: !prevState.showFormsList
             };
         });
     };
@@ -145,7 +183,8 @@ const mapStateToProps = (state, props) => ({
   nickname: state.user.nickname, // TODO make this select from state what the nick should be...
   bookmarked: isRoomBookmarked(state, { roomJid: props.match.params.jid }),
   messages: getRoomMessages(state, { roomJid: props.match.params.jid }),
-  members: getRoomMembers(state, { roomJid: props.match.params.jid })
+  members: getRoomMembers(state, { roomJid: props.match.params.jid }),
+  forms: getRoomForms(state, { roomJid: props.match.params.jid }),
 });
 
 const mapDispatchToProps = (dispatch, props) => {

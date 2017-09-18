@@ -147,7 +147,6 @@ export default (state = {}, action) => {
         return state;
       }
 
-      // TODO add upper limit - 99? - show 99+
       let unreadCount = room.unreadMessageCount + 1;
 
       return {

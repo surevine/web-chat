@@ -22,11 +22,11 @@ class RoomHeader extends React.Component {
                         <FontAwesome name='user-o' /> { this.props.members.length }
                     </a>
                     <a className="formsMenu iconButton"
+                        onClick={this.props.toggleForms}
                         data-offset="{'left': 2}"
                         data-delay-show='100'
                         data-tip="Form Submissions">
-                        {/* TODO dynamic form submission count */}
-                        <FontAwesome name='file-text-o' /> 3
+                        <FontAwesome name='file-text-o' /> { this.props.forms.length }
                     </a>
                     <a className="bookmarkMenu iconButton"
                         onClick={this.props.toggleBookmark}

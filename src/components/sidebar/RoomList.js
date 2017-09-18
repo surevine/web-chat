@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import find from 'lodash/find';
 import FontAwesome from 'react-fontawesome';
-import ReactTooltip from 'react-tooltip'
+import ReactTooltip from 'react-tooltip';
 
 class RoomList extends React.Component {
 
@@ -30,6 +30,12 @@ class RoomList extends React.Component {
 
     getRoomUnread(jid) {
         if(this.props.rooms[jid]) {
+
+            // TODO make this limit configurable
+            if(this.props.rooms[jid].unreadMessageCount > 10) {
+                return "10+";
+            }
+
             return this.props.rooms[jid].unreadMessageCount
         }
     }

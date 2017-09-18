@@ -33,6 +33,19 @@ body {
   float: left;
 }
 
+/* User info */
+
+.UserInfo a {
+  color: #868FB1;
+  padding: 4px;
+}
+
+.UserInfo a:hover {
+  color: #ffffff;
+}
+
+/* Sidebar */
+
 .Sidebar {
   display: grid;
   grid-template-rows: 70px auto;

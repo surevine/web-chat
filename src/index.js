@@ -9,6 +9,7 @@ import App from './App';
 import Login from './screens/Login';
 import Logout from './screens/Logout';
 import Main from './screens/Main';
+import Settings from './screens/Settings';
 import Room from './screens/Room';
 
 import './index.css';
@@ -29,6 +30,7 @@ ReactDOM.render(
               <Route path="/logout" component={Logout} />
               
               <PrivateRoute path="/" exact={true} component={Main} />
+              <PrivateRoute path="/settings" exact={true} component={Settings} />
               <PrivateRoute path="/room/:jid" component={Room} />
             </App>
 

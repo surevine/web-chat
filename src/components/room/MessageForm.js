@@ -7,7 +7,7 @@ import { sendMessage } from '../../ducks/messages';
 
 class MessageForm extends React.Component {
 
-    componentDidMount() {
+    componentDidUpdate() { 
         this._message.focus();
     }
 

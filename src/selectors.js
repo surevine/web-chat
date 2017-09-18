@@ -31,6 +31,11 @@ export const getRoomMembers = (state, { roomJid }) => {
   return members;
 };
 
+export const getRoomForms = (state, { roomJid }) => {
+  const forms = (state.forms[roomJid] && state.forms[roomJid].forms) || [];
+  return forms;
+};
+
 export const isRoomBookmarked = (state, { roomJid }) => {
 
   let index = findIndex(state.bookmarks.conferences, function(bookmark) {
