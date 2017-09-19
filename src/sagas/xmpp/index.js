@@ -6,6 +6,7 @@ import clientSaga from './client';
 import rooms from './rooms';
 import messages from './messages';
 import presence from './presence';
+import user from './user';
 
 function* runLoop(client) {
   let restarts = 0;
@@ -17,7 +18,8 @@ function* runLoop(client) {
             clientSaga(client),
             rooms(client),
             messages(client),
-            presence(client)
+            presence(client),
+            user(client)
         ]
     } catch (e) {
       console.error("Caught error in saga, restarting:");

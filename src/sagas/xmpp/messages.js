@@ -22,7 +22,13 @@ function* watchForMessages(client) {
       // add in msg id for rendering key
       msg.id = md5(msg.subject + msg.from.bare.toString() + msg.time);
       emit(msg);
-    }
+    },
+    'chat:state': (emit, msg) => {
+      console.log('CHAT STATE', msg)
+
+      // TODO outbound as below:
+      // client.sendMessage({ to: 'peer@example.com', type: 'chat', chatState: 'composing' })
+    },
   });
 
   yield takeEvery(channel, function* eachMessage(msg) {

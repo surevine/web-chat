@@ -17,6 +17,8 @@ import registerServiceWorker from './registerServiceWorker';
 
 import configureStore from "./store/configureStore";
 
+import 'react-select/dist/react-select.css';
+
 const store = configureStore({});
 window.store = store;
 

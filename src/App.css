@@ -44,6 +44,14 @@ body {
   color: #ffffff;
 }
 
+.UserInfo .Select-control {
+  width: 50px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  /* display: block; */
+}
+
 /* Sidebar */
 
 .Sidebar {
@@ -79,6 +87,7 @@ body {
   padding: 10px;
   text-decoration: none;
   color: #8190B0;
+  cursor: pointer;
 }
 
 .RoomList ul li a:hover {
@@ -98,7 +107,6 @@ body {
 
 .badge {
   float: right;
-  display: inline-block;
   min-width: 10px;
   padding: 3px 7px;
   font-size: 12px;

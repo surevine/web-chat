@@ -17,7 +17,21 @@ function* joinRoom(client) {
 
   yield takeLatest(JOIN_ROOM, function* joinRoom(action) {
 
-    yield client.joinRoom(action.payload.jid, action.payload.nickname);
+    yield client.joinRoom(action.payload.jid, action.payload.nickname, {
+      joinMuc: {
+        history: true
+      }
+    });
+
+  //   client.joinRoom('room@muc.example.com', 'User', {
+  //     status: 'This will be my status in the MUC',
+  //     joinMuc: {
+  //         password: 'hunter2',
+  //         history: {
+  //             maxstanzas: 20
+  //         }
+  //     }
+  // });
 
     // TODO handle if not successful?
     yield put(joinedRoom(action.payload.jid, action.payload.nickname));
