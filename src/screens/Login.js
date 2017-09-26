@@ -29,14 +29,16 @@ class Login extends React.Component {
         }
 
         return (
-        <div className="Home">
-            <h3>Login</h3>
+        <div className="Home Page">
+            <h2>Login</h2>
             <form className="form" onSubmit={this.handleSubmit}>
 
                 {this.props.error === AUTH_ERRORS.CREDENTIALS &&
                     <h3 style={{ color: "red" }}>OOPS: Looks like your login is incorrect</h3>}
 
-                <input ref={el => this._jid = el} name="jid" id="jid" placeholder="Enter JID" />
+                <label htmlFor="jid">Username</label>
+                <input ref={el => this._jid = el} type="text" name="jid" id="jid" placeholder="Username" />
+                <label htmlFor="password">Password</label>
                 <input ref={el => this._password = el} name="password" type="password" id="password" placeholder="Password" />
                 <input type="submit" value="Log in" />
             </form>

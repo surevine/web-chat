@@ -6,28 +6,36 @@ const constant = makeConstant("jchat/forms");
 // TODO understand how we will load forms - will it be all at once? one at a time?
 export const RECEIVED_FORM = constant("RECEIVED_FORM");
 
-export const receivedForms = (jid, forms) => ({
+export const LIST_FORMS = constant("LIST_FORMS");
+export const GET_FORM_TEMPLATE = constant("GET_FORM_TEMPLATE");
+export const SUBMIT_FORM = constant("SUBMIT_FORM");
+
+export const receivedForm = (form) => ({
   type: RECEIVED_FORM,
   payload: {
-      jid,
-      forms
+      form
   }
 });
 
-// TODO remove mock data
-const initialState = {
-    'whitesands@conference.localhost': {
-        jid: 'whitesands@conference.localhost',
-        forms: [
-            { id: 123 },
-            { id: 456 }
-        ]
-    }, 
-    'second@conference.localhost': {
-        jid: 'second@conference.localhost',
-        forms: []
-    }, 
-}
+export const listForms = () => ({
+    type: GET_FORM_TEMPLATE,
+    payload: {}
+});
+
+export const getFormTemplate = (node) => ({
+    type: GET_FORM_TEMPLATE,
+    payload: { node }
+});
+
+export const submitForm = (node, form) => ({
+    type: SUBMIT_FORM,
+    payload: {
+        node,
+        form
+    }
+  });
+
+const initialState = {};
 
 // reducer
 export default (state = initialState, action) => {
@@ -35,11 +43,11 @@ export default (state = initialState, action) => {
 
     case RECEIVED_FORM: {
         
-        const form = action.payload;
+        const form = action.payload.form;
         const peerJid = form.from.bare;
         const peer = state[peerJid] || {
-        jid: peerJid,
-        forms: []
+            jid: peerJid,
+            forms: []
         };
 
         if(state[peer.jid] && state[peer.jid].forms) {
@@ -50,8 +58,8 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 [peer.jid]: {
-                ...peer,
-                forms: uniqBy(currentForms, 'id')
+                    ...peer,
+                    forms: uniqBy(currentForms, 'id')
                 }
             };
 

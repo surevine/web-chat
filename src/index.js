@@ -10,6 +10,7 @@ import Login from './screens/Login';
 import Logout from './screens/Logout';
 import Main from './screens/Main';
 import Settings from './screens/Settings';
+import About from './screens/About';
 import Room from './screens/Room';
 
 import './index.css';
@@ -33,6 +34,7 @@ ReactDOM.render(
               
               <PrivateRoute path="/" exact={true} component={Main} />
               <PrivateRoute path="/settings" exact={true} component={Settings} />
+              <PrivateRoute path="/about" exact={true} component={About} />
               <PrivateRoute path="/room/:jid" component={Room} />
             </App>
 

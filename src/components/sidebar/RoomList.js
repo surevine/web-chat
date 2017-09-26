@@ -70,7 +70,7 @@ class RoomList extends React.Component {
                         .map(room => (
                         <li key={"bookmark-" + room.jid.bare}>
                             <a onClick={() => this.goToRoom(room.jid.bare)} className={(this.isRoomActive(room.jid.bare)) ? "active" : ""}>
-                                <span>#</span><span className="local">{room.jid.local}</span>
+                                <FontAwesome name='hashtag' /><span className="local">{room.jid.local}</span>
                                 { this.isRoomUnread(room.jid.bare) && (
                                     <span className="unread badge">{this.getRoomUnread(room.jid.bare)}</span>
                                 )}
@@ -105,7 +105,7 @@ class RoomList extends React.Component {
                         .map(roomJid => (
                         <li key={roomJid}>
                             <a onClick={() => this.goToRoom(roomJid)} className={(this.isRoomActive(roomJid)) ? "active" : ""}>
-                                <span>#</span><span className="local">{roomJid.substr(0, roomJid.indexOf('@'))}</span>
+                                <FontAwesome name='hashtag' /><span className="local">{roomJid.substr(0, roomJid.indexOf('@'))}</span>
                                 { this.isRoomUnread(roomJid) && (
                                     <span className="unread badge">{this.getRoomUnread(roomJid)}</span>
                                 )}
@@ -115,7 +115,9 @@ class RoomList extends React.Component {
                 </ul>
 
             ) : (
-                <div>Loading...</div>
+                <div>
+                    <p className="noRooms">You have not joined any rooms. <Link to='/'>Click here</Link> to join a room.</p>
+                </div>
             )}
 
         </div>

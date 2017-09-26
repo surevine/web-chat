@@ -17,6 +17,8 @@ export const HIDE_ROOM = constant("HIDE_ROOM");
 
 export const INCREMENT_UNREAD = constant("INCREMENT_UNREAD");
 
+export const SAVE_ROOM_DRAFT = constant("SAVE_ROOM_DRAFT");
+
 export const joinRoom = (jid, nickname) => ({
   type: JOIN_ROOM,
   payload: { jid, nickname }
@@ -27,9 +29,9 @@ export const joinedRoom = (jid, nickname) => ({
   payload: { jid, nickname }
 });
 
-export const leaveRoom = (jid, nickname) => ({
+export const leaveRoom = (jid) => ({
   type: LEAVE_ROOM,
-  payload: { jid, nickname }
+  payload: { jid }
 });
 
 export const leftRoom = (jid) => ({
@@ -61,6 +63,11 @@ export const incrementUnreadCount = (jid) => ({
   payload: { jid }
 });
 
+export const saveRoomDraft = (jid, msg) => ({
+  type: SAVE_ROOM_DRAFT,
+  payload: { jid, msg }
+});
+
 // reducer
 export default (state = {}, action) => {
   switch (action.type) {
@@ -76,6 +83,7 @@ export default (state = {}, action) => {
           topic: "",
           nickname: action.payload.nickname,
           isCurrent: false,
+          draft: '',
           unreadMessageCount: 0,
           joined: false
         }
@@ -172,6 +180,23 @@ export default (state = {}, action) => {
         [room.jid]: {
           ...room,
           unreadMessageCount: unreadCount
+        }
+      };
+
+    }
+
+    case SAVE_ROOM_DRAFT: {
+
+      const room = state[action.payload.jid];
+      if(!room || room.isCurrent) {
+        return state;
+      }
+
+      return {
+        ...state,
+        [room.jid]: {
+          ...room,
+          draft: action.payload.msg
         }
       };
 

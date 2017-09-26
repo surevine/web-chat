@@ -15,6 +15,7 @@ function setupClient() {
   });
 
   // client.on("raw:incoming", console.log);
+  // client.on("raw:outgoing", console.log);
 
   return client;
 }

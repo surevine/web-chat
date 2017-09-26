@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Link } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import ReactTooltip from 'react-tooltip';
 import Select from 'react-select';
@@ -23,7 +22,7 @@ class UserInfo extends React.Component {
     ];
 
     setPresence(presence) {
-        this.props.setPresence(presence, this.props.rooms);
+        this.props.setPresence(presence);
     }
 
     renderPresenceOption(option) {
@@ -48,34 +47,36 @@ class UserInfo extends React.Component {
         <div className="UserInfo">
 
             { this.props.client.authenticated && 
-                <div>
+                <div className="authenticated">
 
-                    <div className="presenceControl">
-                        <Select
-                            name="presence"
-                            value={this.props.user.presence.value}
-                            options={this.presenceOpts}
-                            onChange={this.setPresence.bind(this)}
-                            clearable={false}
-                            optionRenderer={this.renderPresenceOption}
-                            valueRenderer={this.renderPresenceValue}
-                        />
+                    <div className="user">
+
+                        <div className="presenceControl">
+                            <Select
+                                name="presence"
+                                value={this.props.user.presence.value}
+                                options={this.presenceOpts}
+                                onChange={this.setPresence.bind(this)}
+                                clearable={false}
+                                optionRenderer={this.renderPresenceOption}
+                                valueRenderer={this.renderPresenceValue}
+                            />
+
+                            {/* TODO have recent section which sets both presence and status */}
+
+                        </div>
+
+                        <div className="username">
+                            <p>{ this.props.client.jid.local }</p>
+                        </div>
+
+                        <div className="status">
+                            Set your status here...
+                            {/* https://kaivi.github.io/riek/ */}
+                        </div>
+
                     </div>
 
-                    <p>{ this.props.client.jid.local }</p>
-
-                    <div className="controls">
-                        <Link to={`/settings`}
-                            data-delay-show='100'
-                            data-tip="Settings">
-                            <FontAwesome name='cog' />
-                        </Link>
-                        <Link to={`/logout`}
-                            data-delay-show='100'
-                            data-tip="Sign out">
-                            <FontAwesome name='sign-out' />
-                        </Link>
-                    </div>
                 </div>
             }
 
@@ -87,13 +88,12 @@ class UserInfo extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   client: state.client,
-  user: state.user,
-  rooms: state.rooms
+  user: state.user
 });
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
-        setPresence: (presence, rooms) => dispatch(setPresence(presence, rooms)),
+        setPresence: (presence) => dispatch(setPresence(presence)),
     };
   };
 

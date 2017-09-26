@@ -18,19 +18,27 @@ class EnterRoomForm extends React.Component {
             nickname = this.props.client.jid.local;
         }
 
-        this.props.joinRoom(jid, nickname);
+        // TODO improve validation on jid
+        if(jid) {
+            this.props.joinRoom(jid, nickname);
 
-        // Navigate to room
-        history.push('/room/' + jid);
+            // Navigate to room
+            history.push('/room/' + jid);
+        }
+
     };
 
     render() {
         return (
         <div className="EnterRoomForm">
             <form className="form" onSubmit={this.handleSubmit}>
-            <input ref={el => this._roomJid = el} name="roomJid" id="roomJid" placeholder="Enter room JID" />
-                <input ref={el => this._nickname = el} name="nickname" id="nickname" placeholder="Nickname (optional)" />
-                <input type="submit" value="Join" />
+                <label htmlFor="roomJid">Room JID</label>
+                <input ref={el => this._roomJid = el} type="text" name="roomJid" id="roomJid" placeholder="Enter room JID" />
+                <label htmlFor="nickname">Nickname <span>(optional)</span></label>
+                <input ref={el => this._nickname = el} type="text" name="nickname" id="nickname" placeholder="Nickname" />
+                <label htmlFor="password">Password <span>(optional)</span></label>
+                <input ref={el => this._password = el} type="password" name="password" id="password" placeholder="Password" />
+                <input type="submit" value="Join Room" />
             </form>
         </div>
         );

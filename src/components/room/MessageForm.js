@@ -4,11 +4,31 @@ import { connect } from 'react-redux';
 import { getCurrentRoomJid } from '../../selectors';
 
 import { sendMessage } from '../../ducks/messages';
+import { saveRoomDraft } from '../../ducks/rooms';
 
 class MessageForm extends React.Component {
 
+    componentWillUpdate() {
+        this.saveDraft();
+    }
+
     componentDidUpdate() { 
         this._message.focus();
+
+        if(this.props.rooms[this.props.roomJid] &&
+            this.props.rooms[this.props.roomJid].draft !== '') {
+    
+            this._message.value = this.props.rooms[this.props.roomJid].draft;
+        }
+    }
+
+    componentWillUnmount() {
+        this.saveDraft();
+    }
+
+    saveDraft() {
+        this.props.saveRoomDraft(this.props.roomJid, this._message.value);
+        this._message.value = '';
     }
 
     handleSubmit = e => {
@@ -42,11 +62,13 @@ class MessageForm extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   roomJid: getCurrentRoomJid(state),
+  rooms: state.rooms
 });
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
     sendMessage: (msg) => dispatch(sendMessage(msg)),
+    saveRoomDraft: (jid, msg) => dispatch(saveRoomDraft(jid, msg)),
   };
 };
 

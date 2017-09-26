@@ -34,7 +34,7 @@ class ParticipantList extends React.Component {
         return (
         <div className="ParticipantList">
 
-            <h2>Room members</h2>
+            <h2>Members</h2>
 
             { this.membersContainRole('moderator') && (
                 <div className="roleGroup">

@@ -165,7 +165,7 @@ class Room extends React.Component {
 
     leaveRoom = e => {
         e.preventDefault();
-        this.props.leaveRoom(this.state.roomJid, this.props.nickname);
+        this.props.leaveRoom(this.state.roomJid);
         history.push('/');
     }
 
@@ -188,7 +188,7 @@ const mapDispatchToProps = (dispatch, props) => {
     showRoom: (jid, nickname) => dispatch(showRoom(jid, nickname)),
     hideRoom: (jid) => dispatch(hideRoom(jid)),
     joinRoom: (jid, nickname) => dispatch(joinRoom(jid, nickname)),
-    leaveRoom: (jid, nickname) => dispatch(leaveRoom(jid)),
+    leaveRoom: (jid) => dispatch(leaveRoom(jid)),
     receivedMessage: (msg) => dispatch(receivedMessage(msg)),
     topicUpdated: (msg) => dispatch(topicUpdated(msg)),
     receivedPresenceAvailable: (presence) => dispatch(receivedPresenceAvailable(presence)),

@@ -3,6 +3,7 @@ import setupClient from "./setupClient";
 import auth from "./auth";
 import bookmarks from './bookmarks';
 import clientSaga from './client';
+import forms from './forms';
 import rooms from './rooms';
 import messages from './messages';
 import presence from './presence';
@@ -16,6 +17,7 @@ function* runLoop(client) {
         yield [
             bookmarks(client),
             clientSaga(client),
+            forms(client),
             rooms(client),
             messages(client),
             presence(client),

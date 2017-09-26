@@ -8,10 +8,16 @@ import {
   JOINED_ROOM,
   joinedRoom,
   LEAVE_ROOM,
-  leftRoom
+  leftRoom,
+  topicUpdated
 } from "../../ducks/rooms";
 import { setRecentRooms } from "../../ducks/local";
-import { topicUpdated } from "../../ducks/rooms";
+
+
+    // THIS IS HOW WE LOOK UP ROOMS!
+    // client.getDiscoItems('conference.localhost', '').then(response => {
+    //   console.log(response.discoItems);
+    // });
 
 function* joinRoom(client) {
 
@@ -44,7 +50,7 @@ function* leaveRoom(client) {
   
     yield takeLatest(LEAVE_ROOM, function* leaveRoom(action) {
   
-      yield client.leaveRoom(action.payload.jid, action.payload.nickname);
+      yield client.leaveRoom(action.payload.jid);
   
       // TODO handle if not successful?
       yield put(leftRoom(action.payload.jid));
@@ -88,7 +94,7 @@ function* watchForTopic(client) {
       }
   
     });
-  }
+}
 
 // TODO support joining multiple rooms...
 export default function*(client) {
