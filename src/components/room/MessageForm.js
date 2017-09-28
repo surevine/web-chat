@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import FontAwesome from 'react-fontawesome';
 
 import { getCurrentRoomJid } from '../../selectors';
 
 import { sendMessage } from '../../ducks/messages';
 import { saveRoomDraft } from '../../ducks/rooms';
+
+import SendFormControl from './SendFormControl';
 
 class MessageForm extends React.Component {
 
@@ -54,6 +57,9 @@ class MessageForm extends React.Component {
             <form className="form" onSubmit={this.handleSubmit} autoComplete="off">
                 <input ref={el => this._message = el} name="message" id="sendMessage" placeholder="Send a message" />
             </form>
+
+            <SendFormControl></SendFormControl>
+            
         </div>
         );
     }

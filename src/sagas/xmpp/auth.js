@@ -12,6 +12,7 @@ import {
   authenticated
 } from "../../ducks/client";
 import { getBookmarks } from "../../ducks/bookmarks";
+import { subscribeToFormNodes } from "../../ducks/forms";
 import deserializeWithBuffers from "../../lib/deserialize-with-buffers";
 
 import { makeChannel } from "../_helpers";
@@ -64,6 +65,9 @@ function* tryConnect(client, initialCredentials) {
       yield put(authenticated(client.jid));
       errorChannel.close();
 
+      // Bootstrap other XMPP actions once logged in
+      // 
+      yield put(subscribeToFormNodes());
       yield put(getBookmarks());
 
       if (saveOnSuccess) {

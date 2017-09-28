@@ -48,3 +48,19 @@ export const isRoomBookmarked = (state, { roomJid }) => {
   return false;
 
 }
+
+export const getTemplateOptions = (state) => {
+
+  let opts = [];
+
+  // TODO change this to use ID of the template from the server...
+  state.forms.templates.forEach((template, index) => {
+    opts.push({
+      label: template.title,
+      value: index
+    })
+  });
+
+  return opts;
+
+}

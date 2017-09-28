@@ -234,26 +234,50 @@ input[type='password'] {
 
 input[type='text']:focus,
 input[type='password']:focus {
-  border-color: #0084FF;
+  border-color: #007eff;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
 }
 
-input[type='submit'] {
-  padding: 12px;
+input[type='submit'],
+.submitForm {
+  padding: 12px 15px;
   font-size: 16px;
   border-radius: 3px;
-  background-color: #0084FF;
+  background-color: #007eff;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
   color: #ffffff;
   border: none;
   cursor: pointer;
   outline: none;
 }
 
-input[type='submit']:hover {
+input[type='submit']:hover,
+.submitForm:hover {
   box-shadow: inset 0 -3px rgba(0,0,0,.25)
 }
 
-input[type='submit']:active {
+input[type='submit']:active,
+.submitForm:active {
   box-shadow: none;
+}
+
+.cancelForm {
+  margin-right: 10px;
+  padding: 11px 15px;
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: #f3f3f3;
+  color: #666;
+  border: solid 1px #ccc;
+  cursor: pointer;
+  outline: none;
+}
+
+.cancelForm:hover {
+  background-color: #fff;
+  color: #0084FF;
 }
 
 /* Rooms */
@@ -453,4 +477,62 @@ input[type='submit']:active {
 .MessageForm #sendMessage:focus {
   border: solid 2px #999;
   outline: none;
+}
+
+/* Send Form */
+
+.Modal {
+  position: absolute;
+  top: 50px;
+  left: 25%;
+  right: 25%;
+  bottom: 50px;
+  background-color: #fff;
+  border-radius: 5px;
+  outline: none;
+  overflow-y: scroll;
+  -webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.25);
+  box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.25);
+}
+
+.Modal .header {
+  display: block;
+  padding: 20px 15px;
+  background-color: #eee;
+}
+
+.Modal .header h3 {
+  margin: 0;
+}
+
+.Modal .content {
+  min-height: 300px;
+  padding: 20px;
+  overflow-y: scroll;
+}
+
+.Modal .controls {
+  float: right;
+}
+
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.15);
+}
+
+.closeModal {
+  float: right;
+}
+
+.cancelForm {
+
+}
+
+.submitForm {
+
 }

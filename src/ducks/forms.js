@@ -3,12 +3,32 @@ import { makeConstant } from "./_helpers";
 
 const constant = makeConstant("jchat/forms");
 
-// TODO understand how we will load forms - will it be all at once? one at a time?
-export const RECEIVED_FORM = constant("RECEIVED_FORM");
+export const SUBSCRIBE_TO_FORMS = constant("SUBSCRIBE_TO_FORMS");
+export const LOADED_FORM_NODES = constant("LOADED_FORM_NODES");
+export const LOAD_FORM_TEMPLATES = constant("LOAD_FORM_TEMPLATES");
 
-export const LIST_FORMS = constant("LIST_FORMS");
-export const GET_FORM_TEMPLATE = constant("GET_FORM_TEMPLATE");
+export const RECEIVED_FORM = constant("RECEIVED_FORM");
+export const RECEIVED_FORM_TEMPLATE = constant("RECEIVED_FORM_TEMPLATE");
+
 export const SUBMIT_FORM = constant("SUBMIT_FORM");
+
+export const subscribeToFormNodes = () => ({
+    type: SUBSCRIBE_TO_FORMS,
+    payload: {}
+});
+
+export const loadedFormNodes = (templateNodes, submissionNodes) => ({
+    type: LOADED_FORM_NODES,
+    payload: {
+        templateNodes,
+        submissionNodes
+    }
+});
+
+export const loadFormTemplates = () => ({
+    type: LOAD_FORM_TEMPLATES,
+    payload: {}
+});
 
 export const receivedForm = (form) => ({
   type: RECEIVED_FORM,
@@ -17,14 +37,11 @@ export const receivedForm = (form) => ({
   }
 });
 
-export const listForms = () => ({
-    type: GET_FORM_TEMPLATE,
-    payload: {}
-});
-
-export const getFormTemplate = (node) => ({
-    type: GET_FORM_TEMPLATE,
-    payload: { node }
+export const receivedFormTemplate = (template) => ({
+type: RECEIVED_FORM_TEMPLATE,
+payload: {
+    template
+}
 });
 
 export const submitForm = (node, form) => ({
@@ -35,11 +52,43 @@ export const submitForm = (node, form) => ({
     }
   });
 
-const initialState = {};
+const initialState = {
+    nodes: {
+        templateNodes: [],
+        submissionNodes: []
+    },
+    templates: []
+};
 
 // reducer
 export default (state = initialState, action) => {
   switch (action.type) {
+
+    case LOADED_FORM_NODES: {
+
+        return {
+            ...state,
+            nodes: {
+                templateNodes: action.payload.templateNodes,
+                submissionNodes: action.payload.submissionNodes
+            }
+        };
+
+    }
+
+    case RECEIVED_FORM_TEMPLATE: {
+
+        let currentTemplates = state.templates;
+
+        return {
+            ...state,
+            templates: [
+                ...currentTemplates,
+                action.payload.template
+            ]
+        };
+
+    }
 
     case RECEIVED_FORM: {
         
