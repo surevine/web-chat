@@ -14,10 +14,12 @@ class SelectField extends React.Component {
 
         let value = "";
 
-        if(this.props.multi) {
-            value = options.map(option => option.value);
-        } else {
-            value = options.value
+        if(options) {
+            if(this.props.multi) {
+                value = options.map(option => option.value);
+            } else {
+                value = options.value
+            }
         }
 
         this.props.onChange(this.props.name, value);

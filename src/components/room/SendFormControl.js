@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import ReactModal from 'react-modal';
+import ReactTooltip from 'react-tooltip';
 import Select from 'react-select';
 import forIn from 'lodash/forIn';
 
@@ -139,9 +140,10 @@ class SendFormControl extends React.Component {
 
         return (
         <div className="SendFormControl">
-            <a className="sendForm" onClick={this.handleOpenModal}>
+            <a className="sendForm" onClick={this.handleOpenModal} data-tip="Send Form">
                 <FontAwesome name='file-text' className="icon" />
             </a>
+            <ReactTooltip effect="solid" delayShow={300} offset={{right: 2}} />
 
             <ReactModal 
                 isOpen={this.state.showModal}
@@ -155,13 +157,13 @@ class SendFormControl extends React.Component {
                     <a className="closeModal" onClick={this.handleCloseModal}>
                         <FontAwesome name='close' />
                     </a>
-                    <h3>Send Form to Room</h3>
+                    <h3>Send Form to {this.props.roomJid}</h3>
                 </div>
 
                 <div className="content">
 
                     {/* Conditionally render these instructions only when not selected! */}
-                    <h3>Select Form</h3>
+                    <h3>Select Form Template</h3>
                     <Select
                         name="template"
                         value={this.state.selectedTemplate}

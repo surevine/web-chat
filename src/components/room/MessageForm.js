@@ -54,11 +54,12 @@ class MessageForm extends React.Component {
     render() {
         return (
         <div className="MessageForm">
-            <form className="form" onSubmit={this.handleSubmit} autoComplete="off">
-                <input ref={el => this._message = el} name="message" id="sendMessage" placeholder="Send a message" />
-            </form>
 
             <SendFormControl></SendFormControl>
+
+            <form className="form message" onSubmit={this.handleSubmit} autoComplete="off">
+                <input ref={el => this._message = el} name="message" id="sendMessage" placeholder="Send a message" />
+            </form>
             
         </div>
         );
