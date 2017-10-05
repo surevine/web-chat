@@ -21,35 +21,34 @@ class Sidebar extends React.Component {
         return (
         <div className="Sidebar">
 
-
             {this.props.client.authenticated ? (
 
-                <div>
+                <div className="sidebarWrapper">
 
-                <div className="App-header">
-                    <UserInfo />
-                </div>
-
-                <RoomList />
-
-                <div className="footer">
-
-                    <div className="controls">
-                        <Link to={`/settings`}>
-                            <FontAwesome name='cog' className="icon" />
-                            Settings
-                        </Link>
-                        <Link to={`/about`}>
-                            <FontAwesome name='info-circle' className="icon" />
-                            About
-                        </Link>
-                        <Link to={`/logout`}>
-                            <FontAwesome name='sign-out' className="icon" />
-                            Sign out
-                        </Link>
+                    <div className="App-header">
+                        <UserInfo />
                     </div>
 
-                </div>
+                    <RoomList />
+
+                    <div className="footer">
+
+                        <div className="controls">
+                            <Link to={`/settings`}>
+                                <FontAwesome name='cog' className="icon" />
+                                Settings
+                            </Link>
+                            <Link to={`/about`}>
+                                <FontAwesome name='info-circle' className="icon" />
+                                About
+                            </Link>
+                            <Link to={`/logout`}>
+                                <FontAwesome name='sign-out' className="icon" />
+                                Sign out
+                            </Link>
+                        </div>
+
+                    </div>
 
                 </div>
 

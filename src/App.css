@@ -90,12 +90,16 @@ body {
 /* Sidebar */
 
 .Sidebar {
-  display: grid;
-  grid-template-rows: 70px auto 110px;
   grid-column: 1;
   background-color: #262E3E;
   user-select: none;
   overflow-y: scroll;
+}
+
+.sidebarWrapper {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 70px auto 110px;
 }
 
 .RoomList {

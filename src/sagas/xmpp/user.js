@@ -15,7 +15,6 @@ function* sendPresenceToRooms(client, rooms, presence) {
     });
 }
 
-
 function* setPresence(client) {
 
     yield takeLatest(SET_PRESENCE, function* setPresence(action) {
