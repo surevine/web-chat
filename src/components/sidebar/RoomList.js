@@ -58,31 +58,36 @@ class RoomList extends React.Component {
     };
 
     render() {
-        
+
+        let rooms = Object.keys(this.props.rooms)
+                    .filter(roomJid => {
+                        return !this.isRoomBookmarked(roomJid)
+                    });
+                    
         return (
         <div className="RoomList">
-            <h3>Bookmarked Rooms</h3>
-            
-            { this.props.bookmarks.conferences ? (
-                <ul>
-                    { this.props.bookmarks.conferences
-                        .sort((a, b) => a.jid.bare > b.jid.bare)
-                        .map(room => (
-                        <li key={"bookmark-" + room.jid.bare}>
-                            <a onClick={() => this.goToRoom(room.jid.bare)} className={(this.isRoomActive(room.jid.bare)) ? "active" : ""}>
-                                <FontAwesome name='hashtag' /><span className="local">{room.jid.local}</span>
-                                { this.isRoomUnread(room.jid.bare) && (
-                                    <span className="unread badge">{this.getRoomUnread(room.jid.bare)}</span>
-                                )}
-                                {/* <span className="domain">@{room.jid.domain}</span> */}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
 
-            ) : (
-                <div>Loading...</div>
-            )}
+            
+            { this.props.bookmarks.conferences && this.props.bookmarks.conferences.length ? (
+                <div>
+                    <h3>Bookmarked Rooms</h3>
+                    <ul>
+                        { this.props.bookmarks.conferences
+                            .sort((a, b) => a.jid.bare > b.jid.bare)
+                            .map(room => (
+                            <li key={"bookmark-" + room.jid.bare}>
+                                <a onClick={() => this.goToRoom(room.jid.bare)} className={(this.isRoomActive(room.jid.bare)) ? "active" : ""}>
+                                    <FontAwesome name='hashtag' /><span className="local">{room.jid.local}</span>
+                                    { this.isRoomUnread(room.jid.bare) && (
+                                        <span className="unread badge">{this.getRoomUnread(room.jid.bare)}</span>
+                                    )}
+                                    {/* <span className="domain">@{room.jid.domain}</span> */}
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ) : ("")}
 
             <h3>Rooms</h3>
 
@@ -95,12 +100,9 @@ class RoomList extends React.Component {
 
             {/* TODO DRY... */}
 
-            { this.props.rooms ? (
+            { this.props.rooms && rooms.length ? (
                 <ul>
-                    { Object.keys(this.props.rooms)
-                        .filter(roomJid => {
-                            return !this.isRoomBookmarked(roomJid)
-                        })
+                    { rooms
                         .sort((a, b) => a > b)
                         .map(roomJid => (
                         <li key={roomJid}>
@@ -116,7 +118,7 @@ class RoomList extends React.Component {
 
             ) : (
                 <div>
-                    <p className="noRooms">You have not joined any rooms. <Link to='/'>Click here</Link> to join a room.</p>
+                    <p className="noRooms">You have not joined any rooms. <Link to='/'>Join a room</Link> to begin communicating.</p>
                 </div>
             )}
 

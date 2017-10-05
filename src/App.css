@@ -161,8 +161,24 @@ body {
 
 .RoomList .joinRoom {
   float: right;
-  margin-top: -28px;
+  margin-top: -30px;
+  font-size: 22px;
 }
+
+.RoomList .noRooms {
+  margin: 0;
+  padding: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #8190B0;
+}
+
+.RoomList .noRooms a {
+  color: white;
+  cursor: pointer;
+}
+
+/*  */
 
 .main {
   display: grid;
@@ -577,7 +593,7 @@ form p.hint {
 
 .MessageForm {
   grid-row: 2;
-  padding: 0 10px;
+  padding: 0 10px 0 18px;
   height: 70px;
 
   display: grid;
