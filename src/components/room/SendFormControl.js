@@ -320,10 +320,10 @@ class SendFormControl extends React.Component {
                     )}
 
                     <div className="controls">
-                        <a className="cancelForm" onClick={this.handleCloseModal}>
+                        <a className="cancelForm btn" onClick={this.handleCloseModal}>
                             Cancel
                         </a>
-                        <a className="submitForm" onClick={this.handleFormSubmit.bind(this)}>
+                        <a className="primary-btn" onClick={this.handleFormSubmit.bind(this)}>
                             Send form
                         </a>
                     </div>

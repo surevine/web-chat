@@ -70,7 +70,6 @@ body {
   margin: 14px 0;
 }
 
-
 .UserInfo .Select-control {
   width: 50px;
   margin: 5px;
@@ -186,7 +185,7 @@ body {
   cursor: pointer;
 }
 
-/*  */
+/* Main UI */
 
 .main {
 
@@ -270,38 +269,8 @@ textarea:focus {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
 }
 
-input[type='submit'],
-.submitForm {
-  padding: 12px 15px;
-  font-size: 16px;
-  border-radius: 3px;
-  background-color: #007eff;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
-  outline: none;
-}
-
-input[type='submit']:hover,
-.submitForm:hover {
-  box-shadow: inset 0 -3px rgba(0,0,0,.25)
-}
-
-input[type='submit']:active,
-.submitForm:active {
-  box-shadow: none;
-}
-
 .cancelForm {
   margin-right: 10px;
-  padding: 11px 15px;
-  font-size: 16px;
-  border-radius: 3px;
-  background-color: #f3f3f3;
-  color: #666;
-  border: solid 1px #ccc;
-  cursor: pointer;
-  outline: none;
 }
 
 .cancelForm:hover {
@@ -470,8 +439,7 @@ form p.hint {
 }
 
 .Message .chat .author,
-.Message .form .author
- {
+.Message .form .author {
   font-weight: 700;
 }
 
@@ -497,29 +465,52 @@ form p.hint {
   color: #999;
 }
 
-.Message .form {
-
-}
-
-.Message .form .formPreview {
+.FormPreview {
   width: 80%;
   min-height: 36px;
   padding: 20px;
   margin: 20px 10%;
+  background-color: #fefefe;
   border: solid 1px #ccc;
   border-radius: 5px;
-
 }
 
-.Message .form .formPreview .icon {
+.FormPreview time {
+  margin-left: 0;
+}
+
+.FormPreview .icon {
   font-size: 36px;
   float: left;
   margin-right: 20px;
 }
 
-.Message .form .formPreview .reference {
+.FormPreview .reference {
   font-weight: 700;
   margin-top: 0;
+}
+
+.FormPreview a {
+  cursor: pointer;
+}
+
+.FormPreview .actions {
+  float: right;
+  margin-top: -12px;
+  opacity: 0;
+}
+
+.FormPreview:hover .actions {
+  opacity: 1;
+}
+
+.FormPreview .actions a {
+  margin-left: 10px;
+}
+
+.FormPreview .raw {
+  line-height: 20px;
+  font-family: monospace;
 }
 
 /* Participants List */
@@ -671,7 +662,7 @@ form p.hint {
 .Modal .header {
   display: block;
   padding: 20px 15px;
-  background-color: #eee;
+  background-color: #f0f0f0;
 }
 
 .Modal .header h3 {
@@ -705,10 +696,43 @@ form p.hint {
   cursor: pointer;
 }
 
-.cancelForm {
+/* Misc */
 
+.btn {
+  padding: 11px 15px;
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: #f3f3f3;
+  color: #666;
+  border: solid 1px #ccc;
+  cursor: pointer;
+  outline: none;
+  user-select: none;
 }
 
-.submitForm {
+.btn:hover {
+  background-color: #fff;
+  color: #0084FF;
+}
 
+input[type='submit'],
+.primary-btn {
+  padding: 12px 15px;
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: #007eff;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+  
+input[type='submit']:hover,
+.primary-btn:hover {
+  box-shadow: inset 0 -3px rgba(0,0,0,.25)
+}
+
+input[type='submit']:active,
+.primary-btn:active {
+  box-shadow: none;
 }
