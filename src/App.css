@@ -21,6 +21,10 @@ body {
   height: 100vh;
 }
 
+.App.noauth {
+  grid-template-columns: 0% 100%;
+}
+
 .App-header {
   grid-row: 1;
   height: 70px;
@@ -181,6 +185,7 @@ body {
 /*  */
 
 .main {
+
   display: grid;
   grid-template-rows: 70px auto;
 

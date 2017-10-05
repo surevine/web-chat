@@ -14,37 +14,52 @@ class Sidebar extends React.Component {
 
     render() {
 
-        if(!this.props.client.authenticated) {
-            return null;
-        }
+        // if(!this.props.client.authenticated) {
+        //     return null;
+        // }
 
         return (
         <div className="Sidebar">
 
-            <div className="App-header">
-                <UserInfo />
-            </div>
 
-            <RoomList />
+            {this.props.client.authenticated ? (
 
-            <div className="footer">
+                <div>
 
-                <div className="controls">
-                    <Link to={`/settings`}>
-                        <FontAwesome name='cog' className="icon" />
-                        Settings
-                    </Link>
-                    <Link to={`/about`}>
-                        <FontAwesome name='info-circle' className="icon" />
-                        About
-                    </Link>
-                    <Link to={`/logout`}>
-                        <FontAwesome name='sign-out' className="icon" />
-                        Sign out
-                    </Link>
+                <div className="App-header">
+                    <UserInfo />
                 </div>
 
-            </div>
+                <RoomList />
+
+                <div className="footer">
+
+                    <div className="controls">
+                        <Link to={`/settings`}>
+                            <FontAwesome name='cog' className="icon" />
+                            Settings
+                        </Link>
+                        <Link to={`/about`}>
+                            <FontAwesome name='info-circle' className="icon" />
+                            About
+                        </Link>
+                        <Link to={`/logout`}>
+                            <FontAwesome name='sign-out' className="icon" />
+                            Sign out
+                        </Link>
+                    </div>
+
+                </div>
+
+                </div>
+
+            ) : (
+
+                null
+
+            )}
+
+
 
         </div>
         );
