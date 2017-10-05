@@ -33,6 +33,10 @@ body {
   float: left;
 }
 
+.clearfix {
+  clear: both;
+}
+
 /* User info */
 
 .UserInfo .authenticated {
@@ -313,7 +317,7 @@ form p.hint {
 }
 
 .Room.sidebar {
-  grid-template-columns: 65% 35%;
+  grid-template-columns: 75% 25%;
 }
 
 #roomHeader {
@@ -365,22 +369,52 @@ form p.hint {
 
 /* Room Sidebar */
 
-.roomSidebar {
-  grid-column: 2;
+.RoomSidebar {
 
-  padding: 10px 20px;
+  display: grid;
+  grid-template-rows: 71px auto;
+
   overflow-y: scroll;
 
+  grid-column: 2;
+  overflow-y: scroll;
   background-color: #ffffff;
+  color: #333;
   border-left: solid 1px #D7D7D7;
-
   user-select: none;
+}
+
+.sidebarHeader {
+  grid-row: 1;
+  height: 30px;
+  padding: 20px;
+  border-bottom: solid 1px #D7D7D7;
+}
+
+.sidebarHeader h2 {
+  margin: 0;
+  float: left;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.sidebarContent {
+  grid-row: 2;
+  padding: 10px 20px;
+  clear: both;
+  overflow-y: scroll;
 }
 
 .closeSidebar {
   float: right;
-  font-size: 16px;
+  font-size: 20px;
+  line-height: 30px;
   cursor: pointer;
+  color: #777;
+}
+
+.closeSidebar:hover {
+  color: #333;
 }
 
 /* Messages */
@@ -468,6 +502,22 @@ form p.hint {
 .ParticipantList ul {
   list-style-type: none;
   margin: 0;
+  padding: 0;
+  cursor: default;
+  border-radius: 3px;
+}
+
+.ParticipantList ul li {
+  font-size: 14px;
+  padding: 8px;
+}
+
+.ParticipantList ul li:hover {
+  background-color: #eee;
+}
+
+.ParticipantList h4 {
+  margin-bottom: 10px;
 }
 
 .presenceIcon {
@@ -478,6 +528,50 @@ form p.hint {
 .presenceIcon.available { color: #5CD068; }
 .presenceIcon.dnd { color: red; }
 .presenceIcon.away { color: orange; }
+
+/* Forms List */
+
+.FormsList .formSubmission {
+  border: solid 1px #D7D7D7;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.formSubmission .description {
+  margin-left: 50px;
+}
+
+.formSubmission .title {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0 0 5px 0;
+}
+
+.formSubmission .meta {
+  margin: 0;
+  font-size: 14px;
+}
+
+.formSubmission .author {
+  font-weight: bold;
+  margin-right: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.formSubmission .date {
+  font-size: 12px;
+  color: #999
+}
+
+.formSubmission .formIcon {
+  float: left;
+  font-size: 36px;
+  margin: 0 10px 0 0;
+}
 
 /* Message Form */
 

@@ -36,8 +36,8 @@ class RoomList extends React.Component {
         if(this.props.rooms[jid]) {
 
             // TODO make this limit configurable
-            if(this.props.rooms[jid].unreadMessageCount > 10) {
-                return "10+";
+            if(this.props.rooms[jid].unreadMessageCount > 99) {
+                return "99+";
             }
 
             return this.props.rooms[jid].unreadMessageCount

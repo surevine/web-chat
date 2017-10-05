@@ -175,7 +175,6 @@ class SendFormControl extends React.Component {
 
                         <div className="formWrapper">
 
-                            <h4>{template.title}</h4>
                             <p>{template.instructions[0]}</p>
 
                             <form className="formTemplate">
@@ -203,7 +202,7 @@ class SendFormControl extends React.Component {
                                         return (
                                             <div className="fieldgroup" key={field.name}>
                                                 <label htmlFor={field.name}>{field.label}</label>
-                                                <input type="text" {...fieldProps} />
+                                                <input type="text" autoComplete="off" {...fieldProps} />
                                                 <p className="hint">{field.desc}</p>
                                             </div>
                                         )
@@ -220,7 +219,7 @@ class SendFormControl extends React.Component {
                                         return (
                                             <div className="fieldgroup" key={field.name}>
                                                 <label htmlFor={field.name}>{field.label}</label>
-                                                <textarea {...fieldProps}></textarea>
+                                                <textarea autoComplete="off" {...fieldProps}></textarea>
                                                 <p className="hint">{field.desc}</p>
                                             </div>
                                         )
@@ -237,7 +236,7 @@ class SendFormControl extends React.Component {
                                         return (
                                             <div className="fieldgroup" key={field.name}>
                                                 <label htmlFor={field.name}>{field.label}</label>
-                                                <input type="password" {...fieldProps} />
+                                                <input type="password" autoComplete="off" {...fieldProps} />
                                                 <p className="hint">{field.desc}</p>
                                             </div>
                                         )
@@ -283,7 +282,7 @@ class SendFormControl extends React.Component {
                                         return (
                                             <div className="fieldgroup" key={field.name}>
                                                 <label htmlFor={field.name}>{field.label}</label>
-                                                <input type="text" name={field.name} id={field.name} />
+                                                <input type="text" autoComplete="off" name={field.name} id={field.name} />
                                                 <p className="hint">{field.desc}</p>
                                             </div>
                                         )
@@ -293,7 +292,7 @@ class SendFormControl extends React.Component {
                                         return (
                                             <div className="fieldgroup" key={field.name}>
                                                 <label htmlFor={field.name}>{field.label}</label>
-                                                <textarea name={field.name} id={field.name}></textarea>
+                                                <textarea autoComplete="off" name={field.name} id={field.name}></textarea>
                                                 <p className="hint">{field.desc}</p>
                                             </div>
                                         )

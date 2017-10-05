@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from "react-redux";
-import FontAwesome from 'react-fontawesome';
 
 import history from '../history';
 
@@ -17,9 +16,9 @@ import {
     isRoomBookmarked } from '../selectors';
 
 import RoomHeader from '../components/room/RoomHeader';
+import RoomSidebar from '../components/room/RoomSidebar';
 import MessageList from '../components/room/MessageList';
-import ParticipantList from '../components/room/ParticipantList';
-import FormsList from '../components/room/FormsList';
+
 import MessageForm from '../components/room/MessageForm';
 
 class Room extends React.Component {
@@ -79,27 +78,27 @@ class Room extends React.Component {
 
             <div className="roomContent">
 
-                <MessageList currentNickname={this.state.nickname} messages={this.props.messages}></MessageList>
+                { this.props.messages && (
+
+                    <MessageList currentNickname={this.state.nickname} messages={this.props.messages}></MessageList>
+
+                )}
 
                 <MessageForm roomJid={this.props.room.jid}></MessageForm>
 
+
             </div>
 
+
             { this.state.showRoomSidebar && (
-                <div className="roomSidebar">
 
-                    <a className="closeSidebar" onClick={this.hideSidebar}>
-                        <FontAwesome name='close' />
-                    </a>
+                <RoomSidebar 
+                    hideSidebar={this.hideSidebar}
+                    showParticipantsList={this.state.showParticipantsList}
+                    showFormsList={this.state.showFormsList}
+                    members={this.props.members}
+                    forms={this.props.forms} />
 
-                    { this.state.showParticipantsList && (
-                        <ParticipantList members={this.props.members}></ParticipantList>
-                    )}
-
-                    { this.state.showFormsList && (
-                        <FormsList forms={this.props.forms}></FormsList>
-                    )}
-                </div>
                 )}
             
         </div>

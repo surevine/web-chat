@@ -1,6 +1,7 @@
 import React from 'react';
 import find from 'lodash/find';
 import Moment from 'react-moment';
+import FontAwesome from 'react-fontawesome';
 
 class FormsList extends React.Component {
 
@@ -15,14 +16,21 @@ class FormsList extends React.Component {
         return (
         <div className="FormsList">
 
-            <h2>Form Submissions</h2>
-
             { this.props.forms ? (
                 <div>
-                    { this.props.forms.map(form => (
-                        <div key={form.id}>
-                            <p>{form.form.fields[0].value}</p>
-                            <Moment format="Do MMMM YYYY, h:mm:ss a">{this.getFormUpdated(form)}</Moment>
+                    { this.props.forms
+                        .sort((a, b) => this.getFormUpdated(a) < this.getFormUpdated(b))
+                        .map(form => (
+                        <div className="formSubmission" key={form.id}>
+                            <FontAwesome name='file-text-o' className="formIcon" />
+                            <div className="description">
+                                <h5 className="title">{form.form.fields[0].value}</h5>
+                                <p className="meta">
+                                    <span className="author">{form.from.resource}</span>
+                                    <Moment className="date" format="D/M/YYYY, HH:mm">{this.getFormUpdated(form)}</Moment>
+                                </p>
+                            </div>
+                            <div className="clearfix"></div>
                         </div>
                     ))}
                 </div>
