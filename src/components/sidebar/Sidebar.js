@@ -14,9 +14,9 @@ class Sidebar extends React.Component {
 
     render() {
 
-        // if(!this.props.client.authenticated) {
-        //     return null;
-        // }
+        if(!this.props.client.authenticated) {
+            return null;
+        }
 
         return (
         <div className="Sidebar">
@@ -30,21 +30,15 @@ class Sidebar extends React.Component {
             <div className="footer">
 
                 <div className="controls">
-                    <Link to={`/settings`}
-                        data-delay-show='100'
-                        data-tip="Settings">
+                    <Link to={`/settings`}>
                         <FontAwesome name='cog' className="icon" />
                         Settings
                     </Link>
-                    <Link to={`/about`}
-                        data-delay-show='100'
-                        data-tip="About">
+                    <Link to={`/about`}>
                         <FontAwesome name='info-circle' className="icon" />
                         About
                     </Link>
-                    <Link to={`/logout`}
-                        data-delay-show='100'
-                        data-tip="Sign out">
+                    <Link to={`/logout`}>
                         <FontAwesome name='sign-out' className="icon" />
                         Sign out
                     </Link>
