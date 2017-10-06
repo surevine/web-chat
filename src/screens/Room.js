@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
+import Spinner from 'react-spinkit';
 
 import history from '../history';
 
@@ -78,14 +79,17 @@ class Room extends React.Component {
 
             <div className="roomContent">
 
-                { this.props.messages && (
+            { (this.props.messages && !this.props.messages.length) ? (
 
-                    <MessageList currentNickname={this.state.nickname} messages={this.props.messages}></MessageList>
+                <Spinner className="loading" name="folding-cube" color="#262E3E"/>
 
-                )}
+            ) : (
 
-                <MessageForm roomJid={this.props.room.jid}></MessageForm>
+                <MessageList currentNickname={this.state.nickname} messages={this.props.messages}></MessageList>
 
+            )}
+
+            <MessageForm roomJid={this.props.room.jid}></MessageForm>
 
             </div>
 

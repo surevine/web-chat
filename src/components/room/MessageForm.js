@@ -4,7 +4,6 @@ import FontAwesome from 'react-fontawesome';
 import TextareaAutosize from 'react-autosize-textarea';
 
 import { getCurrentRoomJid } from '../../selectors';
-
 import { sendMessage } from '../../ducks/messages';
 import { saveRoomDraft } from '../../ducks/rooms';
 
@@ -19,10 +18,6 @@ class MessageForm extends React.Component {
         };
     }
 
-    componentDidMount() {
-        this.textarea.focus();
-    }
-
     componentWillUpdate(nextProps, nextState) {
         if(nextProps.roomJid !== this.props.roomJid) {
             this.saveDraft();
@@ -31,6 +26,7 @@ class MessageForm extends React.Component {
 
     componentDidUpdate(prevProps, prevState) { 
         if(prevProps.roomJid !== this.props.roomJid) {
+            this.textarea.focus();
             if(this.props.rooms[this.props.roomJid] &&
                 this.props.rooms[this.props.roomJid].draft !== '') {
                 this.setState({ msg: this.props.rooms[this.props.roomJid].draft });
@@ -59,7 +55,7 @@ class MessageForm extends React.Component {
             });
         }
 
-        this.setState({msg: ''});
+        this.setState({ msg: '' });
     };
 
     handleKeyDown = e => {
@@ -81,10 +77,6 @@ class MessageForm extends React.Component {
         }
     }
 
-    handleChange = e => {
-        this.setState({ msg: e.target.value });
-    }
-
     render() {
         return (
         <div className="MessageForm">
@@ -100,7 +92,7 @@ class MessageForm extends React.Component {
                     value={this.state.msg}
                     onKeyDown={this.handleKeyDown}
                     onKeyUp={this.handleKeyPress}
-                    onChange={this.handleChange}
+                    onChange={(e) => this.setState({ msg: e.target.value })}
                     placeholder="Send a message"></TextareaAutosize>
             </form>
             

@@ -19,6 +19,7 @@
     "react-router-dom": "^4.1.1",
     "react-scripts": "1.0.10",
     "react-select": "^1.0.0-rc.10",
+    "react-spinkit": "^3.0.0",
     "react-textarea-autosize": "^5.1.0",
     "react-tooltip": "^3.3.0",
     "redux": "^3.7.1",

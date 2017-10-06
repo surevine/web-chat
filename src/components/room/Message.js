@@ -36,11 +36,7 @@ class Message extends React.Component {
                 <Moment format="h:mm A" data-tip={this.formatMessageDateTime(this.props.message.time)}>{this.props.message.time}</Moment>
                 <ReactTooltip effect="solid" delayShow={300} offset={{right: 20}} />
                 <p>
-                    <Highlighter
-                    highlightClassName='highlight'
-                    searchWords={['surevine']}
-                    textToHighlight={this.props.message.body}
-                    />
+                    {this.props.message.body}
                 </p>
             </div>
         );
@@ -82,7 +78,6 @@ class Message extends React.Component {
                 <FormPreview message={this.props.message} formatMessageDateTime={this.formatMessageDateTime} />
             </div>
         );
-
     }
 
     render() {
