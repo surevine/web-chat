@@ -7,6 +7,10 @@ import { joinRoom } from '../../ducks/rooms';
 
 class EnterRoomForm extends React.Component {
 
+    componentDidMount() {
+        this._roomJid.focus();
+    }
+
     handleSubmit = e => {
         e.preventDefault();
 

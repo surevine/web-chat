@@ -81,7 +81,7 @@ class Room extends React.Component {
 
             { (this.props.messages && !this.props.messages.length) ? (
 
-                <Spinner className="loading" name="folding-cube" color="#262E3E"/>
+                <Spinner className="loading" name="folding-cube" color="#8190B0"/>
 
             ) : (
 
