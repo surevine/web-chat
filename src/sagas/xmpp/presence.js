@@ -21,11 +21,15 @@ function* watchForPresence(client) {
   yield takeEvery(channel, function* eachMessage(presence) {
       
       const roomJid = presence.from.bare;
-      // TODO ensure in state...
-      const roomNickname = yield select(state => state.rooms[roomJid].nickname);
+      const roomNickname = yield select((state) => {
+        if(state.rooms[roomJid]) {
+          return state.rooms[roomJid].nickname
+        }
+        return undefined;
+      });
         
       // Ignore own presence messages
-      if(presence.from.resource !== roomNickname) {
+      if(roomNickname && (presence.from.resource !== roomNickname)) {
 
         const roomMembers = yield select(function(state) {
           let members = [];
