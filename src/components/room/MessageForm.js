@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
+import TextareaAutosize from 'react-autosize-textarea';
 
 import { getCurrentRoomJid } from '../../selectors';
 
@@ -11,17 +12,29 @@ import SendFormControl from './SendFormControl';
 
 class MessageForm extends React.Component {
 
-    componentWillUpdate() {
-        this.saveDraft();
+    constructor(props) {
+        super(props);
+        this.state = {
+            msg: ''
+        };
     }
 
-    componentDidUpdate() { 
-        this._message.focus();
+    componentDidMount() {
+        this.textarea.focus();
+    }
 
-        if(this.props.rooms[this.props.roomJid] &&
-            this.props.rooms[this.props.roomJid].draft !== '') {
-    
-            this._message.value = this.props.rooms[this.props.roomJid].draft;
+    componentWillUpdate(nextProps, nextState) {
+        if(nextProps.roomJid !== this.props.roomJid) {
+            this.saveDraft();
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) { 
+        if(prevProps.roomJid !== this.props.roomJid) {
+            if(this.props.rooms[this.props.roomJid] &&
+                this.props.rooms[this.props.roomJid].draft !== '') {
+                this.setState({ msg: this.props.rooms[this.props.roomJid].draft });
+            }
         }
     }
 
@@ -30,18 +43,15 @@ class MessageForm extends React.Component {
     }
 
     saveDraft() {
-        this.props.saveRoomDraft(this.props.roomJid, this._message.value);
-        this._message.value = '';
+        this.props.saveRoomDraft(this.props.roomJid, this.state.msg);
+        this.setState({ msg: ''});
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
+    handleSubmit() {
 
-        let msg = this._message.value;
+        let msg = this.state.msg.trim();
 
         if(msg && msg.length > 0) {
-            this._message.value = '';
-
             this.props.sendMessage({
                 to: this.props.roomJid,
                 type: 'groupchat',
@@ -49,7 +59,31 @@ class MessageForm extends React.Component {
             });
         }
 
+        this.setState({msg: ''});
     };
+
+    handleKeyDown = e => {
+        // Prevent new line in text area when return pressed unless shift is also pressed
+        if(e.nativeEvent.keyCode === 13) {
+            if(!e.nativeEvent.shiftKey) {
+                e.preventDefault();
+            }
+        }
+    }
+
+    handleKeyPress = e => {
+        if(e.nativeEvent.keyCode === 13) {
+            if(!e.nativeEvent.shiftKey) {
+                e.preventDefault();
+                this.handleSubmit();
+                return false;
+            }
+        }
+    }
+
+    handleChange = e => {
+        this.setState({ msg: e.target.value });
+    }
 
     render() {
         return (
@@ -57,8 +91,17 @@ class MessageForm extends React.Component {
 
             <SendFormControl></SendFormControl>
 
-            <form className="form message" onSubmit={this.handleSubmit} autoComplete="off">
-                <input ref={el => this._message = el} name="message" id="sendMessage" placeholder="Send a message" />
+            <form className="form message" autoComplete="off">
+                <TextareaAutosize 
+                    name="message" 
+                    id="sendMessage" 
+                    innerRef={ref => this.textarea = ref}
+                    maxRows={5}
+                    value={this.state.msg}
+                    onKeyDown={this.handleKeyDown}
+                    onKeyUp={this.handleKeyPress}
+                    onChange={this.handleChange}
+                    placeholder="Send a message"></TextareaAutosize>
             </form>
             
         </div>

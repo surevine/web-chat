@@ -356,7 +356,7 @@ form p.hint {
 
 .roomContent {
   display: grid;
-  grid-template-rows: auto 70px;
+  grid-template-rows: auto minmax(min-content, 70px);
   grid-row: 2;
   overflow-y: scroll;
 }
@@ -454,6 +454,7 @@ form p.hint {
   margin-top: 6px;
   margin-bottom: 0;
   line-height: 22px;
+  white-space: pre-line;
 }
 
 .Message .topic, 
@@ -595,7 +596,9 @@ form p.hint {
 .MessageForm {
   grid-row: 2;
   padding: 0 10px 0 18px;
-  height: 70px;
+  min-height: 70px;
+
+  overflow: hidden;
 
   display: grid;
   grid-template-columns: 60px auto;
@@ -611,12 +614,14 @@ form p.hint {
 
 .MessageForm #sendMessage {
   width: calc(100% - 40px);
-  padding: 10px;
+  padding: 11px 10px;
   height: 24px;
+  margin-bottom: 24px;
   font-size: 16px;
   color: #333;
   border: solid 2px #ccc;
   border-radius: 6px;
+  box-shadow: none;
 }
 
 .MessageForm #sendMessage:focus {

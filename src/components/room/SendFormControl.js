@@ -171,7 +171,7 @@ class SendFormControl extends React.Component {
 
                 <div className="header">
                     <a className="closeModal" onClick={this.handleCloseModal}>
-                        <FontAwesome name='close' />
+                        &#x2715;
                     </a>
                     <h3>Send Form to {this.props.roomJid}</h3>
                 </div>
