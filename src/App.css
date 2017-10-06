@@ -509,6 +509,7 @@ form p.hint {
 }
 
 .FormPreview .raw {
+  margin-top: 20px;
   line-height: 20px;
   font-family: monospace;
 }
@@ -676,8 +677,9 @@ form p.hint {
 }
 
 .Modal .controls {
-  float: right;
-  margin-top: 50px;
+  width: 420px;
+  text-align: right;
+  margin: 50px 0 20px 0;
   height: 30px;
 }
 

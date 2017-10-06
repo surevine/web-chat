@@ -37,18 +37,20 @@ export const receivedForm = (form) => ({
   }
 });
 
-export const receivedFormTemplate = (template) => ({
+export const receivedFormTemplate = (node, template) => ({
 type: RECEIVED_FORM_TEMPLATE,
 payload: {
+    node,
     template
 }
 });
 
-export const submitForm = (node, form) => ({
+export const submitForm = (node, form, jid) => ({
     type: SUBMIT_FORM,
     payload: {
         node,
-        form
+        form,
+        jid
     }
   });
 
@@ -57,7 +59,7 @@ const initialState = {
         templateNodes: [],
         submissionNodes: []
     },
-    templates: []
+    templates: {}
 };
 
 // reducer
@@ -82,10 +84,10 @@ export default (state = initialState, action) => {
 
         return {
             ...state,
-            templates: [
+            templates: {
                 ...currentTemplates,
-                action.payload.template
-            ]
+                [action.payload.node]: action.payload.template
+            }
         };
 
     }

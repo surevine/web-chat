@@ -25,14 +25,17 @@ function* fetchFormNodes(client) {
     let submissionNodes = [];
 
     allNodes.discoItems.items.forEach((node) => {
+
         if(node.node.startsWith('fdp/template')) {
             templateNodes.push(node.node);
             return;
         }
+
         if(node.node.startsWith('fdp/submitted')) {
             submissionNodes.push(node.node);
             return;
         }
+
     });
 
     yield put(loadedFormNodes(templateNodes, submissionNodes));
@@ -64,17 +67,18 @@ function* loadFormTemplates(client) {
 
 function* loadTemplate(client, node) {
     let response = yield call([client, client.getItems], 'pubsub.localhost', node, { max: 1 });
-    yield put(receivedFormTemplate(response.pubsub.retrieve.item.form));
+    yield put(receivedFormTemplate(node, response.pubsub.retrieve.item.form));
 }
 
 function* watchForForms(client) {
     
     const channel = makeChannel(client, {
         'dataform': (emit, msg) => {
+            console.log('dataform', msg)
             emit(msg);
         },
-        "pubsub:published": (emit, msg) => {
-            // console.log('published...', msg)
+        "pubsub:event": (emit, msg) => {
+            console.log('published...', msg)
         }
     });
 
@@ -88,6 +92,18 @@ function* watchForForms(client) {
         );
 
     });
+}
+
+// TODO move this elsewhere
+function buildFormMessage(formData) {
+    let message = "";
+    formData.fields.forEach((field) => {
+        if(field.type === "hidden") {
+            return;
+        }
+        message += (field.label + " " + field.value + "\n");
+    });
+    return message;
 }
 
 function* publishForm(client) {
@@ -107,13 +123,10 @@ function* publishForm(client) {
             }
         );
 
-        // Message the MUC
-        // TODO remove hardcoding
-        // TODO build up the 
         yield call([client, client.sendMessage], {
             to: action.payload.jid,
             type: 'groupchat',
-            body: "RAWHARDCODEDFORMMESSAGEHERE",
+            body: buildFormMessage(formData),
             form: formData
         });
 

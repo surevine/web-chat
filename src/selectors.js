@@ -54,10 +54,10 @@ export const getTemplateOptions = (state) => {
   let opts = [];
 
   // TODO change this to use ID of the template from the server...
-  state.forms.templates.forEach((template, index) => {
+  Object.keys(state.forms.templates).forEach((node) => {
     opts.push({
-      label: template.title,
-      value: index
+      label: state.forms.templates[node].title,
+      value: node
     })
   });
 
