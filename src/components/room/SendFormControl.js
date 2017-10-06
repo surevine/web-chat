@@ -49,7 +49,16 @@ class SendFormControl extends React.Component {
         let submissionNode = templateNode.replace("fdp/template", "fdp/submitted");
         this.props.submitForm(submissionNode, this.buildFormFields(), this.props.roomJid);
 
-        // TODO close the modal!
+
+        this.handleCloseModal();
+
+        this.setState(function(prevState, props) {
+            return {
+                ...prevState,
+                selectedTemplate: '',
+                form: {}
+            };
+        });
     }
 
     buildFormFields() {

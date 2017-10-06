@@ -74,11 +74,18 @@ function* watchForForms(client) {
     
     const channel = makeChannel(client, {
         'dataform': (emit, msg) => {
-            console.log('dataform', msg)
+            // console.log('dataform', msg)
             emit(msg);
         },
         "pubsub:event": (emit, msg) => {
-            console.log('published...', msg)
+
+            // COULD USE THIS INSTEAD? Latest form for each node gets published on connect...
+            // Then all realtime forms are delivered
+
+            // msg.event.updated.node
+            // msg.event.updated.published[0]
+
+            // console.log('published...', msg)
         }
     });
 
