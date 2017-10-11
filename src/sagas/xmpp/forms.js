@@ -19,7 +19,7 @@ import { receivedForm,
 
 function* fetchFormNodes(client) {
 
-    const allNodes = yield call([client, client.getDiscoItems], 'pubsub.localhost', '');
+    const allNodes = yield call([client, client.getDiscoItems], 'pubsub.'+window.config.xmppDomain, '');
 
     let templateNodes = [];
     let submissionNodes = [];
@@ -52,7 +52,7 @@ function* subscribeToFormNodes(client) {
     // TODO check for existing subscription first?
     // TODO change to yield all
     submissionNodes.forEach((node) => {
-        client.subscribeToNode('pubsub.localhost', node);
+        client.subscribeToNode('pubsub.'+window.config.xmppDomain, node);
     });
 
     // TODO maybe do this on the fly
@@ -66,7 +66,7 @@ function* loadFormTemplates(client) {
 }
 
 function* loadTemplate(client, node) {
-    let response = yield call([client, client.getItems], 'pubsub.localhost', node, { max: 1 });
+    let response = yield call([client, client.getItems], 'pubsub.'+window.config.xmppDomain, node, { max: 1 });
     yield put(receivedFormTemplate(node, response.pubsub.retrieve.item.form));
 }
 
@@ -123,7 +123,7 @@ function* publishForm(client) {
         };
 
         const response = yield call([client, client.publish], 
-            'pubsub.localhost', 
+            'pubsub.'+window.config.xmppDomain, 
             action.payload.node, 
             { 
                 form: formData

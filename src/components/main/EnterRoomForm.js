@@ -22,9 +22,14 @@ class EnterRoomForm extends React.Component {
             nickname = this.props.client.jid.local;
         }
 
+        let password = this._password.value;
+        if(!password) {
+            password = '';
+        }
+
         // TODO improve validation on jid
         if(jid) {
-            this.props.joinRoom(jid, nickname);
+            this.props.joinRoom(jid, nickname, password);
 
             // Navigate to room
             history.push('/room/' + jid);
@@ -56,7 +61,7 @@ const mapStateToProps = (state, props) => ({
   
   const mapDispatchToProps = (dispatch, props) => {
     return {
-      joinRoom: (jid, nickname) => dispatch(joinRoom(jid, nickname)),
+      joinRoom: (jid, nickname, password) => dispatch(joinRoom(jid, nickname, password)),
     };
   };
   

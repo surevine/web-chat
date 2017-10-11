@@ -190,7 +190,7 @@ const mapDispatchToProps = (dispatch, props) => {
     removeBookmark: (jid) => dispatch(removeBookmark(jid)),
     showRoom: (jid, nickname) => dispatch(showRoom(jid, nickname)),
     hideRoom: (jid) => dispatch(hideRoom(jid)),
-    joinRoom: (jid, nickname) => dispatch(joinRoom(jid, nickname)),
+    joinRoom: (jid, nickname, password) => dispatch(joinRoom(jid, nickname, password)),
     leaveRoom: (jid) => dispatch(leaveRoom(jid)),
     receivedMessage: (msg) => dispatch(receivedMessage(msg)),
     topicUpdated: (msg) => dispatch(topicUpdated(msg)),

@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, put } from "redux-saga/effects";
+import { select, takeEvery, takeLatest, put } from "redux-saga/effects";
 
 import { makeChannel } from "../_helpers";
 import { addRecentRoom, getRecentRooms } from '../../localStorage';
@@ -6,8 +6,8 @@ import { addRecentRoom, getRecentRooms } from '../../localStorage';
 import {
   JOIN_ROOM,
   JOINED_ROOM,
-  joinedRoom,
   LEAVE_ROOM,
+  joinedRoom,
   leftRoom,
   topicUpdated
 } from "../../ducks/rooms";
@@ -23,11 +23,26 @@ function* joinRoom(client) {
 
   yield takeLatest(JOIN_ROOM, function* joinRoom(action) {
 
+    let joinOpts = {
+      history: true,
+    };
+
+    if(action.payload.password && action.payload.password !== '') {
+      joinOpts.password = action.payload.password
+    }
+
     yield client.joinRoom(action.payload.jid, action.payload.nickname, {
-      joinMuc: {
-        history: true
-      }
+      joinMuc: joinOpts
     });
+
+    const presence = yield select((state) => state.user.presence);
+    if(presence) {
+      console.log('presence is ' + presence.value)
+      yield client.sendPresence({
+          to: action.payload.jid,
+          show: presence.value
+      });
+    }
 
   //   client.joinRoom('room@muc.example.com', 'User', {
   //     status: 'This will be my status in the MUC',

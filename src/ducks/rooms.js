@@ -19,9 +19,9 @@ export const INCREMENT_UNREAD = constant("INCREMENT_UNREAD");
 
 export const SAVE_ROOM_DRAFT = constant("SAVE_ROOM_DRAFT");
 
-export const joinRoom = (jid, nickname) => ({
+export const joinRoom = (jid, nickname, password) => ({
   type: JOIN_ROOM,
-  payload: { jid, nickname }
+  payload: { jid, nickname, password }
 });
 
 export const joinedRoom = (jid, nickname) => ({
