@@ -85,53 +85,6 @@ function* tryJoinRoom(client) {
 
 }
 
-
-// function* joinRoom(client) {
-
-//   // const errorChannel = makeChannel(client, {
-//   //   "muc:error": (emit, msg) => emit(msg)
-//   // });
-
-//   yield takeLatest(JOIN_ROOM, function* joinRoom(action) {
-
-//     let joinOpts = {
-//       history: true,
-//     };
-
-//     if(action.payload.password && action.payload.password !== '') {
-//       joinOpts.password = action.payload.password
-//     }
-
-//     yield client.joinRoom(action.payload.jid, action.payload.nickname, {
-//       joinMuc: joinOpts
-//     });
-
-//     // Send current presence to room
-//     const presence = yield select((state) => state.user.presence);
-//     if(presence) {
-//       yield client.sendPresence({
-//           to: action.payload.jid,
-//           show: presence.value
-//       });
-//     }
-
-//   //   client.joinRoom('room@muc.example.com', 'User', {
-//   //     status: 'This will be my status in the MUC',
-//   //     joinMuc: {
-//   //         password: 'hunter2',
-//   //         history: {
-//   //             maxstanzas: 20
-//   //         }
-//   //     }
-//   // });
-
-//     // TODO handle if not successful?
-//     yield put(joinedRoom(action.payload.jid, action.payload.nickname));
-
-//   });
-
-// }
-
 function* leaveRoom(client) {
   
     yield takeLatest(LEAVE_ROOM, function* leaveRoom(action) {
