@@ -35,9 +35,9 @@ function* joinRoom(client) {
       joinMuc: joinOpts
     });
 
+    // Send current presence to room
     const presence = yield select((state) => state.user.presence);
     if(presence) {
-      console.log('presence is ' + presence.value)
       yield client.sendPresence({
           to: action.payload.jid,
           show: presence.value
