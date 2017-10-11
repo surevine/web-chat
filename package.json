@@ -22,6 +22,7 @@
     "react-spinkit": "^3.0.0",
     "react-textarea-autosize": "^5.1.0",
     "react-tooltip": "^3.3.0",
+    "react-web-notification": "^0.2.4",
     "redux": "^3.7.1",
     "redux-saga": "^0.15.4",
     "stanza.io": "^8.4.1",

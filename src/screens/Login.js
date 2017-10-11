@@ -5,14 +5,6 @@ import { AUTH_ERRORS, login } from "../ducks/client";
 
 class Login extends React.Component {
 
-    handleSubmit = e => {
-        e.preventDefault();
-        // TODO verify valid jid?
-        if(this._jid.value.length && this._password.value.length) {
-            this.props.login(this._jid.value, this._password.value);
-        }
-    };
-
     componentDidMount() {
 
     }
@@ -20,12 +12,12 @@ class Login extends React.Component {
     render() {
 
         if (this.props.error === AUTH_ERRORS.CERTIFICATE) {
-        return (
-            <div className="Page">
-                <h2>Connection error</h2>
-                <p>Please ensure the xmpp server is running and refresh this page to try again.</p>
-            </div>
-        );
+            return (
+                <div className="Page">
+                    <h2>Connection error</h2>
+                    <p>Please ensure the xmpp server is running and refresh this page to try again.</p>
+                </div>
+            );
         }
 
         return (
@@ -47,6 +39,14 @@ class Login extends React.Component {
         </div>
         );
     }
+
+    handleSubmit = e => {
+        e.preventDefault();
+        // TODO verify valid jid?
+        if(this._jid.value.length && this._password.value.length) {
+            this.props.login(this._jid.value, this._password.value);
+        }
+    };
 
 }
 

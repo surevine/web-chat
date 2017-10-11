@@ -62,21 +62,6 @@ class Room extends React.Component {
         }
     }
 
-    renderError(error) {
-        switch(error.condition) {
-            case "not-authorized":
-                return (
-                    <div className="roomErrorWrapper">
-                        <h5>Authentication Error</h5>
-                        <p>Incorrect password provided. Please try again.</p>
-                    </div>
-                );
-            break;
-            default:
-                return null;
-        }
-    }
-
     render() {
         return (
         <div className={"Room" + (this.state.showRoomSidebar ? ' sidebar' : '')}>
@@ -101,22 +86,16 @@ class Room extends React.Component {
             ) : (
 
                 <div>
-
                 { (this.props.room.error) ? (
-                
                     this.renderError(this.props.room.error)
-
                 ) : (
-
                     <Spinner className="loading" name="folding-cube" color="#8190B0"/>
-
                 )}
-
                 </div>
 
             )}
 
-            <MessageForm enabled={this.props.room.joined} roomJid={this.props.room.jid}></MessageForm>
+                <MessageForm enabled={this.props.room.joined} roomJid={this.props.room.jid}></MessageForm>
 
             </div>
 
@@ -134,6 +113,21 @@ class Room extends React.Component {
             
         </div>
         );
+    }
+
+    renderError(error) {
+        switch(error.condition) {
+            case "not-authorized":
+                return (
+                    <div className="roomErrorWrapper">
+                        <h5>Authentication Error</h5>
+                        <p>Incorrect password provided. Please try again.</p>
+                    </div>
+                );
+            break;
+            default:
+                return null;
+        }
     }
 
     hideSidebar = e => {

@@ -9,6 +9,14 @@ import FormPreview from './messages/FormPreview';
 
 class Message extends React.Component {
 
+    render() {
+        return (
+            <div className="Message">
+                { this.renderMessage() }
+            </div>
+        );
+    }
+
     formatMessageDateTime(time) {
         return momentjs(time).format('Do MMM YYYY [at] h:mm A');
     }
@@ -74,14 +82,6 @@ class Message extends React.Component {
                 <Moment format="h:mm A" data-tip={this.formatMessageDateTime(this.props.message.time)}>{this.props.message.time}</Moment>
                 <ReactTooltip effect="solid" delayShow={300} offset={{right: 20}} />
                 <FormPreview message={this.props.message} formatMessageDateTime={this.formatMessageDateTime} />
-            </div>
-        );
-    }
-
-    render() {
-        return (
-            <div className="Message">
-                { this.renderMessage() }
             </div>
         );
     }

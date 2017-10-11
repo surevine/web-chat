@@ -13,26 +13,6 @@ class FormPreview extends React.Component {
         };
     }
 
-    getFormUpdated(form) {
-        let lastUpdateField = find(form.form.fields, function(field) {
-            return ((field.type === "hidden") && (field.name === "jchat.last_modified"));
-        });
-        return parseInt(lastUpdateField.value);
-    }
-
-    toggleRaw() {
-        // e.preventDefault();
-        this.setState(function(prevState, props) {
-            if(props.message.body) {
-                return {
-                    ...prevState,
-                    showRaw: !prevState.showRaw
-                };
-            }
-            return prevState;
-        });
-    }
-
     render() {
         return (
             <div className="FormPreview">
@@ -80,6 +60,25 @@ class FormPreview extends React.Component {
 
             </div>
         );
+    }
+
+    toggleRaw() {
+        this.setState(function(prevState, props) {
+            if(props.message.body) {
+                return {
+                    ...prevState,
+                    showRaw: !prevState.showRaw
+                };
+            }
+            return prevState;
+        });
+    }
+
+    getFormUpdated(form) {
+        let lastUpdateField = find(form.form.fields, function(field) {
+            return ((field.type === "hidden") && (field.name === "jchat.last_modified"));
+        });
+        return parseInt(lastUpdateField.value);
     }
 
 }

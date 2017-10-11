@@ -38,6 +38,30 @@ class MessageForm extends React.Component {
         this.saveDraft();
     }
 
+    render() {
+        return (
+        <div className="MessageForm">
+
+            <SendFormControl enabled={this.props.enabled}></SendFormControl>
+
+            <form className="form message" autoComplete="off">
+                <TextareaAutosize 
+                    name="message" 
+                    id="sendMessage" 
+                    innerRef={ref => this.textarea = ref}
+                    maxRows={5}
+                    value={this.state.msg}
+                    disabled={this.props.enabled ? "" : "disabled"}
+                    onKeyDown={this.handleKeyDown}
+                    onKeyUp={this.handleKeyPress}
+                    onChange={(e) => this.setState({ msg: e.target.value })}
+                    placeholder="Send a message"></TextareaAutosize>
+            </form>
+            
+        </div>
+        );
+    }
+
     saveDraft() {
         this.props.saveRoomDraft(this.props.roomJid, this.state.msg);
         this.setState({ msg: ''});
@@ -75,30 +99,6 @@ class MessageForm extends React.Component {
                 return false;
             }
         }
-    }
-
-    render() {
-        return (
-        <div className="MessageForm">
-
-            <SendFormControl enabled={this.props.enabled}></SendFormControl>
-
-            <form className="form message" autoComplete="off">
-                <TextareaAutosize 
-                    name="message" 
-                    id="sendMessage" 
-                    innerRef={ref => this.textarea = ref}
-                    maxRows={5}
-                    value={this.state.msg}
-                    disabled={this.props.enabled ? "" : "disabled"}
-                    onKeyDown={this.handleKeyDown}
-                    onKeyUp={this.handleKeyPress}
-                    onChange={(e) => this.setState({ msg: e.target.value })}
-                    placeholder="Send a message"></TextareaAutosize>
-            </form>
-            
-        </div>
-        );
     }
 
 }

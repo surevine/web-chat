@@ -5,13 +5,6 @@ import FontAwesome from 'react-fontawesome';
 
 class FormsList extends React.Component {
 
-    getFormUpdated(form) {
-        let lastUpdateField = find(form.form.fields, function(field) {
-            return ((field.type === "hidden") && (field.name === "jchat.last_modified"));
-        });
-        return parseInt(lastUpdateField.value);
-    }
-
     render() {
         return (
         <div className="FormsList">
@@ -43,6 +36,13 @@ class FormsList extends React.Component {
 
         </div>
         );
+    }
+
+    getFormUpdated(form) {
+        let lastUpdateField = find(form.form.fields, function(field) {
+            return ((field.type === "hidden") && (field.name === "jchat.last_modified"));
+        });
+        return parseInt(lastUpdateField.value);
     }
 
 }

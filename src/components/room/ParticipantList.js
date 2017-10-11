@@ -3,33 +3,6 @@ import FontAwesome from 'react-fontawesome';
 
 class ParticipantList extends React.Component {
 
-    membersContainRole(role) {
-        let filteredMembers = this.props.members.filter((member) => {
-            return member.role === role;
-        });
-        if(filteredMembers.length) {
-            return true;
-        }
-        return false;
-    }
-
-    renderMembersWithRoleList(role) {
-        let filteredMembers = this.props.members.filter((member) => {
-            return member.role === role;
-        });
-
-        return (
-            <ul>
-            {filteredMembers.map(member => (
-                    <li key={member.resource} title={member.status}>
-                        <FontAwesome name='circle' className={ "presenceIcon " + member.presence} />
-                        {member.resource}
-                    </li>
-            ))}
-            </ul>
-        );
-    }
-
     render() {
         return (
         <div className="ParticipantList">
@@ -55,6 +28,33 @@ class ParticipantList extends React.Component {
                 </div>
             )}
         </div>
+        );
+    }
+
+    membersContainRole(role) {
+        let filteredMembers = this.props.members.filter((member) => {
+            return member.role === role;
+        });
+        if(filteredMembers.length) {
+            return true;
+        }
+        return false;
+    }
+
+    renderMembersWithRoleList(role) {
+        let filteredMembers = this.props.members.filter((member) => {
+            return member.role === role;
+        });
+
+        return (
+            <ul>
+            {filteredMembers.map(member => (
+                    <li key={member.resource} title={member.status}>
+                        <FontAwesome name='circle' className={ "presenceIcon " + member.presence} />
+                        {member.resource}
+                    </li>
+            ))}
+            </ul>
         );
     }
 
