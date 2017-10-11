@@ -48,10 +48,8 @@ class RoomList extends React.Component {
 
         // Only join once
         if(!this.props.rooms[jid] || !this.props.rooms[jid].joined) {
-
             // TODO consider fallback global nickname OR saving nickname for bookmarks from previous session
             this.props.joinRoom(jid, this.props.client.jid.local);
-
         }
 
         history.push('/room/' + jid);

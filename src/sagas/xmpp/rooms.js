@@ -1,7 +1,10 @@
-import { select, takeEvery, takeLatest, put } from "redux-saga/effects";
+import { delay } from "redux-saga";
+import { call, race, select, take, takeEvery, takeLatest, put } from "redux-saga/effects";
 
 import { makeChannel } from "../_helpers";
 import { addRecentRoom, getRecentRooms } from '../../localStorage';
+
+import history from '../../history';
 
 import {
   JOIN_ROOM,
@@ -9,6 +12,7 @@ import {
   LEAVE_ROOM,
   joinedRoom,
   leftRoom,
+  failedJoinRoom,
   topicUpdated
 } from "../../ducks/rooms";
 import { setRecentRooms } from "../../ducks/local";
@@ -19,47 +23,114 @@ import { setRecentRooms } from "../../ducks/local";
     //   console.log(response.discoItems);
     // });
 
-function* joinRoom(client) {
+function joinRoomWithOpts(client, roomJid, nickname, opts) {
+  client.joinRoom(roomJid, nickname, {
+    joinMuc: opts
+  });
+}
+
+function* tryJoinRoom(client) {
+
+  const errorChannel = makeChannel(client, {
+    "muc:error": (emit, msg) => emit(msg),
+  });
+
+  const successChannel = makeChannel(client, {
+    "muc:available": (emit, msg) => emit(msg),
+  });
 
   yield takeLatest(JOIN_ROOM, function* joinRoom(action) {
+    
+      let joinOpts = {
+        history: true,
+      };
+    
+      if(action.payload.password && action.payload.password !== '') {
+        joinOpts.password = action.payload.password
+      }
 
-    let joinOpts = {
-      history: true,
-    };
-
-    if(action.payload.password && action.payload.password !== '') {
-      joinOpts.password = action.payload.password
-    }
-
-    yield client.joinRoom(action.payload.jid, action.payload.nickname, {
-      joinMuc: joinOpts
-    });
-
-    // Send current presence to room
-    const presence = yield select((state) => state.user.presence);
-    if(presence) {
-      yield client.sendPresence({
-          to: action.payload.jid,
-          show: presence.value
+      yield call(joinRoomWithOpts, client, action.payload.jid, action.payload.nickname, joinOpts);
+    
+      const result = yield race({
+        success: take(successChannel),
+        timeout: delay(5000),
+        error: take(errorChannel)
       });
-    }
+  
+      if (result.timeout) {
+        // TODO action to explain timeout + suggest retry
+      }
+  
+      if (result.error) {
+        yield put(failedJoinRoom(action.payload.jid, result.error.error));
+        // or we have a currentRoomJoining state object which tracks the WIP join, then updates accordingly
+      }
+  
+      if (result.success) {
+  
+        // Send current presence to room
+        const presence = yield select((state) => state.user.presence);
+        if(presence) {
+          yield client.sendPresence({
+              to: action.payload.jid,
+              show: presence.value
+          });
+        }
 
-  //   client.joinRoom('room@muc.example.com', 'User', {
-  //     status: 'This will be my status in the MUC',
-  //     joinMuc: {
-  //         password: 'hunter2',
-  //         history: {
-  //             maxstanzas: 20
-  //         }
-  //     }
-  // });
+        yield put(joinedRoom(action.payload.jid, action.payload.nickname));
 
-    // TODO handle if not successful?
-    yield put(joinedRoom(action.payload.jid, action.payload.nickname));
+      }
 
   });
 
 }
+
+
+// function* joinRoom(client) {
+
+//   // const errorChannel = makeChannel(client, {
+//   //   "muc:error": (emit, msg) => emit(msg)
+//   // });
+
+//   yield takeLatest(JOIN_ROOM, function* joinRoom(action) {
+
+//     let joinOpts = {
+//       history: true,
+//     };
+
+//     if(action.payload.password && action.payload.password !== '') {
+//       joinOpts.password = action.payload.password
+//     }
+
+//     yield client.joinRoom(action.payload.jid, action.payload.nickname, {
+//       joinMuc: joinOpts
+//     });
+
+//     // Send current presence to room
+//     const presence = yield select((state) => state.user.presence);
+//     if(presence) {
+//       yield client.sendPresence({
+//           to: action.payload.jid,
+//           show: presence.value
+//       });
+//     }
+
+//   //   client.joinRoom('room@muc.example.com', 'User', {
+//   //     status: 'This will be my status in the MUC',
+//   //     joinMuc: {
+//   //         password: 'hunter2',
+//   //         history: {
+//   //             maxstanzas: 20
+//   //         }
+//   //     }
+//   // });
+
+//     // TODO handle if not successful?
+//     yield put(joinedRoom(action.payload.jid, action.payload.nickname));
+
+//   });
+
+// }
 
 function* leaveRoom(client) {
   
@@ -111,7 +182,6 @@ function* watchForTopic(client) {
     });
 }
 
-// TODO support joining multiple rooms...
 export default function*(client) {
-  yield [joinRoom(client), leaveRoom(client), watchJoinedRoom(client), watchForTopic(client)];
+  yield [tryJoinRoom(client), leaveRoom(client), watchJoinedRoom(client), watchForTopic(client)];
 }

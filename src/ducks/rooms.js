@@ -11,6 +11,8 @@ export const JOINED_ROOM = constant("JOINED_ROOM");
 export const LEAVE_ROOM = constant("LEAVE_ROOM");
 export const LEFT_ROOM = constant("LEFT_ROOM");
 
+export const FAILED_JOIN_ROOM = constant("FAILED_JOIN_ROOM");
+
 export const TOPIC_UPDATED = constant("TOPIC_UPDATED");
 export const SHOW_ROOM = constant("SHOW_ROOM");
 export const HIDE_ROOM = constant("HIDE_ROOM");
@@ -39,6 +41,13 @@ export const leftRoom = (jid) => ({
   payload: { jid }
 });
 
+export const failedJoinRoom = (jid, error) => ({
+  type: FAILED_JOIN_ROOM,
+  payload: {
+    jid,
+    error
+  }
+})
 
 export const topicUpdated = (message) => ({
   type: TOPIC_UPDATED,
@@ -85,7 +94,8 @@ export default (state = {}, action) => {
           isCurrent: false,
           draft: '',
           unreadMessageCount: 0,
-          joined: false
+          joined: false,
+          error: undefined
         }
       };
 
@@ -100,7 +110,8 @@ export default (state = {}, action) => {
         ...state,
         [room.jid]: {
           ...room,
-          joined: true
+          joined: true,
+          error: undefined
         }
       };
     }
@@ -108,6 +119,21 @@ export default (state = {}, action) => {
     case LEFT_ROOM: {
 
       return omit(state, [ action.payload.jid ]);
+
+    }
+
+    case FAILED_JOIN_ROOM: {
+
+      // TODO ensure it exists
+      const room = state[action.payload.jid];
+      
+      return {
+        ...state,
+        [room.jid]: {
+          ...room,
+          error: action.payload.error
+        }
+      };
 
     }
 

@@ -27,6 +27,11 @@ class SendFormControl extends React.Component {
     }
 
     handleOpenModal() {
+
+        if(!this.props.enabled) {
+            return false;
+        }
+
         this.setState(function(prevState, props) {
             return {
                 ...prevState,
@@ -156,18 +161,24 @@ class SendFormControl extends React.Component {
 
         return (
         <div className="SendFormControl">
-            <a className="sendForm" onClick={this.handleOpenModal} data-tip="Send Form">
-                <FontAwesome name='file-text' className="icon" />
-            </a>
+
+            {this.props.enabled ? (
+                <a className="sendForm" onClick={this.handleOpenModal} data-tip="Send Form">
+                    <FontAwesome name='file-text' className="icon" />
+                </a>
+            ) : (
+                <a className="sendForm disabled" onClick={this.handleOpenModal}>
+                    <FontAwesome name='file-text' className="icon" />
+                </a>
+            )}
+
             <ReactTooltip effect="solid" delayShow={300} offset={{right: 2}} />
 
             <ReactModal 
                 isOpen={this.state.showModal}
-                contentLabel="onRequestClose Example"
                 onRequestClose={this.handleCloseModal}
                 className="Modal"
-                overlayClassName="Overlay"
-                >
+                overlayClassName="Overlay">
 
                 <div className="header">
                     <a className="closeModal" onClick={this.handleCloseModal}>

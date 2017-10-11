@@ -81,7 +81,7 @@ class MessageForm extends React.Component {
         return (
         <div className="MessageForm">
 
-            <SendFormControl></SendFormControl>
+            <SendFormControl enabled={this.props.enabled}></SendFormControl>
 
             <form className="form message" autoComplete="off">
                 <TextareaAutosize 
@@ -90,6 +90,7 @@ class MessageForm extends React.Component {
                     innerRef={ref => this.textarea = ref}
                     maxRows={5}
                     value={this.state.msg}
+                    disabled={this.props.enabled ? "" : "disabled"}
                     onKeyDown={this.handleKeyDown}
                     onKeyUp={this.handleKeyPress}
                     onChange={(e) => this.setState({ msg: e.target.value })}
