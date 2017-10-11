@@ -302,7 +302,12 @@ form p.hint {
 }
 
 form .actions {
-  margin-top: 40px;
+  margin-top: 30px;
+}
+
+.formError {
+  color: #cc0000;
+  margin-bottom: -20px;
 }
 
 /* Rooms */

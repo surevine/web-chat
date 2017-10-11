@@ -21,9 +21,9 @@ class Login extends React.Component {
 
         if (this.props.error === AUTH_ERRORS.CERTIFICATE) {
         return (
-            <div>
-                <h1>Connection error!</h1>
-                <p>Please check the xmpp server is running and refresh.</p>
+            <div className="Page">
+                <h2>Connection error</h2>
+                <p>Please ensure the xmpp server is running and refresh this page to try again.</p>
             </div>
         );
         }
@@ -34,13 +34,15 @@ class Login extends React.Component {
             <form className="form" onSubmit={this.handleSubmit}>
 
                 {this.props.error === AUTH_ERRORS.CREDENTIALS &&
-                    <h3 style={{ color: "red" }}>OOPS: Looks like your login is incorrect</h3>}
+                    <h4 className="formError">Incorrect username or password</h4>}
 
                 <label htmlFor="jid">Username</label>
                 <input ref={el => this._jid = el} type="text" name="jid" id="jid" placeholder="Username" />
                 <label htmlFor="password">Password</label>
                 <input ref={el => this._password = el} name="password" type="password" id="password" placeholder="Password" />
-                <input type="submit" value="Log in" />
+                <div className="actions">
+                    <input type="submit" value="Log in" />
+                </div>
             </form>
         </div>
         );
