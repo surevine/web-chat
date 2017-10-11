@@ -47,7 +47,9 @@ class EnterRoomForm extends React.Component {
                 <input ref={el => this._nickname = el} type="text" name="nickname" id="nickname" placeholder="Nickname" />
                 <label htmlFor="password">Password <span>(optional)</span></label>
                 <input ref={el => this._password = el} type="password" name="password" id="password" placeholder="Password" />
-                <input type="submit" value="Join Room" />
+                <div className="actions">
+                    <input type="submit" value="Join Room" />
+                </div>
             </form>
         </div>
         );

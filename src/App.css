@@ -301,6 +301,10 @@ form p.hint {
   color: #aaa;
 }
 
+form .actions {
+  margin-top: 40px;
+}
+
 /* Rooms */
 
 .Room {
