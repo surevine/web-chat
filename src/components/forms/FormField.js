@@ -72,7 +72,6 @@ class FormField extends React.Component {
 
             case "jid-single":
 
-                // TODO make this autocomplete style...
                 return (
                     <input type="email" autoComplete="off" {...fieldProps} />
                 )

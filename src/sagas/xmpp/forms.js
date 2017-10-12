@@ -1,4 +1,5 @@
 import { all, call, select, take, takeEvery, put } from "redux-saga/effects";
+import find from "lodash/find";
 
 import { makeChannel } from "../_helpers";
 
@@ -42,17 +43,38 @@ function* fetchFormNodes(client) {
 
 }
 
+function* fetchSubscriptions(client) {
+    const response = yield call([client, client.getSubscriptions], 'pubsub.'+window.config.xmppDomain);
+    console.log(response.pubsub.subscriptions.list)
+    return response.pubsub.subscriptions.list;
+}
+
 function* subscribeToFormNodes(client) {
 
     yield take(SUBSCRIBE_TO_FORMS);
 
     yield fetchFormNodes(client);
 
+    const subscriptions = yield fetchSubscriptions(client);
+
     const submissionNodes = yield select(state => state.forms.nodes.submissionNodes);
-    // TODO check for existing subscription first?
+    const userJid = yield select(state => state.client.jid.bare);
+
+
     // TODO change to yield all
     submissionNodes.forEach((node) => {
-        client.subscribeToNode('pubsub.'+window.config.xmppDomain, node);
+
+        let found = find(subscriptions, function(sub) {
+            return sub.node === node;
+        });
+
+        if(!found) {
+            client.subscribeToNode('pubsub.'+window.config.xmppDomain, {
+                node: node,
+                jid: userJid
+            });
+        }
+
     });
 
     // TODO maybe do this on the fly
@@ -73,10 +95,10 @@ function* loadTemplate(client, node) {
 function* watchForForms(client) {
     
     const channel = makeChannel(client, {
-        'dataform': (emit, msg) => {
-            // console.log('dataform', msg)
-            emit(msg);
-        },
+        // 'dataform': (emit, msg) => {
+        //     // console.log('dataform', msg)
+        //     // emit(msg);
+        // },
         "pubsub:event": (emit, msg) => {
 
             // COULD USE THIS INSTEAD? Latest form for each node gets published on connect...
@@ -85,7 +107,8 @@ function* watchForForms(client) {
             // msg.event.updated.node
             // msg.event.updated.published[0]
 
-            // console.log('published...', msg)
+            console.log('published...', msg)
+            emit(msg);
         }
     });
 

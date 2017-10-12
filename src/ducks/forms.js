@@ -93,8 +93,27 @@ export default (state = initialState, action) => {
     }
 
     case RECEIVED_FORM: {
+
+
+
+        // TODO check if delay, if so, ignore
+
+
         
         const form = action.payload.form;
+
+        console.log('in received form action', form);
+
+        // form.event.updated.node
+        // TODO check the above starts with fdp/submitted
+
+        // form.event.updated.published[0].id
+        // form.event.updated.published[0].form.fields
+
+        // ONE OF THOSE WILL HAVE NAME 'room', this is what we can use to tie to a room
+
+        // 
+
         const peerJid = form.from.bare;
         const peer = state[peerJid] || {
             jid: peerJid,
