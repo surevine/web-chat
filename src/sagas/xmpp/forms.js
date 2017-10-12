@@ -45,7 +45,6 @@ function* fetchFormNodes(client) {
 
 function* fetchSubscriptions(client) {
     const response = yield call([client, client.getSubscriptions], 'pubsub.'+window.config.xmppDomain);
-    console.log(response.pubsub.subscriptions.list)
     return response.pubsub.subscriptions.list;
 }
 
@@ -77,9 +76,7 @@ function* subscribeToFormNodes(client) {
 
     });
 
-    // TODO maybe do this on the fly
     yield call(loadFormTemplates, client);
-
 }
 
 function* loadFormTemplates(client) {
