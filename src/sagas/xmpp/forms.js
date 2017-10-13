@@ -1,4 +1,5 @@
-import { all, call, select, take, takeEvery, put } from "redux-saga/effects";
+import { delay } from "redux-saga";
+import { all, call, race, select, take, takeEvery, put } from "redux-saga/effects";
 import find from "lodash/find";
 
 import { makeChannel } from "../_helpers";
@@ -26,17 +27,14 @@ function* fetchFormNodes(client) {
     let submissionNodes = [];
 
     allNodes.discoItems.items.forEach((node) => {
-
         if(node.node.startsWith('fdp/template')) {
             templateNodes.push(node.node);
             return;
         }
-
         if(node.node.startsWith('fdp/submitted')) {
             submissionNodes.push(node.node);
             return;
         }
-
     });
 
     yield put(loadedFormNodes(templateNodes, submissionNodes));
@@ -91,10 +89,6 @@ function* loadTemplate(client, node) {
 function* watchForForms(client) {
     
     const channel = makeChannel(client, {
-        // 'dataform': (emit, msg) => {
-            // console.log('dataform', msg)
-        //     // emit(msg);
-        // },
         "pubsub:event": (emit, msg) => {
             emit(msg);
         }
@@ -106,8 +100,15 @@ function* watchForForms(client) {
 }
 
 // TODO move this elsewhere
-function buildFormMessage(formData) {
-    let message = "";
+function buildFormMessage(formData, template, node, formId) {
+
+    // TODO replace / remove below when form id delivered
+    // BUILD hyperlink consistent with exisintg jchat client
+    let message = "<a href='jchat://pubsub.localhost?select-form" + 
+                    "&node=" + node.replace("fdp/submitted/", "") + 
+                    "&id=" + formId + "'>" + 
+                    "===== " + template.title + " =====</a>";
+    
     formData.fields.forEach((field) => {
         if(field.type === "hidden") {
             return;
@@ -118,6 +119,10 @@ function buildFormMessage(formData) {
 }
 
 function* publishForm(client) {
+
+    const successChannel = makeChannel(client, {
+        "pubsub:event": (emit, msg) => emit(msg),
+    });
 
     yield takeEvery(SUBMIT_FORM, function* submitForm(action) {
 
@@ -134,12 +139,28 @@ function* publishForm(client) {
             }
         );
 
-        yield call([client, client.sendMessage], {
-            to: action.payload.jid,
-            type: 'groupchat',
-            body: buildFormMessage(formData),
-            form: formData
+        const result = yield race({
+            success: take(successChannel),
+            timeout: delay(5000)
         });
+      
+        if (result.timeout) {
+        // TODO action to explain timeout + suggest retry
+        }
+
+        if(result.success) {
+
+            let publishedForm = result.success.event.updated.published[0];
+            let template = yield select(state => state.forms.templates[action.payload.node.replace("fdp/submitted", "fdp/template")]);
+
+            yield call([client, client.sendMessage], {
+                to: action.payload.jid,
+                type: 'groupchat',
+                body: buildFormMessage(formData, template, action.payload.node, publishedForm.id),
+                form: publishedForm.form
+            });
+
+        }
 
     });
 
