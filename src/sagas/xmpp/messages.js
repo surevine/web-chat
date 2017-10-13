@@ -1,4 +1,4 @@
-import { call, take, takeEvery, put } from "redux-saga/effects";
+import { call, select, take, takeEvery, put } from "redux-saga/effects";
 import md5 from "md5";
 
 import {
@@ -10,7 +10,7 @@ import { makeChannel } from "../_helpers";
 
 function* watchForMessages(client) {
 
-  const channel = makeChannel(client, {
+  const messageChannel = makeChannel(client, {
     chat: (emit, msg) => {
       emit(msg);
     },
@@ -23,27 +23,28 @@ function* watchForMessages(client) {
       msg.id = md5(msg.subject + msg.from.bare.toString() + msg.time);
       emit(msg);
     },
-    'chat:state': (emit, msg) => {
-      console.log('CHAT STATE', msg)
-
-      // TODO outbound as below:
-      // client.sendMessage({ to: 'peer@example.com', type: 'chat', chatState: 'composing' })
-    },
+    // 'chat:state': (emit, msg) => {
+    //   // console.log('CHAT STATE', msg)
+    //   // TODO outbound as below:
+    //   // client.sendMessage({ to: 'peer@example.com', type: 'chat', chatState: 'composing' })
+    // },
   });
 
-  yield takeEvery(channel, function* eachMessage(msg) {
+  yield takeEvery(messageChannel, function* eachMessage(msg) {
+
+    // Skip delayed messages (for now)
+    if(msg.delay) {
+      return;
+    }
 
     yield put(
       receivedMessage({
         ...msg,
         time: (msg.delay && msg.delay.stamp) || new Date(),
-        from: msg.from,
-        to: msg.to,
-        anonymous: msg.anonymous,
-        direction: msg.to.bare === client.jid.bare ? "incoming" : "outgoing",
-        room: msg.type === "groupchat"
+        direction: msg.to.bare === client.jid.bare ? "incoming" : "outgoing"
       })
     );
+
 
     yield put(incrementUnreadCount(msg.from.bare));
 

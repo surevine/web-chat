@@ -1,8 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import Moment from 'react-moment';
 import ReactTooltip from 'react-tooltip'
 import FontAwesome from 'react-fontawesome';
 import find from 'lodash/find';
+
+import { getPublishedForm } from '../../../selectors';
+import { parseFormIdFromMessage } from '../../../helpers';
 
 class FormPreview extends React.Component {
 
@@ -15,12 +20,15 @@ class FormPreview extends React.Component {
 
     render() {
 
+        console.log(this.props.publishedForm);
+        // let formID = this.parseFormIdFromMessage(this.props.message);
+
         return (
             <div className="FormPreview">
 
                 <div className="formPreview">
                     <FontAwesome name='file-text' className="icon" />
-                    <p className="reference">{ this.props.message.form.fields[0].value }</p>  
+                    <p className="reference">{ this.props.publishedForm.template.title } - { this.props.publishedForm.id }</p>  
                     <Moment format="Do MMMM YYYY, HH:mm">{this.getFormUpdated(this.props.message)}</Moment>
                     
                     <div className="actions">
@@ -77,11 +85,23 @@ class FormPreview extends React.Component {
 
     getFormUpdated(form) {
         let lastUpdateField = find(form.form.fields, function(field) {
-            return ((field.type === "hidden") && (field.name === "jchat.last_modified"));
+            return (field.name === "jchat.last_modified");
         });
         return parseInt(lastUpdateField.value);
     }
 
 }
 
-export default FormPreview;
+// export default FormPreview;
+
+const mapStateToProps = (state, props) => ({
+    publishedForm: getPublishedForm(state, {
+        formId: parseFormIdFromMessage(props.message)
+    })
+  });
+  
+  const mapDispatchToProps = (dispatch, props) => {
+    return {};
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(FormPreview);

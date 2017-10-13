@@ -4,10 +4,10 @@ import find from "lodash/find";
 import { makeChannel } from "../_helpers";
 
 import { receivedForm, 
-    loadedFormNodes,
-    receivedFormTemplate,
-    SUBSCRIBE_TO_FORMS,
-    SUBMIT_FORM } from '../../ducks/forms';
+        loadedFormNodes,
+        receivedFormTemplate,
+        SUBSCRIBE_TO_FORMS,
+        SUBMIT_FORM } from '../../ducks/forms';
 
 
     // console.log('getting disco info!')
@@ -40,7 +40,6 @@ function* fetchFormNodes(client) {
     });
 
     yield put(loadedFormNodes(templateNodes, submissionNodes));
-
 }
 
 function* fetchSubscriptions(client) {
@@ -93,31 +92,16 @@ function* watchForForms(client) {
     
     const channel = makeChannel(client, {
         // 'dataform': (emit, msg) => {
-        //     // console.log('dataform', msg)
+            // console.log('dataform', msg)
         //     // emit(msg);
         // },
         "pubsub:event": (emit, msg) => {
-
-            // COULD USE THIS INSTEAD? Latest form for each node gets published on connect...
-            // Then all realtime forms are delivered
-
-            // msg.event.updated.node
-            // msg.event.updated.published[0]
-
-            console.log('published...', msg)
             emit(msg);
         }
     });
 
     yield takeEvery(channel, function* eachForm(msg) {
-
-        yield put(
-            receivedForm({
-                ...msg,
-                time: (msg.delay && msg.delay.stamp) || new Date()
-            })
-        );
-
+        yield put(receivedForm(msg));
     });
 }
 

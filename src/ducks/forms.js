@@ -1,4 +1,6 @@
 import uniqBy from "lodash/uniqBy";
+import find from "lodash/find";
+
 import { makeConstant } from "./_helpers";
 
 const constant = makeConstant("jchat/forms");
@@ -94,57 +96,78 @@ export default (state = initialState, action) => {
 
     case RECEIVED_FORM: {
 
-
-
         // TODO check if delay, if so, ignore
-
-
         
         const form = action.payload.form;
 
-        console.log('in received form action', form);
-
-        // form.event.updated.node
-        // TODO check the above starts with fdp/submitted
+        // Only process FDP nodes
+        if(form.event.updated.node.indexOf('fdp/submitted') === -1) {
+            console.log('skipping as not an FDP node');
+            return;
+        }
 
         // form.event.updated.published[0].id
-        // form.event.updated.published[0].form.fields
 
-        // ONE OF THOSE WILL HAVE NAME 'room', this is what we can use to tie to a room
+        // TODO ensure field exists..
+        const roomField = find(form.event.updated.published[0].form.fields, function(field) {
+            return field.name === 'room';
+        });
 
-        // 
+        // Only process if form has been sent to a particular room
+        if(roomField) {
 
-        const peerJid = form.from.bare;
-        const peer = state[peerJid] || {
-            jid: peerJid,
-            forms: []
-        };
+            const peerJid = roomField.value[0];
+            const peer = state[peerJid] || {
+                jid: peerJid,
+                forms: []
+            };
 
-        if(state[peer.jid] && state[peer.jid].forms) {
+            let publisherField = find(form.event.updated.published[0].form.fields, function(field) {
+                return field.name === 'userid';
+            });
 
-            var currentForms = state[peer.jid].forms;
-            currentForms.push(form);
+            // TODO refactor into helper
+            const templateNode = form.event.updated.node.replace("fdp/submitted", "fdp/template");
+    
+            let newForm = {
+                form: form.event.updated.published[0].form,
+                id: form.event.updated.published[0].id,
+                node: form.event.updated.node,
+                template: state.templates[templateNode],
+                from: publisherField.value[0]
+            };
 
-            return {
-                ...state,
-                [peer.jid]: {
+            if(state[peer.jid] && state[peer.jid].forms) {
+    
+                let currentForms = state[peer.jid].forms;
+
+                currentForms.push(newForm);
+
+                // TODO ensure updates to existing forms are used, not thrown away...
+                console.log('updating state, about to make this uniq:', currentForms)
+    
+                return {
+                    ...state,
+                    [peer.jid]: {
+                        ...peer,
+                        forms: uniqBy(currentForms, 'id')
+                    }
+                };
+    
+            } else {
+    
+                return {
+                    ...state,
+                    [peer.jid]: {
                     ...peer,
-                    forms: uniqBy(currentForms, 'id')
-                }
-            };
-
-        } else {
-
-            return {
-                ...state,
-                [peer.jid]: {
-                ...peer,
-                forms: [
-                    ...peer.forms,
-                    form
-                    ]
-                }
-            };
+                    forms: [
+                        ...peer.forms,
+                        newForm
+                        ]
+                    }
+                };
+    
+            }
 
         }
 

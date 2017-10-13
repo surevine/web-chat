@@ -1,5 +1,6 @@
 import findIndex from "lodash/findIndex";
 import findKey from "lodash/findKey";
+import find from "lodash/find";
 
 export const getAuthenticated = state => state.client.authenticated;
 
@@ -62,5 +63,22 @@ export const getTemplateOptions = (state) => {
   });
 
   return opts;
+
+}
+
+export const getPublishedForm = (state, { formId }) => {
+
+  console.log('checking')
+
+  let roomJid = getCurrentRoomJid(state);
+
+  console.log(formId, roomJid)
+
+  let form = find(state.forms[roomJid].forms, function(form) {
+    console.log('in loop for forms...')
+    return form.id === formId;
+  });
+
+  return form;
 
 }

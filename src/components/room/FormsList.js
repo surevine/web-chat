@@ -17,9 +17,10 @@ class FormsList extends React.Component {
                         <div className="formSubmission" key={form.id}>
                             <FontAwesome name='file-text-o' className="formIcon" />
                             <div className="description">
-                                <h5 className="title">{form.form.fields[0].value}</h5>
+                                <h5 className="title">{form.template.title}</h5>
+                                <p>{form.id}</p>
                                 <p className="meta">
-                                    <span className="author">{form.from.resource}</span>
+                                    <span className="author">{form.from}</span>
                                     <Moment className="date" format="D/M/YYYY, HH:mm">{this.getFormUpdated(form)}</Moment>
                                 </p>
                             </div>

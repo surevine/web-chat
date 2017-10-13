@@ -59,13 +59,11 @@ class Message extends React.Component {
     renderPresence() {
 
         if(this.props.message.type === 'available') {
-
             return (
                 <div className="presence">
                     <p>{this.props.message.from.resource} joined the room.</p>
                 </div>
             );
-
         }
 
         return (
@@ -76,6 +74,9 @@ class Message extends React.Component {
     }
 
     renderFormPreview() {
+
+        // TODO load the form from state...
+
         return (
             <div className="form">
                 <span className="author">{this.props.message.from.resource}</span>
