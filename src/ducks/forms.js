@@ -1,5 +1,6 @@
 import uniqBy from "lodash/uniqBy";
 import find from "lodash/find";
+import filter from "lodash/filter";
 
 import { makeConstant } from "./_helpers";
 
@@ -138,14 +139,13 @@ export default (state = initialState, action) => {
             };
 
             if(state[peer.jid] && state[peer.jid].forms) {
-    
-                let currentForms = state[peer.jid].forms;
 
+                // TODO double check that publish time of form is newer
+                let currentForms = filter(state[peer.jid].forms, function(form) {
+                    return form.id !== newForm.id;
+                });
                 currentForms.push(newForm);
 
-                // TODO ensure updates to existing forms are used, not thrown away...
-                console.log('updating state, about to make this uniq:', currentForms)
-    
                 return {
                     ...state,
                     [peer.jid]: {
