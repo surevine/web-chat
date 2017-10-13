@@ -68,14 +68,8 @@ export const getTemplateOptions = (state) => {
 
 export const getPublishedForm = (state, { formId }) => {
 
-  console.log('checking')
-
   let roomJid = getCurrentRoomJid(state);
-
-  console.log(formId, roomJid)
-
   let form = find(state.forms[roomJid].forms, function(form) {
-    console.log('in loop for forms...')
     return form.id === formId;
   });
 

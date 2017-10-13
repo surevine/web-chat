@@ -20,9 +20,6 @@ class FormPreview extends React.Component {
 
     render() {
 
-        console.log(this.props.publishedForm);
-        // let formID = this.parseFormIdFromMessage(this.props.message);
-
         return (
             <div className="FormPreview">
 
