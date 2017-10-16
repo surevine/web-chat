@@ -27,9 +27,13 @@ function* watchForPresence(client) {
         }
         return undefined;
       });
+
+      console.log('recived presence for channel', presence)
         
       // Ignore own presence messages
       if(roomNickname && (presence.from.resource !== roomNickname)) {
+
+        console.log('in not own presence stuff apparently?')
 
         const roomMembers = yield select(function(state) {
           let members = [];
@@ -44,13 +48,11 @@ function* watchForPresence(client) {
         });
 
         // Don't show join message if member already in room
-        if(memberInRoom && presence.type === 'available') {
-          return;
+        if(!memberInRoom || presence.type !== 'available') {
+          // TODO fix this more properly
+          presence.id = md5(presence.from.resource + new Date());
+          yield put(receivedMessage(presence));
         }
-
-        // TODO fix this more properly
-        presence.id = md5(presence.from.resource + new Date());
-        yield put(receivedMessage(presence));
 
       }
 

@@ -6,6 +6,7 @@ import ReactTooltip from 'react-tooltip';
 import Select from 'react-select';
 import forIn from 'lodash/forIn';
 
+import { getFormField } from '../../forms';
 import FormField from '../forms/FormField';
 
 
@@ -199,11 +200,87 @@ class SendFormControl extends React.Component {
                             <div className="formWrapper">
                                 <p>{template.instructions[0]}</p>
                                 <form className="formTemplate">
-                                    { template.fields.map(field => {
-                                        return (
-                                            <FormField key={field.name} field={field} form={this.state.form} onChange={this.updateFormState.bind(this)} />
-                                        )
-                                    })}
+
+                                    { template.layout ? (
+                                        <div className="layout">
+                                            {/* TODO: refactor entire thing into Form component as well, which does the if layout etc */}
+                                            {/* TODO: refactor into LayoutForm */}
+
+                                            { template.layout.map((page, index) => {
+
+                                                if(!page.label) {
+                                                    page.label = (index + 1);
+                                                }
+
+                                                return (
+
+                                                    <div className="formPage" key={page.label}>
+                                                    <h3>PAGE: {page.label}</h3>
+
+                                                    {/* DRY */}
+                                                    { page.contents.map(formItem => {
+
+                                                        // Skip text layout items as not used
+                                                        if(formItem.text) {
+                                                            return null;
+                                                        }
+
+                                                        return (
+                                                            <div className="formItem" key={formItem.field || formItem.section.label}>
+                                                            { formItem.field ? (
+
+                                                                <FormField key={getFormField(template, formItem.field).name} field={getFormField(template, formItem.field)} form={this.state.form} onChange={this.updateFormState.bind(this)} />
+
+                                                            ) : (
+                                                                <div className="formSection">
+                                                                    {/* TODO ensure section exists */}
+                                                                    <h4>{formItem.section.label}</h4>
+
+                                                                    <div className="sectionFields">
+
+                                                                    {/* TODO: refactor not repeat above... */}
+                                                                    { formItem.section.contents.map(sectionItem => {
+
+                                                                        return (
+                                                                            <FormField key={getFormField(template, sectionItem.field).name} field={getFormField(template, sectionItem.field)} form={this.state.form} onChange={this.updateFormState.bind(this)} />
+                                                                        );
+
+                                                                    })}
+
+                                                                    <div className="clearfix"></div>
+
+                                                                    </div>                                   
+
+                                                                </div>
+                                                            )}
+                                                            </div>
+                                                        )
+
+
+                                                    })}
+
+                                                    </div>
+
+                                                )
+
+
+                                            })}
+
+                                        </div>  
+                                    ) : (
+
+                                        <div className="basic">
+
+                                        { template.fields.map(field => {
+                                            return (
+                                                <FormField key={field.name} field={field} form={this.state.form} onChange={this.updateFormState.bind(this)} />
+                                            )
+                                        })}
+
+                                        </div>
+
+                                    ) }
+
                                 </form>
                             </div>
                             <div className="controls">

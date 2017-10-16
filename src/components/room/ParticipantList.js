@@ -1,5 +1,6 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
+import ReactTooltip from 'react-tooltip';
 
 class ParticipantList extends React.Component {
 
@@ -49,13 +50,38 @@ class ParticipantList extends React.Component {
         return (
             <ul>
             {filteredMembers.map(member => (
-                    <li key={member.resource} title={member.status}>
-                        <FontAwesome name='circle' className={ "presenceIcon " + member.presence} />
+                    <li key={member.resource} title={member.status}>   
+                        <span data-delay-show='50' data-tip={this.buildMemberPresence(member)}>
+                            <FontAwesome name='circle' className={ "presenceIcon " + member.presence} />
+                            <ReactTooltip />
+                        </span>
                         {member.resource}
                     </li>
             ))}
             </ul>
         );
+    }
+
+    buildMemberPresence(member) {
+        let msg = '';
+
+        switch(member.presence) {
+            case "available":
+                msg = 'Available';
+                break;
+            case "dnd":
+                msg = "Busy";
+                break;
+            case "away":
+                msg = "Away";
+                break;
+        }
+        
+        if(member.status && member.status.length) {
+            msg += (' - ' + member.status);
+        }
+
+        return msg;
     }
 
 }
