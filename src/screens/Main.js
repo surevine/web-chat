@@ -8,6 +8,7 @@ class Home extends React.Component {
     render() {
         return (
         <div className="Join Page">
+            
             <h2>Join a room</h2>
             <EnterRoomForm />
 

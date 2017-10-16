@@ -91,7 +91,7 @@ class Room extends React.Component {
 
             ) : (
 
-                <div className="Page">
+                <div className="roomError">
                 { (this.props.room.error) ? (
                     this.renderError(this.props.room.error)
                 ) : (

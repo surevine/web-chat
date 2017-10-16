@@ -226,7 +226,9 @@ body {
 /* Page */
 
 .Page {
+  height: 100vh;
   padding: 0 30px;
+  overflow-y: scroll;
 }
 
 /* Forms */
@@ -404,6 +406,10 @@ form .actions {
   overflow-y: scroll;
 }
 
+.roomError {
+  padding: 0 30px;
+}
+
 /* Room Sidebar */
 
 .RoomSidebar {
@@ -442,7 +448,8 @@ form .actions {
   overflow-y: scroll;
 }
 
-.closeSidebar {
+.closeSidebar,
+.closeModal {
   float: right;
   font-size: 20px;
   line-height: 30px;
@@ -450,7 +457,8 @@ form .actions {
   color: #777;
 }
 
-.closeSidebar:hover {
+.closeSidebar:hover,
+.closeModal:hover {
   color: #333;
 }
 
@@ -746,8 +754,7 @@ form .actions {
 }
 
 .closeModal {
-  float: right;
-  cursor: pointer;
+  line-height: 24px;
 }
 
 /* Misc */
