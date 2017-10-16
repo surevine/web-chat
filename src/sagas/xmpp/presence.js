@@ -28,12 +28,8 @@ function* watchForPresence(client) {
         return undefined;
       });
 
-      console.log('recived presence for channel', presence)
-        
       // Ignore own presence messages
       if(roomNickname && (presence.from.resource !== roomNickname)) {
-
-        console.log('in not own presence stuff apparently?')
 
         const roomMembers = yield select(function(state) {
           let members = [];
