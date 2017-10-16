@@ -11,6 +11,12 @@ class FormsList extends React.Component {
 
             { this.props.forms ? (
                 <div>
+
+                    { (this.props.forms.length == 0) && (
+                        <p>No forms have been submitted to this channel.</p>
+                    )}
+
+
                     { this.props.forms
                         .sort((a, b) => this.getFormUpdated(a) < this.getFormUpdated(b))
                         .map(form => (

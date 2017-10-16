@@ -49,6 +49,12 @@ class Room extends React.Component {
     componentWillUpdate(nextProps, nextState) {
         if(nextProps.match.params.jid !== this.state.roomJid) {
 
+            // Close sidebar when joining new room /
+            // room we're not connected to
+            if(!nextProps.room.joined) {
+                this.hideSidebar();
+            }
+
             // TODO also need to change the isCurrent?!
 
             this.setState(function(prevState, props) {
@@ -85,7 +91,7 @@ class Room extends React.Component {
 
             ) : (
 
-                <div>
+                <div className="Page">
                 { (this.props.room.error) ? (
                     this.renderError(this.props.room.error)
                 ) : (
@@ -131,7 +137,9 @@ class Room extends React.Component {
     }
 
     hideSidebar = e => {
-        e.preventDefault();
+        if(e) {
+            e.preventDefault();
+        }
         this.setState({ 
             showRoomSidebar: false,
             showParticipantsList: false,
@@ -150,6 +158,11 @@ class Room extends React.Component {
 
     toggleParticipants = e => {
         e.preventDefault();
+
+        // don't allow toggling if not connected
+        if(!this.props.room.joined) {
+            return;
+        }
 
         this.setState(function(prevState, props) {
 
@@ -170,6 +183,12 @@ class Room extends React.Component {
 
     toggleForms = e => {
         e.preventDefault();
+
+        // don't allow toggling if not connected
+        if(!this.props.room.joined) {
+            return;
+        }
+
         this.setState(function(prevState, props) {
 
             // TODO refactor this...

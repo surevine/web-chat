@@ -50,7 +50,7 @@ class ParticipantList extends React.Component {
         return (
             <ul>
             {filteredMembers.map(member => (
-                    <li key={member.resource} title={member.status}>   
+                    <li key={member.resource}>   
                         <span data-delay-show='50' data-tip={this.buildMemberPresence(member)}>
                             <FontAwesome name='circle' className={ "presenceIcon " + member.presence} />
                             <ReactTooltip />

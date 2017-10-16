@@ -35,7 +35,7 @@ class FormField extends React.Component {
             case "text-single":
 
                 return (
-                    <input required="true" type="text" autoComplete="off" {...fieldProps} />
+                    <input type="text" autoComplete="off" {...fieldProps} />
                 )
 
             case "text-multi":
@@ -114,11 +114,6 @@ class FormField extends React.Component {
         let fixedFieldTypes = [
             "hidden", "fixed"
         ];
-
-        if(field.validation) {
-            console.log(field.validation);
-            // TODO establish required validation method
-        }
 
         // Basic render of certain inputs
         if(fixedFieldTypes.indexOf(field.type) > -1) {
