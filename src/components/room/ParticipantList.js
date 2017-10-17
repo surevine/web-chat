@@ -51,9 +51,13 @@ class ParticipantList extends React.Component {
             <ul>
             {filteredMembers.map(member => (
                     <li key={member.resource}>   
-                        <span data-delay-show='50' data-tip={this.buildMemberPresence(member)}>
+                        <span 
+                            data-tip
+                            data-for={member.resource+'Tip'}>
                             <FontAwesome name='circle' className={ "presenceIcon " + member.presence} />
-                            <ReactTooltip />
+                            <ReactTooltip id={member.resource+'Tip'} place="top" effect='solid' delayShow={100} offset={{left:2}}>
+                                <span>{this.buildMemberPresence(member)}</span>
+                            </ReactTooltip>
                         </span>
                         {member.resource}
                     </li>

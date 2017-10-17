@@ -17,39 +17,47 @@ class RoomHeader extends React.Component {
 
                     <a className="leaveRoom iconButton"
                         onClick={this.props.leaveRoom}
-                        data-offset="{'left': 2}"
-                        data-delay-show='100'
-                        data-tip="Leave Room">
+                        data-tip
+                        data-for="leaveRoomTip">
                         <FontAwesome name='sign-out' />
                     </a>
+                    <ReactTooltip id='leaveRoomTip' place="bottom" effect='solid' delayShow={100} offset={{left:2}}>
+                        <span>Leave Room</span>
+                    </ReactTooltip>
 
                     <a className="formsMenu iconButton"
                         onClick={this.props.toggleForms}
-                        data-offset="{'left': 2}"
-                        data-delay-show='100'
-                        data-tip="Form Submissions">
+                        data-tip
+                        data-for="formsTip">
                         <FontAwesome name='file-text-o' /> { this.props.forms.length }
                     </a>
+                    <ReactTooltip id='formsTip' place="bottom" effect='solid' delayShow={100} offset={{left:2}}>
+                        <span>Form Submissions</span>
+                    </ReactTooltip>
 
                     <a className="participantsMenu iconButton" 
                         onClick={this.props.toggleParticipants}
-                        data-offset="{'left': 2}"
-                        data-delay-show='100'
-                        data-tip="Room Members">
+                        data-tip
+                        data-for="membersTip">
                         <FontAwesome name='user-o' /> { this.props.members.length }
                     </a>
+                    <ReactTooltip id='membersTip' place="bottom" effect='solid' delayShow={100} offset={{left:2}}>
+                        <span>Room Members</span>
+                    </ReactTooltip>
 
                     <a className="bookmarkMenu iconButton"
                         onClick={this.props.toggleBookmark}
-                        data-offset="{'left': 2}"
-                        data-delay-show='100'
-                        data-tip={this.props.bookmarked ? "Unbookmark Room" : "Bookmark Room"}>
+                        data-tip
+                        data-for="bookmarkTip">
                         {this.props.bookmarked ? (
                             <FontAwesome name='bookmark' />
                         ) : (
                             <FontAwesome name='bookmark-o' />
                         )}
                     </a>
+                    <ReactTooltip id='bookmarkTip' place="bottom" effect='solid' delayShow={100} offset={{left:2}}>
+                        <span>{this.props.bookmarked ? "Unbookmark Room" : "Bookmark Room"}</span>
+                    </ReactTooltip>
 
                 </div>
             </div>

@@ -90,11 +90,13 @@ class RoomList extends React.Component {
             <h3>Rooms</h3>
 
             <Link to='/' className="joinRoom iconButton"
-                data-offset="{'left': 2}"
-                data-delay-show='100'
-                data-tip="Join a room">
+                data-tip
+                data-for="joinTip">
                 <FontAwesome name='plus-circle' />
             </Link>
+            <ReactTooltip id='joinTip' place="top" effect='solid' delayShow={100} offset={{left:2}}>
+                <span>Join a room</span>
+            </ReactTooltip>
 
             {/* TODO DRY... */}
 

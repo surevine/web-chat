@@ -651,44 +651,6 @@ form .actions {
   margin: 0 10px 0 0;
 }
 
-/* Message Form */
-
-.MessageForm {
-  grid-row: 2;
-  padding: 0 10px 0 18px;
-  min-height: 70px;
-
-  overflow: hidden;
-
-  display: grid;
-  grid-template-columns: 60px auto;
-}
-
-.MessageForm .SendFormControl {
-  grid-column: 1;
-}
-
-.MessageForm form {
-  grid-column: 2;
-}
-
-.MessageForm #sendMessage {
-  width: calc(100% - 40px);
-  padding: 11px 10px;
-  height: 24px;
-  margin-bottom: 24px;
-  font-size: 16px;
-  color: #333;
-  border: solid 2px #ccc;
-  border-radius: 6px;
-  box-shadow: none;
-}
-
-.MessageForm #sendMessage:focus {
-  border: solid 2px #999;
-  outline: none;
-}
-
 .SendFormControl .sendForm {
   display: block;
   width: 30px;

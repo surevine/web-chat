@@ -159,9 +159,17 @@ class SendFormControl extends React.Component {
         <div className="SendFormControl">
 
             {this.props.enabled ? (
-                <a className="sendForm" onClick={this.handleOpenModal} data-tip="Send Form">
-                    <FontAwesome name='file-text' className="icon" />
-                </a>
+                <span>
+                    <a className="sendForm" 
+                        onClick={this.handleOpenModal} 
+                        data-tip 
+                        data-for="sendTip">
+                        <FontAwesome name='file-text' className="icon" />
+                    </a>
+                    <ReactTooltip id='sendTip' place="top" effect='solid' delayShow={100} offset={{left:2}}>
+                        <span>Send Form</span>
+                    </ReactTooltip>
+                </span>
             ) : (
                 <a className="sendForm disabled" onClick={this.handleOpenModal}>
                     <FontAwesome name='file-text' className="icon" />

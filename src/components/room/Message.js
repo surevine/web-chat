@@ -41,8 +41,14 @@ class Message extends React.Component {
         return (
             <div className="chat">
                 <span className="author">{this.props.message.from.resource}</span>
-                <Moment format="h:mm A" data-tip={this.formatMessageDateTime(this.props.message.time)}>{this.props.message.time}</Moment>
-                <ReactTooltip effect="solid" delayShow={300} offset={{right: 20}} />
+                <Moment format="h:mm A"
+                        data-tip
+                        data-for={this.props.message.id+'Tip'}>
+                        {this.props.message.time}
+                </Moment>
+                <ReactTooltip id={this.props.message.id+'Tip'} place="top" effect='solid' delayShow={300} offset={{right:20}}>
+                    <span>{this.formatMessageDateTime(this.props.message.time)}</span>
+                </ReactTooltip>
                 <p>{this.props.message.body}</p>
             </div>
         );
@@ -80,8 +86,14 @@ class Message extends React.Component {
         return (
             <div className="form">
                 <span className="author">{this.props.message.from.resource}</span>
-                <Moment format="h:mm A" data-tip={this.formatMessageDateTime(this.props.message.time)}>{this.props.message.time}</Moment>
-                <ReactTooltip effect="solid" delayShow={300} offset={{right: 20}} />
+                <Moment format="h:mm A"
+                        data-tip
+                        data-for={this.props.message.id+'Tip'}>
+                        {this.props.message.time}
+                </Moment>
+                <ReactTooltip id={this.props.message.id+'Tip'} place="top" effect='solid' delayShow={300} offset={{right:20}}>
+                    <span>{this.formatMessageDateTime(this.props.message.time)}</span>
+                </ReactTooltip>
                 <FormPreview message={this.props.message} formatMessageDateTime={this.formatMessageDateTime} />
             </div>
         );
