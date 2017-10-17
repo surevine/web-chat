@@ -105,9 +105,7 @@ class FormTemplate extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        let form = this.state.form;
-        console.log(form);
-        this.props.onSubmit(form);
+        this.props.onSubmit(this.state.form);
     }
 
 }
