@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import ReactModal from 'react-modal';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ReactTooltip from 'react-tooltip';
 import Select from 'react-select';
 import forIn from 'lodash/forIn';
@@ -214,65 +215,79 @@ class SendFormControl extends React.Component {
                                             {/* TODO: refactor entire thing into Form component as well, which does the if layout etc */}
                                             {/* TODO: refactor into LayoutForm */}
 
-                                            { template.layout.map((page, index) => {
+                                            <Tabs>
 
-                                                if(!page.label) {
-                                                    page.label = (index + 1);
-                                                }
+                                                <TabList>
+                                                { template.layout.map((page, index) => {
 
-                                                return (
+                                                    if(!page.label) {
+                                                        page.label = "Page " + (index + 1);
+                                                    }
 
-                                                    <div className="formPage" key={page.label}>
-                                                    <h3>PAGE: {page.label}</h3>
+                                                    return (
+                                                        <Tab key={page.label}>{page.label}</Tab>
+                                                    )
 
-                                                    {/* DRY */}
-                                                    { page.contents.map(formItem => {
+                                                })}
+                                                </TabList>
 
-                                                        // Skip text layout items as not used
-                                                        if(formItem.text) {
-                                                            return null;
-                                                        }
+                                                
 
-                                                        return (
-                                                            <div className="formItem" key={formItem.field || formItem.section.label}>
-                                                            { formItem.field ? (
+                                                { template.layout.map((page, index) => {
 
-                                                                <FormField key={getFormField(template, formItem.field).name} field={getFormField(template, formItem.field)} form={this.state.form} onChange={this.updateFormState.bind(this)} />
+                                                    return (
 
-                                                            ) : (
-                                                                <div className="formSection">
-                                                                    {/* TODO ensure section exists */}
-                                                                    <h4>{formItem.section.label}</h4>
+                                                        <TabPanel key={index}>
 
-                                                                    <div className="sectionFields">
+                                                        { page.contents.map((formItem, index) => {
 
-                                                                    {/* TODO: refactor not repeat above... */}
-                                                                    { formItem.section.contents.map(sectionItem => {
+                                                            // Skip text layout items as not used
+                                                            if(formItem.text) {
+                                                                return null;
+                                                            }
 
-                                                                        return (
-                                                                            <FormField key={getFormField(template, sectionItem.field).name} field={getFormField(template, sectionItem.field)} form={this.state.form} onChange={this.updateFormState.bind(this)} />
-                                                                        );
+                                                            return (
+                                                                <div className="formItem" key={index}>
+                                                                { formItem.field ? (
 
-                                                                    })}
+                                                                    <FormField key={getFormField(template, formItem.field).name} field={getFormField(template, formItem.field)} form={this.state.form} onChange={this.updateFormState.bind(this)} />
 
-                                                                    <div className="clearfix"></div>
+                                                                ) : (
+                                                                    <div className="formSection">
+                                                                        {/* TODO ensure section exists */}
+                                                                        <h4>{formItem.section.label}</h4>
 
-                                                                    </div>                                   
+                                                                        <div className="sectionFields">
 
+                                                                        {/* TODO: refactor not repeat above... */}
+                                                                        { formItem.section.contents.map(sectionItem => {
+
+                                                                            return (
+                                                                                <FormField key={getFormField(template, sectionItem.field).name} field={getFormField(template, sectionItem.field)} form={this.state.form} onChange={this.updateFormState.bind(this)} />
+                                                                            );
+
+                                                                        })}
+
+                                                                        <div className="clearfix"></div>
+
+                                                                        </div>                                   
+
+                                                                    </div>
+                                                                )}
                                                                 </div>
-                                                            )}
-                                                            </div>
-                                                        )
+                                                            )
 
 
-                                                    })}
+                                                        })}
 
-                                                    </div>
+                                                        </TabPanel>
 
-                                                )
+                                                    )
 
 
-                                            })}
+                                                })}
+
+                                            </Tabs>
 
                                         </div>  
                                     ) : (
