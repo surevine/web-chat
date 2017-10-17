@@ -1,10 +1,22 @@
 import React from 'react';
 
+import FormField from '../forms/FormField';
+
 class BasicForm extends React.Component {
 
     render() {
         return (
-            'TODO: basic spit out fields...'
+
+            <div className="basic">
+            
+            { this.props.template.fields.map(field => {
+                return (
+                    <FormField key={field.name} field={field} form={this.props.form} onChange={this.props.onFieldChange} />
+                )
+            })}
+
+            </div>
+
         );
     }
 

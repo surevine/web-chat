@@ -292,6 +292,7 @@ textarea:disabled,
 .formSection .sectionFields {
   padding: 0 20px;
   background-color: #f3f3f3;
+  border-radius: 6px;
 }
 
 .formSection .sectionFields .fieldgroup {
@@ -770,4 +771,42 @@ input[type='submit']:hover,
 input[type='submit']:active,
 .primary-btn:active {
   box-shadow: none;
+}
+
+/* Tabs */
+
+.react-tabs {
+
+}
+
+.react-tabs__tab-list {
+  margin-bottom: 40px;
+  margin: 0;
+  padding: 0;
+}
+
+.react-tabs__tab-list li {
+  display: block;
+  float: left;  
+  margin: 0;
+  padding: 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+.react-tabs__tab-list li:hover {
+  color: #007eff;
+}
+
+li.react-tabs__tab--selected {
+  font-weight: bold;
+  border-bottom: solid 2px #007eff;
+}
+
+li.react-tabs__tab--selected:hover {
+  color: inherit;
+}
+
+.react-tabs__tab-panel {
+
 }

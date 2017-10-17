@@ -2,17 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 import ReactModal from 'react-modal';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import ReactTooltip from 'react-tooltip';
 import Select from 'react-select';
 import forIn from 'lodash/forIn';
 
-import { getFormField } from '../../forms';
-import FormField from '../forms/FormField';
-
-
+import FormTemplate from '../forms/FormTemplate';
 import { getCurrentRoomJid, getTemplateOptions } from '../../selectors';
-
 import { submitForm } from '../../ducks/forms';
 
 class SendFormControl extends React.Component {
@@ -21,8 +16,7 @@ class SendFormControl extends React.Component {
         super();
         this.state = {
             showModal: false,
-            selectedTemplate: '',
-            form: {}
+            selectedTemplate: ''
         };
         
         this.handleOpenModal = this.handleOpenModal.bind(this);
@@ -52,26 +46,26 @@ class SendFormControl extends React.Component {
         });
     }
 
-    handleFormSubmit() {
+    handleFormSubmit(form) {
+
         let templateNode = this.state.selectedTemplate;
         let submissionNode = templateNode.replace("fdp/template", "fdp/submitted");
-        this.props.submitForm(submissionNode, this.buildFormFields(), this.props.roomJid);
+        this.props.submitForm(submissionNode, this.buildFormData(form), this.props.roomJid);
 
         this.handleCloseModal();
         this.setState(function(prevState, props) {
             return {
                 ...prevState,
-                selectedTemplate: '',
-                form: {}
+                selectedTemplate: ''
             };
         });
     }
 
-    buildFormFields() {
+    buildFormData(form) {
 
         let formFields = [];
         
-        forIn(this.state.form, function(field, key) {
+        forIn(form, function(field, key) {
             formFields.push(field);
         });
 
@@ -98,56 +92,16 @@ class SendFormControl extends React.Component {
         return formFields;
     }
 
-    selectForm(option) {
-
-        let formState = {};
-
-        if(option && option.value !== undefined) {
-            let template = this.props.templates[option.value];
-
-            template.fields.map(field => {
-
-                if(field.type !== 'fixed') {
-                    formState[field.name] = {
-                        type: field.type,
-                        label: field.label,
-                        name: field.name,
-                        value: "",
-                    };
-                }
-
-            });
-
-        } else {
+    selectFormTemplate(option) {
+        if(!option || option.value === undefined) {
             option = {
                 value: undefined
             }
         }
-
         this.setState(function(prevState, props) {
             return {
                 ...prevState,
-                selectedTemplate: option.value,
-                form: formState
-            };
-        });
-
-    }
-
-    updateFormState(fieldName, value) {
-
-        this.setState(function(prevState, props) {
-            let currentFormState = prevState.form;
-            let currentField = currentFormState[fieldName];
-            return {
-                ...prevState,
-                form: {
-                    ...currentFormState,
-                    [fieldName]: {
-                        ...currentField,
-                        value: value
-                    }
-                }
+                selectedTemplate: option.value
             };
         });
     }
@@ -200,121 +154,15 @@ class SendFormControl extends React.Component {
                         name="template"
                         value={this.state.selectedTemplate}
                         options={this.props.templateOpts}
-                        onChange={this.selectForm.bind(this)}
+                        onChange={this.selectFormTemplate.bind(this)}
                     />
 
                     { template && (
 
-                        <div>
-                            <div className="formWrapper">
-                                <p>{template.instructions[0]}</p>
-                                <form className="formTemplate">
-
-                                    { template.layout ? (
-                                        <div className="layout">
-                                            {/* TODO: refactor entire thing into Form component as well, which does the if layout etc */}
-                                            {/* TODO: refactor into LayoutForm */}
-
-                                            <Tabs>
-
-                                                <TabList>
-                                                { template.layout.map((page, index) => {
-
-                                                    if(!page.label) {
-                                                        page.label = "Page " + (index + 1);
-                                                    }
-
-                                                    return (
-                                                        <Tab key={page.label}>{page.label}</Tab>
-                                                    )
-
-                                                })}
-                                                </TabList>
-
-                                                
-
-                                                { template.layout.map((page, index) => {
-
-                                                    return (
-
-                                                        <TabPanel key={index}>
-
-                                                        { page.contents.map((formItem, index) => {
-
-                                                            // Skip text layout items as not used
-                                                            if(formItem.text) {
-                                                                return null;
-                                                            }
-
-                                                            return (
-                                                                <div className="formItem" key={index}>
-                                                                { formItem.field ? (
-
-                                                                    <FormField key={getFormField(template, formItem.field).name} field={getFormField(template, formItem.field)} form={this.state.form} onChange={this.updateFormState.bind(this)} />
-
-                                                                ) : (
-                                                                    <div className="formSection">
-                                                                        {/* TODO ensure section exists */}
-                                                                        <h4>{formItem.section.label}</h4>
-
-                                                                        <div className="sectionFields">
-
-                                                                        {/* TODO: refactor not repeat above... */}
-                                                                        { formItem.section.contents.map(sectionItem => {
-
-                                                                            return (
-                                                                                <FormField key={getFormField(template, sectionItem.field).name} field={getFormField(template, sectionItem.field)} form={this.state.form} onChange={this.updateFormState.bind(this)} />
-                                                                            );
-
-                                                                        })}
-
-                                                                        <div className="clearfix"></div>
-
-                                                                        </div>                                   
-
-                                                                    </div>
-                                                                )}
-                                                                </div>
-                                                            )
-
-
-                                                        })}
-
-                                                        </TabPanel>
-
-                                                    )
-
-
-                                                })}
-
-                                            </Tabs>
-
-                                        </div>  
-                                    ) : (
-
-                                        <div className="basic">
-
-                                        { template.fields.map(field => {
-                                            return (
-                                                <FormField key={field.name} field={field} form={this.state.form} onChange={this.updateFormState.bind(this)} />
-                                            )
-                                        })}
-
-                                        </div>
-
-                                    ) }
-
-                                </form>
-                            </div>
-                            <div className="controls">
-                                <a className="cancelForm btn" onClick={this.handleCloseModal}>
-                                    Cancel
-                                </a>
-                                <a className="primary-btn" onClick={this.handleFormSubmit.bind(this)}>
-                                    Send form
-                                </a>
-                            </div>
-                        </div>
+                        <FormTemplate
+                            template={template}
+                            onCancel={this.handleCloseModal}
+                            onSubmit={this.handleFormSubmit.bind(this)} />
 
                     )}
 
