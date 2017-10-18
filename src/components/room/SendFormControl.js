@@ -91,7 +91,6 @@ class SendFormControl extends React.Component {
         );
     }
 
-
     handleOpenModal() {
 
         if(!this.props.enabled) {

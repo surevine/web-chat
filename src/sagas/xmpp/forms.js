@@ -9,6 +9,7 @@ import { receivedForm,
         receivedFormTemplate,
         SUBSCRIBE_TO_FORMS,
         SUBMIT_FORM } from '../../ducks/forms';
+import { showNotification } from '../../ducks/notification';
 
 
     // console.log('getting disco info!')
@@ -96,6 +97,7 @@ function* watchForForms(client) {
 
     yield takeEvery(channel, function* eachForm(msg) {
         yield put(receivedForm(msg));
+        yield put(showNotification('RECEIVED FORM!', 'body of notification here'))
     });
 }
 

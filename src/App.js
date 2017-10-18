@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Sidebar from './components/sidebar/Sidebar';
+import AppNotification from './components/app/AppNotification';
 
 import './App.css';
 
@@ -15,6 +16,8 @@ class App extends React.Component {
         <div className="main">
           {this.props.children}
         </div>
+
+        <AppNotification />
 
       </div>
     );

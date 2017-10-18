@@ -11,6 +11,24 @@ class EnterRoomForm extends React.Component {
         this._roomJid.focus();
     }
 
+    render() {
+        return (
+        <div className="EnterRoomForm">
+            <form className="form" onSubmit={this.handleSubmit}>
+                <label htmlFor="roomJid">Room JID</label>
+                <input ref={el => this._roomJid = el} type="text" name="roomJid" id="roomJid" placeholder="Enter room JID" />
+                <label htmlFor="nickname">Nickname <span>(optional)</span></label>
+                <input ref={el => this._nickname = el} type="text" name="nickname" id="nickname" placeholder="Nickname" />
+                <label htmlFor="password">Password <span>(optional)</span></label>
+                <input ref={el => this._password = el} type="password" name="password" id="password" placeholder="Password" />
+                <div className="actions">
+                    <input type="submit" value="Join Room" />
+                </div>
+            </form>
+        </div>
+        );
+    }
+
     handleSubmit = e => {
         e.preventDefault();
 
@@ -36,24 +54,6 @@ class EnterRoomForm extends React.Component {
         }
 
     };
-
-    render() {
-        return (
-        <div className="EnterRoomForm">
-            <form className="form" onSubmit={this.handleSubmit}>
-                <label htmlFor="roomJid">Room JID</label>
-                <input ref={el => this._roomJid = el} type="text" name="roomJid" id="roomJid" placeholder="Enter room JID" />
-                <label htmlFor="nickname">Nickname <span>(optional)</span></label>
-                <input ref={el => this._nickname = el} type="text" name="nickname" id="nickname" placeholder="Nickname" />
-                <label htmlFor="password">Password <span>(optional)</span></label>
-                <input ref={el => this._password = el} type="password" name="password" id="password" placeholder="Password" />
-                <div className="actions">
-                    <input type="submit" value="Join Room" />
-                </div>
-            </form>
-        </div>
-        );
-    }
 
 }
 

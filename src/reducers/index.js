@@ -6,6 +6,7 @@ import forms from '../ducks/forms';
 import local from '../ducks/local';
 import rooms from '../ducks/rooms';
 import messages from '../ducks/messages';
+import notification from '../ducks/notification';
 import presence from '../ducks/presence';
 import user from '../ducks/user';
 
@@ -16,6 +17,7 @@ export default combineReducers({
   local,
   rooms,
   messages,
+  notification,
   presence,
   user
 });
