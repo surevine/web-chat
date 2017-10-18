@@ -4,9 +4,7 @@
     grid-row: 2;
     padding: 0 10px 0 18px;
     min-height: 70px;
-  
     overflow: hidden;
-  
     display: grid;
     grid-template-columns: 60px auto;
   }

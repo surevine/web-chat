@@ -23,6 +23,75 @@ class SendFormControl extends React.Component {
         this.handleCloseModal = this.handleCloseModal.bind(this);
     }
 
+    render() {
+
+        let template = this.props.templates[this.state.selectedTemplate];
+
+        return (
+        <div className="SendFormControl">
+
+            {this.props.enabled ? (
+                <span>
+                    <a className="sendForm" 
+                        onClick={this.handleOpenModal} 
+                        data-tip 
+                        data-for="sendTip">
+                        <FontAwesome name='file-text' className="icon" />
+                    </a>
+                    <ReactTooltip id='sendTip' place="top" effect='solid' delayShow={100} offset={{left:2}}>
+                        <span>Send Form</span>
+                    </ReactTooltip>
+                </span>
+            ) : (
+                <a className="sendForm disabled" onClick={this.handleOpenModal}>
+                    <FontAwesome name='file-text' className="icon" />
+                </a>
+            )}
+
+            <ReactTooltip effect="solid" delayShow={300} offset={{right: 2}} />
+
+            <ReactModal 
+                isOpen={this.state.showModal}
+                onRequestClose={this.handleCloseModal}
+                className="Modal"
+                overlayClassName="Overlay">
+
+                <div className="header">
+                    <a className="closeModal" onClick={this.handleCloseModal}>
+                        &#x2715;
+                    </a>
+                    <h3>Send Form to {this.props.roomJid}</h3>
+                </div>
+
+                <div className="content">
+
+                    {/* Conditionally render these instructions only when not selected! */}
+                    <h3>Select Form Template</h3>
+                    <Select
+                        name="template"
+                        value={this.state.selectedTemplate}
+                        options={this.props.templateOpts}
+                        onChange={this.selectFormTemplate.bind(this)}
+                    />
+
+                    { template && (
+
+                        <FormTemplate
+                            template={template}
+                            onCancel={this.handleCloseModal}
+                            onSubmit={this.handleFormSubmit.bind(this)} />
+
+                    )}
+
+                </div>
+
+            </ReactModal>
+
+        </div>
+        );
+    }
+
+
     handleOpenModal() {
 
         if(!this.props.enabled) {
@@ -104,74 +173,6 @@ class SendFormControl extends React.Component {
                 selectedTemplate: option.value
             };
         });
-    }
-
-    render() {
-
-        let template = this.props.templates[this.state.selectedTemplate];
-
-        return (
-        <div className="SendFormControl">
-
-            {this.props.enabled ? (
-                <span>
-                    <a className="sendForm" 
-                        onClick={this.handleOpenModal} 
-                        data-tip 
-                        data-for="sendTip">
-                        <FontAwesome name='file-text' className="icon" />
-                    </a>
-                    <ReactTooltip id='sendTip' place="top" effect='solid' delayShow={100} offset={{left:2}}>
-                        <span>Send Form</span>
-                    </ReactTooltip>
-                </span>
-            ) : (
-                <a className="sendForm disabled" onClick={this.handleOpenModal}>
-                    <FontAwesome name='file-text' className="icon" />
-                </a>
-            )}
-
-            <ReactTooltip effect="solid" delayShow={300} offset={{right: 2}} />
-
-            <ReactModal 
-                isOpen={this.state.showModal}
-                onRequestClose={this.handleCloseModal}
-                className="Modal"
-                overlayClassName="Overlay">
-
-                <div className="header">
-                    <a className="closeModal" onClick={this.handleCloseModal}>
-                        &#x2715;
-                    </a>
-                    <h3>Send Form to {this.props.roomJid}</h3>
-                </div>
-
-                <div className="content">
-
-                    {/* Conditionally render these instructions only when not selected! */}
-                    <h3>Select Form Template</h3>
-                    <Select
-                        name="template"
-                        value={this.state.selectedTemplate}
-                        options={this.props.templateOpts}
-                        onChange={this.selectFormTemplate.bind(this)}
-                    />
-
-                    { template && (
-
-                        <FormTemplate
-                            template={template}
-                            onCancel={this.handleCloseModal}
-                            onSubmit={this.handleFormSubmit.bind(this)} />
-
-                    )}
-
-                </div>
-
-            </ReactModal>
-
-        </div>
-        );
     }
 
 }
