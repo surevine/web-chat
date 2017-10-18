@@ -78,7 +78,7 @@ class AppNotification extends React.Component {
     buildNotificationOptions() {
         return {
             body: this.props.notification.body,
-            icon: 'http://georgeosddev.github.io/react-web-notification/example/Notifications_button_24.png',
+            icon: '/assets/images/file-text.png',
             lang: 'en',
             dir: 'ltr',
             sound: '/assets/sounds/pop.mp3'

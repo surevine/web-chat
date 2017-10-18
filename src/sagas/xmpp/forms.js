@@ -109,7 +109,7 @@ function buildFormMessage(formData, template, node, formId) {
     let message = "<a href='jchat://pubsub.localhost?select-form" + 
                     "&node=" + node.replace("fdp/submitted/", "") + 
                     "&id=" + formId + "'>" + 
-                    "===== " + template.title + " =====</a>";
+                    "===== " + template.title + " =====</a>\n\n";
     
     formData.fields.forEach((field) => {
         if(field.type === "hidden") {
