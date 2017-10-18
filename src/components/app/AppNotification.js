@@ -29,7 +29,7 @@ class AppNotification extends React.Component {
             options={this.buildNotificationOptions()}
             />
             <audio id='notificationSound' preload='auto'>
-            <source src='./sound.mp3' type='audio/mpeg' />
+            <source src='/assets/sounds/pop.mp3' type='audio/mpeg' />
             </audio>
         </div>
         )
@@ -81,7 +81,7 @@ class AppNotification extends React.Component {
             icon: 'http://georgeosddev.github.io/react-web-notification/example/Notifications_button_24.png',
             lang: 'en',
             dir: 'ltr',
-            sound: './sound.mp3'  // no browsers supported https://developer.mozilla.org/en/docs/Web/API/notification/sound#Browser_compatibility
+            sound: '/assets/sounds/pop.mp3'
         }
     }
 
