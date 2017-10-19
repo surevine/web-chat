@@ -100,7 +100,7 @@ function* watchForForms(client) {
         yield put(receivedForm(msg));
 
         // TODO improve the content of the notification
-        yield put(showNotification('Form Published', 'body of notification here'))
+        yield put(showNotification('Form Published', 'body of notification here'));
     });
 }
 
@@ -136,12 +136,10 @@ function* publishForm(client) {
             fields: action.payload.form
         };
 
-        const response = yield call([client, client.publish], 
+        yield call([client, client.publish], 
             'pubsub.'+window.config.xmppDomain, 
             action.payload.node, 
-            { 
-                form: formData
-            }
+            { form: formData }
         );
 
         const result = yield race({

@@ -5,6 +5,7 @@ import {
   receivedMessage,
   SEND_MESSAGE } from "../../ducks/messages";
 import { incrementUnreadCount } from "../../ducks/rooms";
+import { showNotification } from '../../ducks/notification';
 
 import { makeChannel } from "../_helpers";
 
@@ -45,13 +46,28 @@ function* watchForMessages(client) {
       })
     );
 
-
     yield put(incrementUnreadCount(msg.from.bare));
+
+    yield call(createNotifications, msg);
 
     // Scroll message pane to bottom
     // scrollMessageList();
 
   });
+}
+
+function* createNotifications(msg) {
+
+  // Check username mention
+  // TODO make this configurable
+  let room = yield select((state) => state.rooms[msg.from.bare]);
+  if(msg.body.indexOf(room.nickname) > -1) {
+    yield put(showNotification(msg.from.resource + ' mentioned you', msg.from.bare));
+  }
+
+  // Check if message contains any defined keywords
+
+
 }
 
 // function scrollMessageList() {

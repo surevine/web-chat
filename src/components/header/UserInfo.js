@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
 import FontAwesome from 'react-fontawesome';
-import ReactTooltip from 'react-tooltip';
 import Select from 'react-select';
 
 import { setPresence } from '../../ducks/user';

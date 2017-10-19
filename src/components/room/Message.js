@@ -3,7 +3,6 @@ import Moment from 'react-moment';
 import momentjs from 'moment';
 import ReactTooltip from 'react-tooltip'
 import Highlighter from 'react-highlight-words';
-import FontAwesome from 'react-fontawesome';
 
 import FormPreview from './messages/FormPreview';
 

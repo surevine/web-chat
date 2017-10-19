@@ -1,5 +1,4 @@
 import React from 'react';
-import find from 'lodash/find';
 import Moment from 'react-moment';
 import FontAwesome from 'react-fontawesome';
 
@@ -12,7 +11,7 @@ class FilesList extends React.Component {
             { this.props.files ? (
                 <div>
 
-                    { (this.props.files.length == 0) && (
+                    { (this.props.files.length === 0) && (
                         <p>No files have been uploaded to this room.</p>
                     )}
 

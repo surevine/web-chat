@@ -108,9 +108,8 @@ class Room extends React.Component {
 
             </div>
 
-
             { this.state.showRoomSidebar && (
-
+                
                 <RoomSidebar 
                     hideSidebar={this.hideSidebar}
                     showParticipantsList={this.state.showParticipantsList}
@@ -119,7 +118,6 @@ class Room extends React.Component {
                     members={this.props.members}
                     forms={this.props.forms}
                     files={this.props.files} />
-
             )}
             
         </div>

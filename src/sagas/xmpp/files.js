@@ -1,6 +1,4 @@
-import { delay } from "redux-saga";
-import { all, call, race, select, take, takeEvery, put } from "redux-saga/effects";
-import find from "lodash/find";
+import { takeEvery } from "redux-saga/effects";
 
 import { SEND_FILE } from '../../ducks/files';
 
@@ -13,7 +11,7 @@ function* sendFile(client) {
 
         // snippets/${chatroomjid}/summary (json metadata?)
 
-        console.log('in sendFile safa action', action.payload)
+        console.log('in sendFile safa action', action.payload);
 
     });
 

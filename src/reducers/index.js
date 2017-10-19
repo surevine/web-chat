@@ -14,6 +14,7 @@ import user from '../ducks/user';
 export default combineReducers({
   bookmarks,
   client,
+  files,
   forms,
   local,
   rooms,

@@ -75,6 +75,7 @@ class AppNotification extends React.Component {
         document.getElementById('notificationSound').play();
     }
 
+    // TODO make the icon variable based on notification type eg mention
     buildNotificationOptions() {
         return {
             body: this.props.notification.body,
