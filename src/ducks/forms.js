@@ -103,7 +103,6 @@ export default (state = initialState, action) => {
 
         // Only process FDP nodes
         if(form.event.updated.node.indexOf('fdp/submitted') === -1) {
-            console.log('skipping as not an FDP node');
             return;
         }
 

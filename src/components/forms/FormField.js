@@ -5,10 +5,6 @@ import CheckboxField from './CheckboxField';
 
 class FormField extends React.Component {
 
-    constructor () {
-        super();
-    }
-
     buildFieldProps(field) {
         return {
             name: field.name,

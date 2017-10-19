@@ -1,0 +1,43 @@
+.dd-menu-items {
+    position: absolute;
+    z-index: 7;
+    margin: 0.5em 0 0 0;
+    background-color: #fff;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 0 4px rgba(0,0,0,.15), 0 2px 4px rgba(0,0,0,.29);
+    box-shadow: 0 0 4px rgba(0,0,0,.15), 0 2px 4px rgba(0,0,0,.29)
+}
+
+.dd-items-upwards {
+    bottom: 78px;
+}
+
+.dd-menu-items .dd-items-left {
+    min-width: 180px;
+    margin: 0;
+    padding: 10px;
+    list-style-type: none;
+}
+
+.dd-items-left li {
+    width: 100%;
+}
+
+.dd-items-left li a {
+    display: block;
+    padding: 10px;
+    cursor: pointer;
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.dd-items-left li a:hover {
+    background-color: #0084FF;
+    color: #fff;
+}
+
+.dd-items-left li .fa {
+    margin-right: 10px;
+}

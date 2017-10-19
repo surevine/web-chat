@@ -4,8 +4,6 @@ import { call, race, select, take, takeEvery, takeLatest, put } from "redux-saga
 import { makeChannel } from "../_helpers";
 import { addRecentRoom, getRecentRooms } from '../../localStorage';
 
-import history from '../../history';
-
 import {
   JOIN_ROOM,
   JOINED_ROOM,

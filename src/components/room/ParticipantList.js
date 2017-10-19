@@ -79,6 +79,9 @@ class ParticipantList extends React.Component {
             case "away":
                 msg = "Away";
                 break;
+            default:
+                msg = 'Available';
+                break;
         }
         
         if(member.status && member.status.length) {

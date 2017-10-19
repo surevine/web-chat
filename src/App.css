@@ -277,7 +277,7 @@ input[type='text']:disabled,
 input[type='password']:disabled,
 input[type='email']:disabled,
 textarea:disabled,
-.SendFormControl .sendForm.disabled {
+.SendDataControl .sendForm.disabled {
   background-color: #f0f0f0;
 }
 
@@ -476,7 +476,7 @@ form .actions {
 .MessageList {
   grid-row: 1;
   grid-column: 1;
-
+  width: 100%;
   text-align: left;
   overflow-y: scroll;
   padding: 0;
@@ -652,7 +652,7 @@ form .actions {
   margin: 0 10px 0 0;
 }
 
-.SendFormControl .sendForm {
+.SendDataControl .sendForm {
   display: block;
   width: 30px;
   height: 24px;
@@ -667,11 +667,11 @@ form .actions {
   color: #999;
 }
 
-.SendFormControl .sendForm:hover {
+.SendDataControl .sendForm:hover {
   border-color: #999;
 }
 
-.SendFormControl .sendForm.disabled:hover {
+.SendDataControl .sendForm.disabled:hover {
   border-color: #ccc;
 }
 
@@ -771,6 +771,12 @@ input[type='submit']:hover,
 input[type='submit']:active,
 .primary-btn:active {
   box-shadow: none;
+}
+
+
+input[type='submit'].disabled,
+.primary-btn.disabled {
+  background-color: red;
 }
 
 /* Tabs */

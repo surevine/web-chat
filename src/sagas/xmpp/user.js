@@ -1,5 +1,4 @@
 import { call, select, takeLatest } from "redux-saga/effects";
-import forEach from "lodash/forEach";
 
 import {
   SET_PRESENCE,

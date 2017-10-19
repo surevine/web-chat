@@ -9,7 +9,7 @@ import { getCurrentRoomJid } from '../../selectors';
 import { sendMessage } from '../../ducks/messages';
 import { saveRoomDraft } from '../../ducks/rooms';
 
-import SendFormControl from './SendFormControl';
+import SendDataControl from './SendDataControl';
 
 class MessageForm extends React.Component {
 
@@ -44,7 +44,7 @@ class MessageForm extends React.Component {
         return (
         <div className="MessageForm">
 
-            <SendFormControl enabled={this.props.enabled}></SendFormControl>
+            <SendDataControl enabled={this.props.enabled}></SendDataControl>
 
             <form className="form message" autoComplete="off">
                 <TextareaAutosize 

@@ -130,7 +130,6 @@ class Room extends React.Component {
                         <p>Incorrect password provided. Please try again.</p>
                     </div>
                 );
-            break;
             default:
                 return null;
         }

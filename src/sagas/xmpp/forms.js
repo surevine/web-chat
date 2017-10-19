@@ -96,8 +96,11 @@ function* watchForForms(client) {
     });
 
     yield takeEvery(channel, function* eachForm(msg) {
+
         yield put(receivedForm(msg));
-        yield put(showNotification('RECEIVED FORM!', 'body of notification here'))
+
+        // TODO improve the content of the notification
+        yield put(showNotification('Form Published', 'body of notification here'))
     });
 }
 
