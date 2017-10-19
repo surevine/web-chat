@@ -32,7 +32,7 @@ class SendDataControl extends React.Component {
             <div>
             {this.props.enabled ? (
                 <span>
-                    <a className="sendForm" 
+                    <a className={"sendForm" + ((this.state.isMenuOpen) ? " active" : "") }
                         onClick={this.toggleMenu} 
                         data-tip 
                         data-for="sendTip">

@@ -667,7 +667,8 @@ form .actions {
   color: #999;
 }
 
-.SendDataControl .sendForm:hover {
+.SendDataControl .sendForm:hover,
+.SendDataControl .sendForm.active {
   border-color: #999;
 }
 
@@ -761,6 +762,7 @@ input[type='submit'],
   border: none;
   cursor: pointer;
   outline: none;
+  user-select: none;
 }
   
 input[type='submit']:hover,
@@ -776,7 +778,8 @@ input[type='submit']:active,
 
 input[type='submit'].disabled,
 .primary-btn.disabled {
-  background-color: red;
+  background-color: #666;
+  color: #f3f3f3;
 }
 
 /* Tabs */

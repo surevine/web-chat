@@ -4,6 +4,7 @@ import ReactModal from 'react-modal';
 import FileBase64 from 'react-file-base64';
 
 import { getCurrentRoomJid } from '../../selectors';
+import { sendFile } from '../../ducks/files';
 
 class SendFileModal extends React.Component {
 
@@ -45,17 +46,8 @@ class SendFileModal extends React.Component {
 
                     { this.state.error && (
     
-                        <div>
-                            <p>{ this.state.error }</p>
-                        </div>
-
-                    )}
-
-                    { this.state.file.type && !this.state.error && (
-
                         <div className="fileError">
-                        <p>{ this.state.file.file.size }</p>
-                        <p>{ this.state.file.base64 }</p>
+                            <p>{ this.state.error }</p>
                         </div>
 
                     )}
@@ -103,20 +95,23 @@ class SendFileModal extends React.Component {
 
     handleSubmit() {
 
-        if(!this.state.file || this.state.error) {
+        if(!this.state.file.type || this.state.error) {
             return;
         }
 
+        // TODO change meta being provided
+        this.props.sendFile(this.props.roomJid, this.state.file.base64, this.state.file.file);
 
+        // Clear state for next time
+        this.setState(function(prevState, props) {
+            return {
+                ...prevState,
+                error: false,
+                file: {}
+            };
+        });
 
-        // spinnets/${chatroomjid}/content (datauri)
-        //  ^ Publish this first, get item id, then use the id for the summary below...
-
-        // snippets/${chatroomjid}/summary (json metadata?)
-
-
-        
-        // ensure file is set in state, then call actions to publish
+        this.props.onClose();
     }
 
 }
@@ -126,7 +121,9 @@ const mapStateToProps = (state, props) => ({
   });
   
   const mapDispatchToProps = (dispatch, props) => {
-    return {};
+    return {
+        sendFile: (roomJid, content, meta) => dispatch(sendFile(roomJid, content, meta)),
+    };
   };
   
   export default connect(mapStateToProps, mapDispatchToProps)(SendFileModal);
