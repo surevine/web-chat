@@ -61,7 +61,7 @@ class SendFileModal extends React.Component {
                     )}
 
                     <div className="controls">
-                        <a className="cancelForm btn" onClick={this.props.onCancel}>
+                        <a className="cancelForm btn" onClick={this.props.onClose}>
                             Cancel
                         </a>
                         <a className={"primary-btn" + (!this.state.file.type || this.state.error ? " disabled" : "")} onClick={this.handleSubmit.bind(this)}>

@@ -31,6 +31,7 @@ class Room extends React.Component {
             showRoomSidebar: false,
             showParticipantsList: false,
             showFormsList: false,
+            showFilesList: false
         };
     }
 
@@ -78,9 +79,11 @@ class Room extends React.Component {
                 topic={this.props.room.topic} 
                 members={this.props.members}
                 forms={this.props.forms}
+                files={this.props.files}
                 toggleBookmark={this.toggleBookmark}
                 toggleParticipants={this.toggleParticipants}
                 toggleForms={this.toggleForms}
+                toggleFiles={this.toggleFiles}
                 leaveRoom={this.leaveRoom} />
 
             <div className="roomContent">
@@ -112,10 +115,12 @@ class Room extends React.Component {
                     hideSidebar={this.hideSidebar}
                     showParticipantsList={this.state.showParticipantsList}
                     showFormsList={this.state.showFormsList}
+                    showFilesList={this.state.showFilesList}
                     members={this.props.members}
-                    forms={this.props.forms} />
+                    forms={this.props.forms}
+                    files={this.props.files} />
 
-                )}
+            )}
             
         </div>
         );
@@ -142,7 +147,8 @@ class Room extends React.Component {
         this.setState({ 
             showRoomSidebar: false,
             showParticipantsList: false,
-            showFormsList: false
+            showFormsList: false,
+            showFilesList: false
         })
     };
 
@@ -175,7 +181,8 @@ class Room extends React.Component {
                 ...prevState,
                 showRoomSidebar: showSidebar,
                 showParticipantsList: !prevState.showParticipantsList,
-                showFormsList: false
+                showFormsList: false,
+                showFilesList: false
             };
         });
     };
@@ -200,7 +207,34 @@ class Room extends React.Component {
                 ...prevState,
                 showRoomSidebar: showSidebar,
                 showParticipantsList: false,
+                showFilesList: false,
                 showFormsList: !prevState.showFormsList
+            };
+        });
+    };
+
+    toggleFiles = e => {
+        e.preventDefault();
+
+        // don't allow toggling if not connected
+        if(!this.props.room.joined) {
+            return;
+        }
+
+        this.setState(function(prevState, props) {
+
+            // TODO refactor this...
+            let showSidebar = false;
+            if(!prevState.showFilesList) {
+                showSidebar = true;
+            }
+
+            return {
+                ...prevState,
+                showRoomSidebar: showSidebar,
+                showParticipantsList: false,
+                showFormsList: false,
+                showFilesList: !prevState.showFilesList,
             };
         });
     };
@@ -221,6 +255,7 @@ const mapStateToProps = (state, props) => ({
   messages: getRoomMessages(state, { roomJid: props.match.params.jid }),
   members: getRoomMembers(state, { roomJid: props.match.params.jid }),
   forms: getRoomForms(state, { roomJid: props.match.params.jid }),
+  files: [] // TODO make this read from state when setup
 });
 
 const mapDispatchToProps = (dispatch, props) => {

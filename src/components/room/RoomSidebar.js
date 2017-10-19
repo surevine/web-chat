@@ -2,6 +2,7 @@ import React from 'react';
 
 import ParticipantList from './ParticipantList';
 import FormsList from './FormsList';
+import FilesList from './FilesList';
 
 class RoomSidebar extends React.Component {
 
@@ -17,6 +18,10 @@ class RoomSidebar extends React.Component {
 
                     { this.props.showFormsList && (
                         <h2>{this.props.forms.length} Form Submissions</h2>
+                    )}
+
+                    { this.props.showFilesList && (
+                        <h2>{this.props.files.length} File Uploads</h2>
                     )}
 
                     <a className="closeSidebar" title="Close sidebar" onClick={this.props.hideSidebar}>
@@ -35,6 +40,10 @@ class RoomSidebar extends React.Component {
 
                 { this.props.showFormsList && (
                     <FormsList forms={this.props.forms}></FormsList>
+                )}
+
+                { this.props.showFilesList && (
+                    <FilesList files={this.props.files}></FilesList>
                 )}
 
                 </div>

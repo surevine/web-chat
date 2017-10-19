@@ -13,9 +13,8 @@ class FormsList extends React.Component {
                 <div>
 
                     { (this.props.forms.length == 0) && (
-                        <p>No forms have been submitted to this channel.</p>
+                        <p>No forms have been submitted to this room.</p>
                     )}
-
 
                     { this.props.forms
                         .sort((a, b) => this.getFormUpdated(a) < this.getFormUpdated(b))
