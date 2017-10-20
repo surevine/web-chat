@@ -9,12 +9,15 @@ import find from 'lodash/find';
 import { getPublishedForm } from '../../../selectors';
 import { parseFormIdFromMessage } from '../../../helpers';
 
+import ViewFormModal from '../../modals/ViewFormModal';
+
 class FormPreview extends React.Component {
 
     constructor () {
         super();
         this.state = {
             showRaw: false,
+            showModal: false
         };
     }
 
@@ -32,7 +35,7 @@ class FormPreview extends React.Component {
                         {this.props.message.body && (
                             <a className="showRaw btn" onClick={this.toggleRaw.bind(this)}>Toggle Raw</a>
                         )}
-                        <a className="expand btn">View</a>
+                        <a className="expand btn" onClick={this.showModal.bind(this)}>View</a>
                     </div>
 
                     {this.state.showRaw && (
@@ -50,22 +53,29 @@ class FormPreview extends React.Component {
                  
                 </div>
 
-                {/* TODO: render specific field components instead */}
-                {/* { this.props.fields.map(field => (
-
-                    (field.type !== 'hidden') && (
-
-                    <div key={field.name}>
-                        <p>{field.name}: </p>
-                        <p>{field.value}</p>
-                    </div>
-
-                    )
-
-                ))} */}
+                {/* TODO maybe make this a single modal for the room, which users can page through forms/files etc  */}
+                <ViewFormModal form={this.props.publishedForm} isOpen={this.state.showModal} onClose={this.hideModal.bind(this)} />
 
             </div>
         );
+    }
+
+    showModal() {
+        this.setState(function(prevState, props) {
+            return {
+                ...prevState,
+                showModal: true
+            };
+        });
+    }
+
+    hideModal() {
+        this.setState(function(prevState, props) {
+            return {
+                ...prevState,
+                showModal: false
+            };
+        });
     }
 
     toggleRaw() {

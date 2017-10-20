@@ -48,7 +48,15 @@ class Message extends React.Component {
                 <ReactTooltip id={this.props.message.id+'Tip'} place="top" effect='solid' delayShow={300} offset={{right:20}}>
                     <span>{this.formatMessageDateTime(this.props.message.time)}</span>
                 </ReactTooltip>
-                <p>{this.props.message.body}</p>
+
+                <p>
+                <Highlighter
+                    highlightClassName='highlight'
+                    searchWords={['medivac', 'contact']}
+                    textToHighlight={this.props.message.body}
+                />
+                </p>
+
             </div>
         );
     }

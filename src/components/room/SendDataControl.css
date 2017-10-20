@@ -15,7 +15,7 @@
 .dd-menu-items .dd-items-left {
     min-width: 180px;
     margin: 0;
-    padding: 10px;
+    padding: 6px;
     list-style-type: none;
 }
 
@@ -34,8 +34,8 @@
 }
 
 .dd-items-left li a:hover {
-    background-color: #0084FF;
-    color: #fff;
+    color: #0084FF;
+    background-color: #fafafa;
 }
 
 .dd-items-left li .fa {

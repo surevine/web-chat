@@ -684,10 +684,12 @@ form .actions {
   left: 25%;
   right: 25%;
   bottom: 50px;
+  display: grid;
+  grid-template-rows: 62px auto;
   background-color: #fff;
   border-radius: 5px;
   outline: none;
-  overflow-y: scroll;
+  overflow-y: hidden;
   -webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.25);
   box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.25);
 }
@@ -696,6 +698,7 @@ form .actions {
   display: block;
   padding: 20px;
   background-color: #f0f0f0;
+  grid-row: 1;
 }
 
 .Modal .header h3 {
@@ -705,7 +708,9 @@ form .actions {
 .Modal .content {
   min-height: 300px;
   padding: 20px;
+  box-sizing: border-box;
   overflow-y: scroll;
+  grid-row: 2;
 }
 
 .Modal .controls {
