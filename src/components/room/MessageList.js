@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from "react-redux";
 
 import Message from './Message';
 
@@ -16,7 +17,7 @@ class MessageList extends React.Component {
             { this.props.messages ? (
                 <div>
                     { this.props.messages.map(message => (
-                        <Message message={message} currentNickname={this.props.currentNickname} key={message.id}></Message>
+                        <Message message={message} keywords={this.props.keywords} currentNickname={this.props.currentNickname} key={message.id}></Message>
                     ))}
                 </div>
             ) : (
@@ -28,4 +29,12 @@ class MessageList extends React.Component {
 
 }
 
-export default MessageList;
+const mapStateToProps = (state, props) => ({
+    keywords: state.settings.keywords
+});
+  
+  const mapDispatchToProps = (dispatch, props) => {
+    return {};
+  };
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(MessageList);

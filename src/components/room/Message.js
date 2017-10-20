@@ -52,7 +52,7 @@ class Message extends React.Component {
                 <p>
                 <Highlighter
                     highlightClassName='highlight'
-                    searchWords={['medivac', 'contact']}
+                    searchWords={this.props.keywords}
                     textToHighlight={this.props.message.body}
                 />
                 </p>
