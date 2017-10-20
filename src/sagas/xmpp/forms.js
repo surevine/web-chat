@@ -10,16 +10,7 @@ import { receivedForm,
         SUBSCRIBE_TO_FORMS,
         SUBMIT_FORM } from '../../ducks/forms';
 import { showNotification } from '../../ducks/notification';
-
-
-    // console.log('getting disco info!')
-    // client.getDiscoInfo('pubsub.localhost', '').then(response => {
-    //   console.log(response.discoInfo.identities);
-    //   // TODO confirm that "urn:xmpp:fdp:0" is one of the identities type...
-
-    // });
   
-
 function* fetchFormNodes(client) {
 
     const allNodes = yield call([client, client.getDiscoItems], 'pubsub.'+window.config.xmppDomain, '');
@@ -98,6 +89,8 @@ function* watchForForms(client) {
     yield takeEvery(channel, function* eachForm(msg) {
 
         yield put(receivedForm(msg));
+
+        console.log(msg);
 
         // TODO improve the content of the notification
         yield put(showNotification('Form Published', 'body of notification here'));

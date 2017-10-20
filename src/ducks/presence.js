@@ -89,8 +89,10 @@ export default (state = initialState, action) => {
         const peerJid = presence.from.bare;
         const peer = state[peerJid];
 
-        // TODO ensure collection exists...
-        let currentMembers = peer.members;
+        let currentMembers = [];
+        if(peer.members !== undefined) {
+            currentMembers = peer.members;
+        }
         
         let remainingMembers = currentMembers.filter((member) => {
             return member.resource !== presence.from.resource;

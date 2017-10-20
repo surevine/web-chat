@@ -59,11 +59,7 @@ class AppNotification extends React.Component {
     }
 
     handleNotificationOnError(e, tag) {
-        // console.log(e, 'Notification error tag:' + tag);
-    }
-
-    handleNotificationOnClose(e, tag) {
-        // console.log(e, 'Notification closed tag:' + tag);
+        console.log(e, 'Notification error tag:' + tag);
     }
 
     handleNotificationOnShow(e, tag) {

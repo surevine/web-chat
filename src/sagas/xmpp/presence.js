@@ -1,6 +1,6 @@
 import { select, takeEvery, put } from "redux-saga/effects";
-import md5 from "md5";
 import find from 'lodash/find';
+import shortid from 'shortid';
 
 import { receivedPresenceAvailable, receivedPresenceUnavailable } from "../../ducks/presence";
 import { receivedMessage } from "../../ducks/messages";
@@ -45,8 +45,7 @@ function* watchForPresence(client) {
 
         // Don't show join message if member already in room
         if(!memberInRoom || presence.type !== 'available') {
-          // TODO fix this more properly
-          presence.id = md5(presence.from.resource + new Date());
+          presence.id = shortid.generate();
           yield put(receivedMessage(presence));
         }
 

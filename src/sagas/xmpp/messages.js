@@ -1,5 +1,5 @@
 import { call, select, take, takeEvery, put } from "redux-saga/effects";
-import md5 from "md5";
+import shortid from "shortid";
 
 import {
   receivedMessage,
@@ -19,9 +19,7 @@ function* watchForMessages(client) {
       emit(msg);
     },
     'muc:subject': (emit, msg) => {
-      // TODO resolve this more properly
-      // add in msg id for rendering key
-      msg.id = md5(msg.subject + msg.from.bare.toString() + msg.time);
+      msg.id = shortid.generate();
       emit(msg);
     },
     // 'chat:state': (emit, msg) => {

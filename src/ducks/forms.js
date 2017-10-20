@@ -97,8 +97,6 @@ export default (state = initialState, action) => {
 
     case RECEIVED_FORM: {
 
-        // TODO check if delay, if so, ignore
-        
         const form = action.payload.form;
 
         // Only process FDP nodes
@@ -106,7 +104,11 @@ export default (state = initialState, action) => {
             return;
         }
 
-        // form.event.updated.published[0].id
+        // Ignore forms not received in realtime
+        if(form.delay) {
+            console.log('skipping old form..')
+            return;
+        }
 
         // TODO ensure field exists..
         const roomField = find(form.event.updated.published[0].form.fields, function(field) {

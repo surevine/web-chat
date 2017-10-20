@@ -248,7 +248,7 @@ class Room extends React.Component {
 const mapStateToProps = (state, props) => ({
   room: getRoomInfo(state, { roomJid: props.match.params.jid }),
   rooms: state.rooms,
-  nickname: state.user.nickname, // TODO make this select from state what the nick should be...
+  nickname: state.user.nickname,
   bookmarked: isRoomBookmarked(state, { roomJid: props.match.params.jid }),
   messages: getRoomMessages(state, { roomJid: props.match.params.jid }),
   members: getRoomMembers(state, { roomJid: props.match.params.jid }),

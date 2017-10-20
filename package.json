@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "lodash": "^4.17.4",
-    "md5": "^2.2.1",
     "moment": "2.18.1",
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
@@ -29,6 +28,7 @@
     "react-web-notification": "^0.2.4",
     "redux": "^3.7.1",
     "redux-saga": "^0.15.4",
+    "shortid": "^2.2.8",
     "stanza.io": "^8.4.1",
     "uuid": "^3.1.0"
   },

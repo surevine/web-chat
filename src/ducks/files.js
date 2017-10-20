@@ -10,8 +10,6 @@ export const sendFile = (roomJid, content, meta) => ({
     payload: { roomJid, content, meta }
 });
 
-// TODO need to have actions to received file (published to known prefix like forms)
-
 const initialState = {};
 
 // reducer

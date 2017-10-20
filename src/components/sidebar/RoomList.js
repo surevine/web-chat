@@ -18,7 +18,6 @@ class RoomList extends React.Component {
         return false;
     }
 
-    // TODO replace this with state flag?
     isRoomBookmarked(jid) {
         return find(this.props.bookmarks.conferences, function(bookmark) {
             return bookmark.jid.bare === jid
@@ -34,12 +33,9 @@ class RoomList extends React.Component {
 
     getRoomUnread(jid) {
         if(this.props.rooms[jid]) {
-
-            // TODO make this limit configurable
             if(this.props.rooms[jid].unreadMessageCount > 99) {
                 return "99+";
             }
-
             return this.props.rooms[jid].unreadMessageCount
         }
     }
