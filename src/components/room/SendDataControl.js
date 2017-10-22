@@ -3,8 +3,7 @@ import FontAwesome from 'react-fontawesome';
 import ReactTooltip from 'react-tooltip';
 import DropdownMenu from 'react-dd-menu';
 
-// import menuStyles from './react-dd-menu.css';
-import styles from './SendDataControl.css';
+import './SendDataControl.css';
 
 import SendFormModal from '../modals/SendFormModal';
 import SendFileModal from '../modals/SendFileModal';

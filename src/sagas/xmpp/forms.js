@@ -90,10 +90,14 @@ function* watchForForms(client) {
 
         yield put(receivedForm(msg));
 
-        console.log(msg);
+        let settings = yield select((state) => state.settings);
 
-        // TODO improve the content of the notification
-        yield put(showNotification('Form Published', 'body of notification here'));
+        if(settings.formNotifications) {
+            // TODO improve the content of the notification
+            // Room jid and form name/type
+            yield put(showNotification('Form Published', 'body of notification here'));
+        }
+
     });
 }
 

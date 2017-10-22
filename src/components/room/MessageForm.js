@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import TextareaAutosize from 'react-autosize-textarea';
 
-import styles from './MessageForm.css';
+import './MessageForm.css';
 
 import { getCurrentRoomJid } from '../../selectors';
 import { sendMessage } from '../../ducks/messages';

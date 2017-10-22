@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 
-import styles from './AppNotification.css';
+import './AppNotification.css';
 import Notification  from 'react-web-notification';
 
 class AppNotification extends React.Component {

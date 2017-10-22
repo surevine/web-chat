@@ -41,12 +41,9 @@ class FormPreview extends React.Component {
                     {this.state.showRaw && (
 
                         <div className="raw">
-                            {/* {this.props.message.body} */}
-
                             {this.props.message.body.split('\n').map((item, key) => {
                                 return <span key={key}>{item}<br/></span>
                             })}
-
                         </div>   
 
                     )}

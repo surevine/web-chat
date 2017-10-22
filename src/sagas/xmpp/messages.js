@@ -56,15 +56,29 @@ function* watchForMessages(client) {
 
 function* createNotifications(msg) {
 
+  let settings = yield select((state) => state.settings);
+
   // Check username mention
-  // TODO make this configurable
-  let room = yield select((state) => state.rooms[msg.from.bare]);
-  if(msg.body.indexOf(room.nickname) > -1) {
-    yield put(showNotification(msg.from.resource + ' mentioned you', msg.from.bare));
+  if(settings.userNotifications) {
+    let room = yield select((state) => state.rooms[msg.from.bare]);
+    if(msg.body.indexOf(room.nickname) > -1) {
+      yield put(showNotification(msg.from.resource + ' mentioned you', msg.from.bare));
+    }
   }
 
   // Check if message contains any defined keywords
-
+  if(settings.keywords.length > 0) {
+    let keywords = yield select((state) => state.settings.keywords);
+    let matchedWords = [];
+    keywords.forEach((word) => {
+      if(msg.body.indexOf(word) > -1) {
+        matchedWords.push(word);
+      }
+    });
+    if(matchedWords.length > 0) {
+      yield put(showNotification(msg.from.resource + ' mentioned ' + matchedWords.join(), msg.from.bare));
+    } 
+  } 
 
 }
 

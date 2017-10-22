@@ -69,7 +69,7 @@ class RoomList extends React.Component {
                         { this.props.bookmarks.conferences
                             .sort((a, b) => a.jid.bare > b.jid.bare)
                             .map(room => (
-                            <li key={"bookmark-" + room.jid.bare}>
+                            <li key={room.jid.bare}>
                                 <a onClick={() => this.goToRoom(room.jid.bare)} className={(this.isRoomActive(room.jid.bare)) ? "active" : ""}>
                                     <FontAwesome name='hashtag' /><span className="local">{room.jid.local}</span>
                                     { this.isRoomUnread(room.jid.bare) && (
