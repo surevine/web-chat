@@ -1,5 +1,4 @@
 import React from 'react';
-import Moment from 'react-moment';
 import FontAwesome from 'react-fontawesome';
 
 class FilesList extends React.Component {

@@ -1,5 +1,5 @@
 import { delay } from "redux-saga";
-import { take, put, select, race, call } from "redux-saga/effects";
+import { all, take, put, select, race, call } from "redux-saga/effects";
 
 import {
   connected,
@@ -62,5 +62,5 @@ function* watchConnectionStatus(client) {
 }
 
 export default function* connection(client) {
-  yield [watchConnectionStatus(client), reconnectOnDrop(client)];
+  yield all([watchConnectionStatus(client), reconnectOnDrop(client)]);
 }

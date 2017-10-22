@@ -1,4 +1,4 @@
-import { select, takeEvery, put } from "redux-saga/effects";
+import { all, select, takeEvery, put } from "redux-saga/effects";
 import find from 'lodash/find';
 import shortid from 'shortid';
 
@@ -63,5 +63,5 @@ function* watchForPresence(client) {
 }
 
 export default function*(client) {
-  yield [watchForPresence(client)];
+  yield all([watchForPresence(client)]);
 }

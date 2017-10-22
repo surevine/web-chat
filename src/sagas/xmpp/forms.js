@@ -88,6 +88,10 @@ function* watchForForms(client) {
 
     yield takeEvery(channel, function* eachForm(msg) {
 
+        if(!msg.event.updated.node.startsWith('fdp/submitted')) {
+            return;
+        }
+
         yield put(receivedForm(msg));
 
         let settings = yield select((state) => state.settings);
@@ -167,5 +171,5 @@ function* publishForm(client) {
 }
 
 export default function*(client) {
-  yield [watchForForms(client), subscribeToFormNodes(client), publishForm(client)];
+  yield all([watchForForms(client), subscribeToFormNodes(client), publishForm(client)]);
 }

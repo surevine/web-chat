@@ -1,4 +1,4 @@
-import { call, select, take, takeEvery, put } from "redux-saga/effects";
+import { all, call, select, take, takeEvery, put } from "redux-saga/effects";
 import shortid from "shortid";
 
 import {
@@ -101,5 +101,5 @@ function* sendMessages(client) {
 }
 
 export default function*(client) {
-  yield [watchForMessages(client), sendMessages(client)];
+  yield all([watchForMessages(client), sendMessages(client)]);
 }

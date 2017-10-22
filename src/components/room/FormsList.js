@@ -48,7 +48,7 @@ class FormsList extends React.Component {
         let lastUpdateField = find(form.form.fields, function(field) {
             return ((field.type === "hidden") && (field.name === "jchat.last_modified"));
         });
-        return parseInt(lastUpdateField.value);
+        return parseInt(lastUpdateField.value, 10);
     }
 
 }

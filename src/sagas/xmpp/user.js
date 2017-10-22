@@ -1,4 +1,4 @@
-import { call, select, takeLatest } from "redux-saga/effects";
+import { all, call, select, takeLatest } from "redux-saga/effects";
 
 import {
   SET_PRESENCE,
@@ -32,5 +32,5 @@ function* setPresence(client) {
 }
 
 export default function*(client) {
-  yield [setPresence(client)];
+  yield all([setPresence(client)]);
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Checkbox, Text } from 'react-form'
 import { connect } from "react-redux";
 
-import { setUserNotification, setFormNotification, setKeywords, saveSettings } from '../../ducks/settings';
+import { saveSettings } from '../../ducks/settings';
 
 class SettingsForm extends React.Component {
 
@@ -78,9 +78,6 @@ const mapStateToProps = (state, props) => ({
   
   const mapDispatchToProps = (dispatch, props) => {
     return {
-        setUserNotification: (enabled) => dispatch(setUserNotification(enabled)),
-        setFormNotification: (enabled) => dispatch(setFormNotification(enabled)),
-        setKeywords: (keywords) => dispatch(setKeywords(keywords)),
         saveSettings: (settings) => dispatch(saveSettings(settings)),
     };
   };

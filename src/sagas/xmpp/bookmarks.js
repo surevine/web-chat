@@ -1,4 +1,4 @@
-import { call, take, takeLatest, put } from "redux-saga/effects";
+import { all, call, take, takeLatest, put } from "redux-saga/effects";
 
 import {
   ADD_BOOKMARK,
@@ -42,5 +42,5 @@ function* removeBookmark(client) {
 }
 
 export default function*(client) {
-  yield [watchGetBookmarks(client), addBookmark(client), removeBookmark(client)];
+  yield all([watchGetBookmarks(client), addBookmark(client), removeBookmark(client)]);
 }

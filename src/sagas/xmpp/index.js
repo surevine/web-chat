@@ -1,3 +1,5 @@
+import { all } from "redux-saga/effects";
+
 import setupClient from "./setupClient";
 
 import auth from "./auth";
@@ -15,7 +17,7 @@ function* runLoop(client) {
 
   while (true) {
     try {
-        yield [
+        yield all([
             bookmarks(client),
             clientSaga(client),
             files(client),
@@ -24,7 +26,7 @@ function* runLoop(client) {
             messages(client),
             presence(client),
             user(client)
-        ]
+        ]);
     } catch (e) {
       console.error("Caught error in saga, restarting:");
       console.error(e);
@@ -38,7 +40,7 @@ function* runLoop(client) {
 
 function* xmppSaga() {
   const client = setupClient();
-  yield [runLoop(client), auth(client)];
+  yield all([runLoop(client), auth(client)]);
 }
 
 export default xmppSaga;

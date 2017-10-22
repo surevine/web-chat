@@ -1,5 +1,5 @@
 import { delay } from "redux-saga";
-import { call, race, select, take, takeEvery, takeLatest, put } from "redux-saga/effects";
+import { all, call, race, select, take, takeEvery, takeLatest, put } from "redux-saga/effects";
 
 import { makeChannel } from "../_helpers";
 import { addRecentRoom, getRecentRooms } from '../../localStorage';
@@ -134,5 +134,5 @@ function* watchForTopic(client) {
 }
 
 export default function*(client) {
-  yield [tryJoinRoom(client), leaveRoom(client), watchJoinedRoom(client), watchForTopic(client)];
+  yield all([tryJoinRoom(client), leaveRoom(client), watchJoinedRoom(client), watchForTopic(client)]);
 }

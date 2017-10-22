@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Moment from 'react-moment';
-import ReactTooltip from 'react-tooltip'
 import FontAwesome from 'react-fontawesome';
 import find from 'lodash/find';
 
@@ -91,7 +90,7 @@ class FormPreview extends React.Component {
         let lastUpdateField = find(form.form.fields, function(field) {
             return (field.name === "jchat.last_modified");
         });
-        return parseInt(lastUpdateField.value);
+        return parseInt(lastUpdateField.value, 10);
     }
 
 }
