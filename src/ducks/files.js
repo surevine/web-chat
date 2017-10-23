@@ -1,7 +1,3 @@
-import uniqBy from "lodash/uniqBy";
-import find from "lodash/find";
-import filter from "lodash/filter";
-
 import { makeConstant } from "./_helpers";
 
 const constant = makeConstant("jchat/files");
@@ -20,9 +16,9 @@ export const receivedFile = (roomJid, id, content) => ({
     payload: { roomJid, id, content }
 });
 
-export const receivedFileMeta = (roomJid, fileId, meta) => ({
+export const receivedFileMeta = (roomJid, id, meta) => ({
     type: RECEIVED_FILE_META,
-    payload: { roomJid, fileId, meta }
+    payload: { roomJid, id, meta }
 });
 
 const initialState = {};
@@ -33,32 +29,28 @@ export default (state = initialState, action) => {
 
     case RECEIVED_FILE: 
 
-        // TODO store files indexed by roomJid like forms
-
-        console.log('IN RECEIVED FILE REDUCER', action.payload);
-
         let newFile = {
             id: action.payload.id,
             content: action.payload.content
         };
 
-        const room = state[action.payload.roomJid] || {
+        let room = state[action.payload.roomJid] || {
             jid: action.payload.roomJid,
-            files: []
+            files: {}
         };
 
         if(state[room.jid] && state[room.jid].files) {
 
-            let currentFiles = filter(state[room.jid].files, function(file) {
-                return file.id !== newFile.id;
-            });
-            currentFiles.push(newFile);
+            let currentFiles = state[room.jid].files;
 
             return {
                 ...state,
                 [room.jid]: {
                     ...room,
-                    files: uniqBy(currentFiles, 'id')
+                    files: {
+                        ...currentFiles,
+                        [newFile.id]: newFile
+                    }
                 }
             };
 
@@ -67,25 +59,41 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 [room.jid]: {
-                ...room,
-                files: [
-                    ...room.files,
-                    newFile
-                    ]
+                    ...room,
+                    files: {
+                        [newFile.id]: newFile
+                    }  
                 }
             };
 
         }
-            
-
-        return state;
 
     break;
 
     case RECEIVED_FILE_META: 
     
-            // TODO store meta for the file
-            return state;
+        let roomObj = state[action.payload.roomJid] || {
+            jid: action.payload.roomJid,
+            files: {}
+        };
+
+        let currentFiles = state[roomObj.jid].files;
+
+        let fileContent = currentFiles[action.payload.id];
+        // TODO ensure exists
+
+        let augmentedObject = Object.assign(fileContent, action.payload.meta);
+
+        return {
+            ...state,
+            [roomObj.jid]: {
+                ...roomObj,
+                files: {
+                    ...currentFiles,
+                    [action.payload.id]: augmentedObject
+                }
+            }
+        };
     
         break;
 

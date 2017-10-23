@@ -100,7 +100,7 @@ export default (state = {}, action) => {
       };
 
     }
-
+ 
     case JOINED_ROOM: {
 
       // TODO ensure it exists

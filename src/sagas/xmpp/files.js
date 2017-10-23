@@ -22,14 +22,14 @@ function* watchJoinRoom(client) {
         let metaNode = 'snippets/' + action.payload.jid + '/summary';
 
         // TODO refactor this
-        let contentNodeExists = yield call(getNode, client, contentNode);
+        let contentNodeExists = yield call(getFileNode, client, contentNode);
         if(!contentNodeExists) {
             let createResponse = yield call(createFileNode, client, contentNode);
             if(createResponse.error) {
                 // TODO handle error
             }
         }
-        let metaNodeExists = yield call(getNode, client, metaNode);
+        let metaNodeExists = yield call(getFileNode, client, metaNode);
         if(!metaNodeExists) {
             let createResponse = yield call(createFileNode, client, metaNode);
             if(createResponse.error) {
@@ -92,8 +92,7 @@ function* fetchSubscriptions(client) {
     return response.pubsub.subscriptions.list;
 }
 
-function* getNode(client, node) {
-
+function* getFileNode(client, node) {
     try {
         let response = yield call([client, client.getItem], 'pubsub.'+window.config.xmppDomain, node);
         return response.pubsub.retrieve.node;
@@ -102,7 +101,6 @@ function* getNode(client, node) {
         console.log('error retrieving node', error);
         return null;
     }
-
 }
 
 function* createFileNode(client, node) {
@@ -137,20 +135,29 @@ function* sendFile(client) {
             }
         );
 
-        // TODO need to get the ID of the published item so we can affiliate the meta...
+        const result = yield race({
+            success: take(successChannel),
+            timeout: delay(5000)
+        });
+      
+        if (result.timeout) {
+            // TODO action to explain timeout + suggest retry
+        }
 
-        // TODO handle errors etc
+        if(result.success) {
 
+            let publishedFile = result.success.event.updated.published[0];
+            
+            yield call([client, client.publish], 
+                'pubsub.'+window.config.xmppDomain, 
+                metaNode, 
+                {
+                    id: publishedFile.id,
+                    json: buildContentMeta(action.payload.meta)
+                }
+            );  
 
-        // TODO submit with SPECIFIC ID which matches the previous...
-
-        yield call([client, client.publish], 
-            'pubsub.'+window.config.xmppDomain, 
-            metaNode, 
-            {
-                json: buildContentMeta(action.payload.meta)
-            }
-        );    
+        }
 
     });
 
@@ -186,16 +193,12 @@ function* watchForFiles(client) {
 
             // TODO replace with regex
             let roomJid = updateEvent.node.replace("snippets/", "").replace("/content", "");
-
-            console.log('going to call action', updateEvent)
-
             yield put(receivedFile(roomJid, updateEvent.published[0].id, updateEvent.published[0].json.data));
 
         } else if(msg.event.updated.node.endsWith('/summary')) {
 
             let roomJid = msg.event.updated.node.replace("snippets/", "").replace("/summary", "");
-
-            // receivedFileMeta(roomJid, ???)
+            yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].json));
         }
 
 
