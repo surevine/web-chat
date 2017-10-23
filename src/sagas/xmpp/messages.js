@@ -60,10 +60,16 @@ function* createNotifications(msg) {
 
   // Check username mention
   if(settings.userNotifications) {
-    let room = yield select((state) => state.rooms[msg.from.bare]);
-    if(msg.body.indexOf(room.nickname) > -1) {
-      yield put(showNotification(msg.from.resource + ' mentioned you', msg.from.bare));
+
+    let currentNickname = yield select((state) => state.rooms[msg.from.bare].nickname);
+
+    if(msg.from.resource !== currentNickname) {
+      let room = yield select((state) => state.rooms[msg.from.bare]);
+      if(msg.body.indexOf(room.nickname) > -1) {
+        yield put(showNotification(msg.from.resource + ' mentioned you', msg.from.bare));
+      }
     }
+
   }
 
   // Check if message contains any defined keywords

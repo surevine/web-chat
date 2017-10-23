@@ -83,9 +83,7 @@ function* loadTemplate(client, node) {
 function* watchForForms(client) {
     
     const channel = makeChannel(client, {
-        "pubsub:event": (emit, msg) => {
-            emit(msg);
-        }
+        "pubsub:event": (emit, msg) => emit(msg)
     });
 
     yield takeEvery(channel, function* eachForm(msg) {
@@ -101,11 +99,15 @@ function* watchForForms(client) {
 
             let form = msg.event.updated.published[0].form;
 
-            let template = yield select(state => state.forms.templates[msg.event.updated.node.replace("fdp/submitted", "fdp/template")]);
-            let author = getFormField(form, 'userid').value;
-            let room = getFormField(form, 'room').value;
+            let author = getFormField(form, 'userid').value[0];
+            let currentUser = yield select((state) => state.client.jid.bare);
 
-            yield put(showNotification(author + ' published ' + template.title, room));
+            if(author !== currentUser) {
+                let template = yield select(state => state.forms.templates[msg.event.updated.node.replace("fdp/submitted", "fdp/template")]);
+                let room = getFormField(form, 'room').value;
+                yield put(showNotification(author + ' published ' + template.title, room));
+            }
+
         }
 
     });
