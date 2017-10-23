@@ -21,12 +21,7 @@ function* watchForMessages(client) {
     'muc:subject': (emit, msg) => {
       msg.id = shortid.generate();
       emit(msg);
-    },
-    // 'chat:state': (emit, msg) => {
-    //   // console.log('CHAT STATE', msg)
-    //   // TODO outbound as below:
-    //   // client.sendMessage({ to: 'peer@example.com', type: 'chat', chatState: 'composing' })
-    // },
+    }
   });
 
   yield takeEvery(messageChannel, function* eachMessage(msg) {
@@ -47,9 +42,6 @@ function* watchForMessages(client) {
     yield put(incrementUnreadCount(msg.from.bare));
 
     yield call(createNotifications, msg);
-
-    // Scroll message pane to bottom
-    // scrollMessageList();
 
   });
 }
@@ -87,12 +79,6 @@ function* createNotifications(msg) {
   } 
 
 }
-
-// function scrollMessageList() {
-//   console.log('going to scroll!')
-//   var messageList = document.getElementById('messageList');
-//   messageList.scrollTop = messageList.scrollHeight;
-// }
 
 function* sendMessages(client) {
   while (true) {
