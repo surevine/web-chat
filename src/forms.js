@@ -2,9 +2,9 @@ import find from 'lodash/find';
 
 // Form Helper Functions
 
-export const getFormField = (formTemplate, fieldName) => {
+export const getFormField = (form, fieldName) => {
 
-    return find(formTemplate.fields, function(field) {
+    return find(form.fields, function(field) {
         return field.name === fieldName;
     });
 }

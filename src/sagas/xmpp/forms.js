@@ -3,6 +3,7 @@ import { all, call, race, select, take, takeEvery, put } from "redux-saga/effect
 import find from "lodash/find";
 
 import { makeChannel } from "../_helpers";
+import { getFormField } from '../../forms';
 
 import { receivedForm, 
         loadedFormNodes,
@@ -97,9 +98,14 @@ function* watchForForms(client) {
 
         let settings = yield select((state) => state.settings);
         if(settings.formNotifications) {
-            // TODO improve the content of the notification
-            // Room jid and form name/type
-            yield put(showNotification('Form Published', 'body of notification here'));
+
+            let form = msg.event.updated.published[0].form;
+
+            let template = yield select(state => state.forms.templates[msg.event.updated.node.replace("fdp/submitted", "fdp/template")]);
+            let author = getFormField(form, 'userid').value;
+            let room = getFormField(form, 'room').value;
+
+            yield put(showNotification(author + ' published ' + template.title, room));
         }
 
     });
