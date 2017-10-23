@@ -13,6 +13,9 @@ import {
     JOINED_ROOM,
     LEAVE_ROOM
 } from '../../ducks/rooms';
+import {
+    showNotification
+} from '../../ducks/toast';
 
 function* watchJoinRoom(client) {
 
@@ -160,6 +163,8 @@ function* sendFile(client) {
                 }
             );  
 
+            yield put(showNotification('File uploaded successfully', 'info'));
+
         }
 
     });
@@ -209,7 +214,6 @@ function* watchForFiles(client) {
 
     });
 }
-
 
 export default function*(client) {
   yield all([

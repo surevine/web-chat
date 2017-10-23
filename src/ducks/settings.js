@@ -12,7 +12,7 @@ export const saveSettings = (settings) => ({
 const initialState = {
     userNotifications: false,
     formNotifications: true,
-    keywords: ['medivac', 'emergency']
+    keywords: []
 };
 
 // reducer

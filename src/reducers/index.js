@@ -10,6 +10,7 @@ import messages from '../ducks/messages';
 import notification from '../ducks/notification';
 import presence from '../ducks/presence';
 import settings from '../ducks/settings';
+import toast from '../ducks/toast';
 import user from '../ducks/user';
 
 export default combineReducers({
@@ -23,5 +24,6 @@ export default combineReducers({
   notification,
   presence,
   settings,
+  toast,
   user
 });

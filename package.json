@@ -24,11 +24,13 @@
     "react-spinkit": "^3.0.0",
     "react-tabs": "^2.1.0",
     "react-textarea-autosize": "^5.1.0",
+    "react-toastify": "^2.1.5",
     "react-tooltip": "^3.3.0",
     "react-transition-group": "^2.2.1",
     "react-web-notification": "^0.2.4",
     "redux": "^3.7.1",
     "redux-saga": "^0.15.4",
+    "redux-thunk": "^2.2.0",
     "shortid": "^2.2.8",
     "stanza.io": "^8.4.1",
     "uuid": "^3.1.0"
