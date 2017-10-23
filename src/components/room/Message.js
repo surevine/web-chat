@@ -5,6 +5,7 @@ import ReactTooltip from 'react-tooltip'
 import Highlighter from 'react-highlight-words';
 
 import FormPreview from './messages/FormPreview';
+// import FilePreview from './messages/FilePreview';
 
 class Message extends React.Component {
 

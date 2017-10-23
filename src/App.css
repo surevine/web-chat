@@ -609,7 +609,8 @@ form .actions {
 
 /* Forms List */
 
-.FormsList .formSubmission {
+.FormsList .formSubmission,
+.FilesList .fileUpload {
   border: solid 1px #D7D7D7;
   border-radius: 10px;
   padding: 20px;
@@ -617,22 +618,26 @@ form .actions {
   cursor: pointer;
 }
 
-.formSubmission .description {
+.formSubmission .description,
+.fileUpload .description {
   margin-left: 50px;
 }
 
-.formSubmission .title {
+.formSubmission .title,
+.fileUpload .title {
   font-weight: bold;
   font-size: 16px;
   margin: 0 0 5px 0;
 }
 
-.formSubmission .meta {
+.formSubmission .meta,
+.fileUpload .meta {
   margin: 0;
   font-size: 14px;
 }
 
-.formSubmission .author {
+.formSubmission .author,
+.fileUpload .author {
   font-weight: bold;
   margin-right: 4px;
   overflow: hidden;
@@ -640,13 +645,15 @@ form .actions {
   white-space: nowrap;
 }
 
-.formSubmission .date {
+.formSubmission .date,
+.fileUpload .date {
   display: inline-block;
   font-size: 12px;
   color: #999;
 }
 
-.formSubmission .formIcon {
+.formSubmission .formIcon,
+.fileUpload .fileIcon {
   float: left;
   font-size: 36px;
   margin: 0 10px 0 0;

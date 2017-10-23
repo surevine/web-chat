@@ -1,6 +1,8 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome';
 
+import FileIcon from './files/FileIcon';
+
 class FilesList extends React.Component {
 
     render() {
@@ -22,18 +24,19 @@ class FilesList extends React.Component {
                             return (
                             <div className="fileUpload" key={file.id}>
 
-
-                                {/* TODO MAKE COMONENTN AND icon based on filetype? */}
-                                <FontAwesome name='file-image-o' className="formIcon" />
+                                <FileIcon type={file.type} name={file.name} />
 
                                 <div className="description">
                                     {file.name}
                                 </div>
 
                                 <div className="meta">
-                                    {/* TODO make this kbs etc */}
-                                    {file.size}
+                                    {this.printFileSize(file.size)}
                                 </div>
+
+                                <a href={file.content} download={file.name} className="download">
+                                    <FontAwesome name="download" className="fileIcon" />
+                                </a>
 
                                 <div className="clearfix"></div>
                             </div>
@@ -48,6 +51,21 @@ class FilesList extends React.Component {
 
         </div>
         );
+    }
+
+    printFileSize(size) {
+
+        // MB
+        if(size > 1000000) {
+            return (size / 1000000).toFixed(2) + "MB";
+        }
+
+        // kB
+        if(size > 1000) {
+            return (size / 1000).toFixed(2) + "kB";
+        }
+
+        return "1kB"; // Minimum size to report
     }
 
 }
