@@ -14,6 +14,7 @@ import {
     getRoomMessages, 
     getRoomMembers,
     getRoomForms, 
+    getRoomFiles,
     isRoomBookmarked } from '../selectors';
 
 import RoomHeader from '../components/room/RoomHeader';
@@ -253,7 +254,7 @@ const mapStateToProps = (state, props) => ({
   messages: getRoomMessages(state, { roomJid: props.match.params.jid }),
   members: getRoomMembers(state, { roomJid: props.match.params.jid }),
   forms: getRoomForms(state, { roomJid: props.match.params.jid }),
-  files: [] // TODO make this read from state when setup
+  files: getRoomFiles(state, { roomJid: props.match.params.jid })
 });
 
 const mapDispatchToProps = (dispatch, props) => {

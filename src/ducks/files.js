@@ -54,23 +54,21 @@ export default (state = initialState, action) => {
                 }
             };
 
-        } else {
-
-            return {
-                ...state,
-                [room.jid]: {
-                    ...room,
-                    files: {
-                        [newFile.id]: newFile
-                    }  
-                }
-            };
-
         }
 
-    break;
+        return {
+            ...state,
+            [room.jid]: {
+                ...room,
+                files: {
+                    [newFile.id]: newFile
+                }  
+            }
+        };
 
-    case RECEIVED_FILE_META: 
+        // break;
+
+    case RECEIVED_FILE_META:
     
         let roomObj = state[action.payload.roomJid] || {
             jid: action.payload.roomJid,
@@ -95,7 +93,7 @@ export default (state = initialState, action) => {
             }
         };
     
-        break;
+        // break;
 
     default:
       return state;

@@ -14,17 +14,31 @@ class FilesList extends React.Component {
                         <p>No files have been uploaded to this room.</p>
                     )}
 
-                    { this.props.files
-                        .map(file => (
-                        <div className="fileUpload" key={file.id}>
-                            {/* TODO icon based on filetype? */}
-                            <FontAwesome name='file-image-o' className="formIcon" />
-                            <div className="description">
-                                {file.id}
+                    { Object.keys(this.props.files)
+                        .map(fileId => {
+                            
+                            let file = this.props.files[fileId];
+                            
+                            return (
+                            <div className="fileUpload" key={file.id}>
+
+
+                                {/* TODO MAKE COMONENTN AND icon based on filetype? */}
+                                <FontAwesome name='file-image-o' className="formIcon" />
+
+                                <div className="description">
+                                    {file.name}
+                                </div>
+
+                                <div className="meta">
+                                    {/* TODO make this kbs etc */}
+                                    {file.size}
+                                </div>
+
+                                <div className="clearfix"></div>
                             </div>
-                            <div className="clearfix"></div>
-                        </div>
-                    ))}
+                        )}
+                    )}
                 </div>
             ) : (
                 <div>

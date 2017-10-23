@@ -125,6 +125,7 @@ function* sendFile(client) {
         let contentNode = 'snippets/' + action.payload.roomJid + '/content';
         let metaNode = 'snippets/' + action.payload.roomJid + '/summary';
 
+        // TODO replace json with custom type xml
         yield call([client, client.publish], 
             'pubsub.'+window.config.xmppDomain, 
             contentNode, 
@@ -137,17 +138,19 @@ function* sendFile(client) {
 
         const result = yield race({
             success: take(successChannel),
-            timeout: delay(5000)
+            timeout: delay(10000)
         });
       
         if (result.timeout) {
             // TODO action to explain timeout + suggest retry
+            console.log('timed out!')
         }
 
         if(result.success) {
 
             let publishedFile = result.success.event.updated.published[0];
             
+            // TODO replace json with custom type xml
             yield call([client, client.publish], 
                 'pubsub.'+window.config.xmppDomain, 
                 metaNode, 

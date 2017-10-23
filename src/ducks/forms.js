@@ -81,7 +81,7 @@ export default (state = initialState, action) => {
 
     }
 
-    case RECEIVED_FORM_TEMPLATE: {
+    case RECEIVED_FORM_TEMPLATE:
 
         let currentTemplates = state.templates;
 
@@ -93,9 +93,7 @@ export default (state = initialState, action) => {
             }
         };
 
-    }
-
-    case RECEIVED_FORM: {
+    case RECEIVED_FORM:
 
         const form = action.payload.form;
 
@@ -155,24 +153,22 @@ export default (state = initialState, action) => {
                     }
                 };
     
-            } else {
+            } 
     
-                return {
-                    ...state,
-                    [peer.jid]: {
-                    ...peer,
-                    forms: [
-                        ...peer.forms,
-                        newForm
-                        ]
-                    }
-                };
-    
-            }
+            return {
+                ...state,
+                [peer.jid]: {
+                ...peer,
+                forms: [
+                    ...peer.forms,
+                    newForm
+                    ]
+                }
+            };
 
         }
 
-    }
+        break;
 
     default:
       return state;

@@ -65,8 +65,7 @@ class FormTemplate extends React.Component {
 
         let formState = {};
         
-        this.props.template.fields.map(field => {
-
+        this.props.template.fields.forEach(field => {
             if(field.type !== 'fixed') {
                 formState[field.name] = {
                     type: field.type,
@@ -75,7 +74,6 @@ class FormTemplate extends React.Component {
                     value: "",
                 };
             }
-
         });
 
         this.setState(function(prevState, props) {

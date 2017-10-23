@@ -29,7 +29,7 @@ class RoomHeader extends React.Component {
                         onClick={this.props.toggleFiles}
                         data-tip
                         data-for="filesTip">
-                        <FontAwesome name='file-image-o' /> { this.props.files.length }
+                        <FontAwesome name='file-image-o' /> { Object.keys(this.props.files).length }
                     </a>
                     <ReactTooltip id='filesTip' place="bottom" effect='solid' delayShow={100} offset={{left:2}}>
                         <span>File Uploads</span>

@@ -14,12 +14,9 @@ class SendFileModal extends React.Component {
             error: false,
             file: {}
         };
-      }
+    }
 
     render() {
-
-        // name, type (mime), size, base64, file
-        // file: name, lastModified, lastModifiedDate, size (bytes), type
 
         return (
 
@@ -70,8 +67,8 @@ class SendFileModal extends React.Component {
 
     getFile(file){
 
-        // TODO set to actual limit
-        const SIZE_LIMIT = 7000;
+        // TODO set to actual limit + refactor
+        const SIZE_LIMIT = 1000000; // 1MB Limit
         if(file.file.size > SIZE_LIMIT) {
 
             this.setState(function(prevState, props) {

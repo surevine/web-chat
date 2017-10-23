@@ -37,6 +37,11 @@ export const getRoomForms = (state, { roomJid }) => {
   return forms;
 };
 
+export const getRoomFiles = (state, { roomJid }) => {
+  const files = (state.files[roomJid] && state.files[roomJid].files) || [];
+  return files;
+};
+
 export const isRoomBookmarked = (state, { roomJid }) => {
 
   let index = findIndex(state.bookmarks.conferences, function(bookmark) {

@@ -5,7 +5,7 @@ import {
 } from "../../ducks/user";
 
 
-function* sendPresenceToRooms(client, rooms, presence) {
+function sendPresenceToRooms(client, rooms, presence) {
     rooms.forEach(function(room) {
         client.sendPresence({
             to: room,
