@@ -10,7 +10,8 @@ import { receivedForm,
         SUBSCRIBE_TO_FORMS,
         SUBMIT_FORM } from '../../ducks/forms';
 import { showNotification } from '../../ducks/notification';
-  
+import { showToast } from '../../ducks/toast';
+
 function* fetchFormNodes(client) {
 
     const allNodes = yield call([client, client.getDiscoItems], 'pubsub.'+window.config.xmppDomain, '');
@@ -163,6 +164,8 @@ function* publishForm(client) {
                 body: buildFormMessage(formData, template, action.payload.node, publishedForm.id),
                 form: publishedForm.form
             });
+
+            yield put(showNotification('Form published successfully', 'info'));
 
         }
 

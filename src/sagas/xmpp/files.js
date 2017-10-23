@@ -13,9 +13,7 @@ import {
     JOINED_ROOM,
     LEAVE_ROOM
 } from '../../ducks/rooms';
-import {
-    showNotification
-} from '../../ducks/toast';
+import { showToast } from '../../ducks/toast';
 
 function* watchJoinRoom(client) {
 
@@ -163,7 +161,7 @@ function* sendFile(client) {
                 }
             );  
 
-            yield put(showNotification('File uploaded successfully', 'info'));
+            yield put(showToast('File uploaded successfully', 'info'));
 
         }
 
@@ -193,7 +191,6 @@ function* watchForFiles(client) {
         let updateEvent = msg.event.updated;
 
         if(!updateEvent.node.startsWith('snippets/')) {
-            console.log('doing nothing as not a file node');
             return;
         }
 
@@ -208,9 +205,6 @@ function* watchForFiles(client) {
             let roomJid = msg.event.updated.node.replace("snippets/", "").replace("/summary", "");
             yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].json));
         }
-
-
-
 
     });
 }
