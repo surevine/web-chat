@@ -627,7 +627,10 @@ form .actions {
 .fileUpload .title {
   font-weight: bold;
   font-size: 16px;
-  margin: 0 0 5px 0;
+  margin: 0 40px 5px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .formSubmission .meta,
@@ -658,6 +661,26 @@ form .actions {
   font-size: 36px;
   margin: 0 10px 0 0;
 }
+
+/* FilesList */
+
+.FilesList .download {
+  float: right;
+  margin-top: -36px;
+  border: solid 1px blue;
+  padding: 4px;
+  width: 20px;
+  text-align: center;
+  height: 20px;
+  border-radius: 4px;
+  opacity: 0;
+}
+
+.FilesList .fileUpload:hover .download {
+  opacity: 1;
+}
+
+/*  */
 
 .SendDataControl .sendForm {
   display: block;

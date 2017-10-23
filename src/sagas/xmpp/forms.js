@@ -96,7 +96,6 @@ function* watchForForms(client) {
         yield put(receivedForm(msg));
 
         let settings = yield select((state) => state.settings);
-
         if(settings.formNotifications) {
             // TODO improve the content of the notification
             // Room jid and form name/type
@@ -165,7 +164,7 @@ function* publishForm(client) {
                 form: publishedForm.form
             });
 
-            yield put(showNotification('Form published successfully', 'info'));
+            yield put(showToast('Form published successfully', 'info'));
 
         }
 

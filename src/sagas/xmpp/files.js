@@ -174,7 +174,8 @@ function buildContentMeta(meta) {
         name: meta.name,
         size: meta.size,
         type: meta.type,
-        lastModified: meta.lastModified
+        lastModified: meta.lastModified,
+        author: 'ME'
     };
 }
 
@@ -204,6 +205,12 @@ function* watchForFiles(client) {
 
             let roomJid = msg.event.updated.node.replace("snippets/", "").replace("/summary", "");
             yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].json));
+
+            // TODO fire a message as well!
+            // TODO or falsely receivedMessage()
+            console.log(msg)
+            // updateEvent.published[0].json.author
+
         }
 
     });

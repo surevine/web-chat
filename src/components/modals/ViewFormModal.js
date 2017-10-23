@@ -6,8 +6,6 @@ class ViewFormModal extends React.Component {
 
     render() {
 
-        console.log(this.props.form);
-
         return (
 
             <ReactModal 

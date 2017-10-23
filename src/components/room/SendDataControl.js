@@ -35,7 +35,7 @@ class SendDataControl extends React.Component {
                         onClick={this.toggleMenu} 
                         data-tip 
                         data-for="sendTip">
-                        <FontAwesome name='share' className="icon" />
+                        <FontAwesome name='upload' className="icon" />
                     </a>
                     <ReactTooltip id='sendTip' place="top" effect='solid' delayShow={100} offset={{left:2}}>
                         <span>Send Data</span>

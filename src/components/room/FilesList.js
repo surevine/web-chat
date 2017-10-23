@@ -26,16 +26,16 @@ class FilesList extends React.Component {
 
                                 <FileIcon type={file.type} name={file.name} />
 
-                                <div className="description">
+                                <h5 className="title">
                                     {file.name}
-                                </div>
+                                </h5>
 
                                 <div className="meta">
                                     {this.printFileSize(file.size)}
                                 </div>
 
                                 <a href={file.content} download={file.name} className="download">
-                                    <FontAwesome name="download" className="fileIcon" />
+                                    <FontAwesome name="download" />
                                 </a>
 
                                 <div className="clearfix"></div>

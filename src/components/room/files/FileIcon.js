@@ -32,9 +32,7 @@ class FileIcon extends React.Component {
         }
 
         return (
-            <div className="FileIcon">
-                <FontAwesome name={icon} className="fileIcon" />
-            </div>
+            <FontAwesome name={icon} className="fileIcon" />
         );
     }
 
