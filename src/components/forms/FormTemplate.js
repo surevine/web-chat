@@ -15,7 +15,6 @@ class FormTemplate extends React.Component {
         };
     }
 
-
     componentDidMount() {
         this.buildFormState();
     }
@@ -26,8 +25,56 @@ class FormTemplate extends React.Component {
         }
     }
 
-    buildDefaultValues() {
+    render() {
+        return (
 
+            <div className="FormTemplate">
+
+                {this.props.template.instructions && (
+                    <p>{this.props.template.instructions[0]}</p>
+                )}
+
+                <Form 
+                    onSubmit={this.handleSubmit}
+                    defaultValues={this.buildDefaultValues()}
+                    validate={this.buildValidationRules.bind(this)}>
+
+                    { formApi => (
+                        <form className="formTemplate" onSubmit={formApi.submitForm}>
+
+                            { this.props.template.layout ? (
+
+                                <LayoutForm 
+                                    template={this.props.template}
+                                    form={this.state.form} />
+
+                            ) : (
+
+                                <BasicForm 
+                                    template={this.props.template}
+                                    form={this.state.form} />
+
+                            ) }
+
+                            <div className="controls">
+                                <a className="cancelForm btn" onClick={this.props.onCancel}>
+                                    Cancel
+                                </a>
+                                <button className="primary-btn" type='submit'>Publish Form</button>
+                            </div>
+
+                        </form>
+                    )}
+
+                </Form>
+
+            </div>
+            
+        );
+    }
+
+    buildDefaultValues() {
+        
         let defaults = {};
         this.props.template.fields.forEach(field => {
             if(field.type !== 'fixed') {
@@ -35,6 +82,39 @@ class FormTemplate extends React.Component {
             }
         });
         return defaults;
+    }
+
+    buildFormState() {
+        
+        let formState = {};
+        
+        this.props.template.fields.forEach(field => {
+            if(field.type !== 'fixed') {
+                formState[field.name] = {
+                    type: field.type,
+                    label: field.label,
+                    name: field.name,
+                    value: "",
+                };
+            }
+        });
+
+        this.setState(function(prevState, props) {
+            return {
+                ...prevState,
+                form: formState
+            };
+        });
+    }
+
+    buildValidationRules(values, state, props) {
+        const rules = {};
+        this.props.template.fields.forEach(field => {
+            if(field.validation) {
+                rules[field.name] = this.validateField(values[field.name], field.validation, field.required);
+            }
+        });
+        return rules;
     }
 
     validateField(field, validation, required) {
@@ -86,87 +166,6 @@ class FormTemplate extends React.Component {
         }
 
         return false;
-    }
-
-    buildValidationRules(values, state, props) {
-        const rules = {};
-        this.props.template.fields.forEach(field => {
-            if(field.validation) {
-                rules[field.name] = this.validateField(values[field.name], field.validation, field.required);
-            }
-        });
-        return rules;
-    }
-
-    render() {
-        return (
-
-            <div className="FormTemplate">
-
-                {this.props.template.instructions && (
-                    <p>{this.props.template.instructions[0]}</p>
-                )}
-
-                <Form 
-                    onSubmit={this.handleSubmit}
-                    defaultValues={this.buildDefaultValues()}
-                    validate={this.buildValidationRules.bind(this)}>
-
-                    { formApi => (
-                        <form className="formTemplate" onSubmit={formApi.submitForm}>
-
-                            { this.props.template.layout ? (
-
-                                <LayoutForm 
-                                    template={this.props.template}
-                                    form={this.state.form} />
-
-                            ) : (
-
-                                <BasicForm 
-                                    template={this.props.template}
-                                    form={this.state.form} />
-
-                            ) }
-
-                            <div className="controls">
-                                <a className="cancelForm btn" onClick={this.props.onCancel}>
-                                    Cancel
-                                </a>
-                                <button className="primary-btn" type='submit'>Publish Form</button>
-                            </div>
-
-                        </form>
-                    )}
-
-                </Form>
-
-            </div>
-            
-        );
-    }
-
-    buildFormState() {
-
-        let formState = {};
-        
-        this.props.template.fields.forEach(field => {
-            if(field.type !== 'fixed') {
-                formState[field.name] = {
-                    type: field.type,
-                    label: field.label,
-                    name: field.name,
-                    value: "",
-                };
-            }
-        });
-
-        this.setState(function(prevState, props) {
-            return {
-                ...prevState,
-                form: formState
-            };
-        });
     }
 
     handleSubmit = (values) => {
