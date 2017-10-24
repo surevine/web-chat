@@ -284,8 +284,12 @@ textarea:disabled,
   background-color: #f0f0f0;
 }
 
-input[type='checkbox'] {
+input[type='checkbox'],
+input[type='file']
+ {
   width: auto;
+  border: none;
+  padding: 0;
 }
 
 .formSection {
