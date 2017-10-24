@@ -113,11 +113,10 @@ function* watchForForms(client) {
     });
 }
 
-// TODO move this elsewhere
 function buildFormMessage(formData, template, node, formId) {
 
     // TODO replace / remove below when form id delivered
-    // BUILD hyperlink consistent with exisintg jchat client
+    // BUILD hyperlink consistent with existing jchat client
     let message = "<a href='jchat://pubsub.localhost?select-form" + 
                     "&node=" + node.replace("fdp/submitted/", "") + 
                     "&id=" + formId + "'>" + 
@@ -157,7 +156,7 @@ function* publishForm(client) {
         });
       
         if (result.timeout) {
-        // TODO action to explain timeout + suggest retry
+            // TODO action to explain timeout + suggest retry
         }
 
         if(result.success) {

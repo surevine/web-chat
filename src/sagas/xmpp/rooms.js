@@ -15,12 +15,6 @@ import {
 } from "../../ducks/rooms";
 import { setRecentRooms } from "../../ducks/local";
 
-
-    // THIS IS HOW WE LOOK UP ROOMS!
-    // client.getDiscoItems('conference.localhost', '').then(response => {
-    //   console.log(response.discoItems);
-    // });
-
 function joinRoomWithOpts(client, roomJid, nickname, opts) {
   client.joinRoom(roomJid, nickname, {
     joinMuc: opts

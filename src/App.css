@@ -250,6 +250,7 @@ label span {
   color: #888;
 }
 
+input,
 input[type='text'],
 input[type='password'],
 input[type='email'],
@@ -264,6 +265,7 @@ textarea {
   line-height: 22px;
 }
 
+input:focus,
 input[type='text']:focus,
 input[type='password']:focus,
 input[type='email']:focus,
@@ -273,6 +275,7 @@ textarea:focus {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 0 3px rgba(0, 126, 255, 0.1);
 }
 
+input:disabled,
 input[type='text']:disabled,
 input[type='password']:disabled,
 input[type='email']:disabled,

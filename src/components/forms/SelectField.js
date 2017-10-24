@@ -1,45 +1,24 @@
 import React from 'react';
 import Select from 'react-select';
+import { FormInput } from 'react-form'
 
-class SelectField extends React.Component {
+export default ({field, ...rest}) => {
+    return (
+        <FormInput field={field}>
 
-    constructor () {
-        super();
-        this.state = {
-            selected: ''
-        };
-    }
+            {({ setValue, getValue, setTouched }) => {
 
-    selected(options)  {
-
-        let value = "";
-
-        if(options) {
-            if(this.props.multi) {
-                value = options.map(option => option.value);
-            } else {
-                value = options.value
-            }
-        }
-
-        this.props.onChange(this.props.name, value);
-
-    }
-
-    render() {
-        return (
-            <div className="fieldgroup">
-                <Select
-                        name={this.props.name}
-                        value={this.props.value}
-                        multi={this.props.multi}
-                        options={this.props.options}
-                        onChange={this.selected.bind(this)}
+                return (
+                    <Select
+                        {...rest} // Send the rest of your props to React-Select
+                        value={getValue()} // Set the value to the forms value
+                        onChange={val => setValue(val)} // On Change, update the form value
+                        onBlur={() => setTouched()} // And the same goes for touched
                     />
-            </div>
-        );
-    }
+                )
 
+            }}
+
+        </FormInput>
+    )
 }
-
-export default SelectField;

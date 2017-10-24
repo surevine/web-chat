@@ -82,3 +82,14 @@ export const getPublishedForm = (state, { formId }) => {
   return form;
 
 }
+
+export const getKeywords = (state) => {
+
+  let parsedKeywords = [];
+  state.settings.keywords.forEach((keyword) => {
+    parsedKeywords.push(keyword.value)
+  });
+
+  return parsedKeywords;
+
+}

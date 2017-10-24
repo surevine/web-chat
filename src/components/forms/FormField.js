@@ -1,18 +1,16 @@
 import React from 'react';
+import { Checkbox, Text, Textarea } from 'react-form';
 
 import SelectField from './SelectField';
-import CheckboxField from './CheckboxField';
+import TagField from './TagField';
 
 class FormField extends React.Component {
 
     buildFieldProps(field) {
         return {
+            field: field.name,
             name: field.name,
             id: field.name,
-            value: (this.props.form[field.name] ? this.props.form[field.name].value : ""),
-            onChange: (e) => {
-                this.props.onChange(e.target.name, e.target.value)
-            }
         };
     }
 
@@ -31,24 +29,23 @@ class FormField extends React.Component {
             case "text-single":
 
                 return (
-                    <input type="text" autoComplete="off" {...fieldProps} />
-                )
-
-            case "text-multi":
-            
-                return (
-                    <textarea autoComplete="off" {...fieldProps}></textarea>
+                    <Text autoComplete="off" {...fieldProps} />
                 )
 
             case "text-private":
             
                 return (
-                    <input type="password" autoComplete="off" {...fieldProps} />
+                    <Text type="password" autoComplete="off" {...fieldProps} />
+                )
+
+            case "text-multi":
+            
+                return (
+                    <Textarea autoComplete="off" {...fieldProps} />
                 )
 
             case "list-single":
 
-                fieldProps.onChange = this.props.onChange;
                 fieldProps.options = field.options;
                 fieldProps.multi = false;
 
@@ -58,7 +55,6 @@ class FormField extends React.Component {
 
             case "list-multi":
 
-                fieldProps.onChange = this.props.onChange;
                 fieldProps.options = field.options;
                 fieldProps.multi = true;
 
@@ -69,24 +65,23 @@ class FormField extends React.Component {
             case "jid-single":
 
                 return (
-                    <input type="email" autoComplete="off" {...fieldProps} />
+                    <Text type="email" autoComplete="off" {...fieldProps} />
                 )
 
             case "jid-multi":
-            
-                // TODO multiselect
+
+                fieldProps.multi = true; 
+                fieldProps.options = [];
+                fieldProps.placeholder="Add Jid..."
+        
                 return (
-                     <textarea autoComplete="off" {...fieldProps}></textarea>
+                    <TagField {...fieldProps} />
                 )
 
             case "boolean":
-            
-                fieldProps.onChange = this.props.onChange;
-                fieldProps.options = field.options;
-                fieldProps.checked = this.props.form[field.name].value;
 
                 return (
-                    <CheckboxField {...fieldProps} />
+                    <Checkbox field={field.name} {...fieldProps} />
                 );
 
             case "hidden":

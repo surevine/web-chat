@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 
 import Message from './Message';
 
+import { getKeywords } from '../../selectors';
+
 class MessageList extends React.Component {
 
     componentDidUpdate(prev, props) {
@@ -30,7 +32,7 @@ class MessageList extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-    keywords: state.settings.keywords
+    keywords: getKeywords(state)
 });
   
   const mapDispatchToProps = (dispatch, props) => {
