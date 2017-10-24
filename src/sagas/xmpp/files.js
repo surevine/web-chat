@@ -127,12 +127,22 @@ function* sendFile(client) {
         let metaNode = 'snippets/' + action.payload.roomJid + '/summary';
 
         // TODO replace json with custom type xml
+        // yield call([client, client.publish], 
+        //     'pubsub.'+window.config.xmppDomain, 
+        //     contentNode, 
+        //     {
+        //         json: {
+        //             data: action.payload.content
+        //         } 
+        //     }
+        // );
+
         yield call([client, client.publish], 
             'pubsub.'+window.config.xmppDomain, 
             contentNode, 
             {
-                json: {
-                    data: action.payload.content
+                snippet: {
+                    uri: action.payload.content
                 } 
             }
         );
@@ -157,7 +167,7 @@ function* sendFile(client) {
                 metaNode, 
                 {
                     id: publishedFile.id,
-                    json: buildContentMeta(action.payload.meta)
+                    metadata: buildContentMeta(action.payload.meta)
                 }
             );  
 
@@ -199,12 +209,12 @@ function* watchForFiles(client) {
 
             // TODO replace with regex
             let roomJid = updateEvent.node.replace("snippets/", "").replace("/content", "");
-            yield put(receivedFile(roomJid, updateEvent.published[0].id, updateEvent.published[0].json.data));
+            yield put(receivedFile(roomJid, updateEvent.published[0].id, updateEvent.published[0].snippet.uri));
 
         } else if(msg.event.updated.node.endsWith('/summary')) {
 
             let roomJid = msg.event.updated.node.replace("snippets/", "").replace("/summary", "");
-            yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].json));
+            yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].metadata));
 
             // TODO fire a message as well!
             // TODO or falsely receivedMessage()
