@@ -16,6 +16,7 @@ class FormTemplate extends React.Component {
         };
     }
 
+
     componentDidMount() {
         this.buildFormState();
     }
@@ -39,12 +40,6 @@ class FormTemplate extends React.Component {
 
     validateField(field, validation, required) {
 
-        // field.validation.basic ???
-        // field.validation.select.min
-        // field.validation.select.max
-
-        return false;
-
         if(required) {
             if(field === '') {
                 return "This field is required";
@@ -52,36 +47,44 @@ class FormTemplate extends React.Component {
         }
 
         if(validation.dataType) {
-            if(validation.dataType === "xs:string") {
-                // TODO ensure field typeof is string!
-                if((typeof field) !== 'string') {
-                    return "This field should be a string";
-                }
-            }
 
             if(validation.dataType === "xs:dateTime") {
                 // what is the format?!
             }
 
-            // TODO other data types?
+            // xs:integer
+            // 123
+            // 
+
+            // geo:mgrs
+            // 38SMB4484
+            // <regex>\\d{1,2}[A-Za-z]\\s*[A-Za-z]{2}\\s*\\d{1,5}\\s*\\d{1,5}</regex>
         }
 
         if(validation.regex) {
-
-            console.log(validation.regex)
-
             let re = new RegExp(validation.regex);
             let found = field.match(re);
             if(!found) {
                 // TODO improve error message
                 return "Invalid format";
             }
-
         }
 
-        // TODO have type field here too, to detect jid-single etc
+        if(validation.select) {
 
-        // TODO other validation based on validation property
+            if(validation.select.min) {
+                if(field.length < validation.select.min)  {
+                    return "Field requires minimum of "+validation.select.min+" value(s)";
+                }
+            }
+
+            if(validation.select.max) {
+                if(field.length > validation.select.max)  {
+                    return "Field requires maximum of "+validation.select.max+" value(s)";
+                }
+            }
+
+        }
 
         return false;
     }
@@ -108,8 +111,7 @@ class FormTemplate extends React.Component {
                 <Form 
                     onSubmit={this.handleSubmit}
                     defaultValues={this.buildDefaultValues()}
-                    validate={this.buildValidationRules.bind(this)}
-                    onValidationFail={this.onValidationFail}>
+                    validate={this.buildValidationRules.bind(this)}>
 
                     {({submitForm}) => {
                     return (
@@ -119,15 +121,13 @@ class FormTemplate extends React.Component {
 
                                 <LayoutForm 
                                     template={this.props.template}
-                                    form={this.state.form}
-                                    onFieldChange={this.updateFormField.bind(this)} />
+                                    form={this.state.form} />
 
                             ) : (
 
                                 <BasicForm 
                                     template={this.props.template}
-                                    form={this.state.form}
-                                    onFieldChange={this.updateFormField.bind(this)} />
+                                    form={this.state.form} />
 
                             ) }
 
@@ -171,47 +171,62 @@ class FormTemplate extends React.Component {
         });
     }
 
-    updateFormField(fieldName, value) { 
-        this.setState(function(prevState, props) {
-            let currentFormState = prevState.form;
-            let currentField = currentFormState[fieldName];
-            return {
-                ...prevState,
-                form: {
-                    ...currentFormState,
-                    [fieldName]: {
-                        ...currentField,
-                        value: value
-                    }
-                }
-            };
-        });
-    }
+    // updateFormField(fieldName, value) { 
+
+    //     console.log(fieldName, value)
+
+    //     this.setState(function(prevState, props) {
+    //         let currentFormState = prevState.form;
+    //         let currentField = currentFormState[fieldName];
+    //         return {
+    //             ...prevState,
+    //             form: {
+    //                 ...currentFormState,
+    //                 [fieldName]: {
+    //                     ...currentField,
+    //                     value: value
+    //                 }
+    //             }
+    //         };
+    //     });
+    // }
 
     onValidationFail = () => {
         console.log('validation failed...');
     }
 
+    onValidationPass = () => {
+        console.log('validation pas...')
+    }
+
     handleSubmit = (values) => {
 
-        console.log(values)
-        
         let form = this.state.form;
 
         // Merge values with other form properties
         Object.keys(values).forEach((fieldname) => {
-            form[fieldname].value = values[fieldname];
+
+            let fieldValue = values[fieldname];
+            if((typeof fieldValue) === 'object') {
+
+                if(fieldValue.length) {
+                    form[fieldname].value = fieldValue.map(val => val.value); // multi value select
+                } else {
+                    form[fieldname].value = fieldValue.value // single value select
+                }
+
+            } else {
+                form[fieldname].value = values[fieldname];
+            }
+            
         });
+
+        console.log(form);
 
         if(this.state.valid) {
             this.props.onSubmit(form);
         }
     };
-
-    // handleSubmit(e) {
-    //     e.preventDefault();
-    //     this.props.onSubmit(this.state.form);
-    // }
 
 }
 

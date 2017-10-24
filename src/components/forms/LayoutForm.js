@@ -40,7 +40,7 @@ class LayoutForm extends React.Component {
                                 <div className="formItem" key={index}>
                                 { formItem.field ? (
 
-                                    <FormField key={getFormField(this.props.template, formItem.field).name} field={getFormField(this.props.template, formItem.field)} form={this.props.form} onChange={this.props.onFieldChange} />
+                                    <FormField key={getFormField(this.props.template, formItem.field).name} field={getFormField(this.props.template, formItem.field)} form={this.props.form} />
 
                                 ) : (
                                     <div className="formSection">
@@ -53,7 +53,7 @@ class LayoutForm extends React.Component {
                                         { formItem.section.contents.map(sectionItem => {
 
                                             return (
-                                                <FormField key={getFormField(this.props.template, sectionItem.field).name} field={getFormField(this.props.template, sectionItem.field)} form={this.props.form} onChange={this.props.onFieldChange} />
+                                                <FormField key={getFormField(this.props.template, sectionItem.field).name} field={getFormField(this.props.template, sectionItem.field)} form={this.props.form} />
                                             );
 
                                         })}

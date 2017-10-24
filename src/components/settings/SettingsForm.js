@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
-import { Form, Checkbox, Text } from 'react-form';
+import { Form, Checkbox } from 'react-form';
 
 import TagField from '../forms/TagField';
 
