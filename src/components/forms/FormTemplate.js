@@ -11,8 +11,7 @@ class FormTemplate extends React.Component {
     constructor () {
         super();
         this.state = {
-            form: {},
-            valid: false
+            form: {}
         };
     }
 
@@ -113,9 +112,8 @@ class FormTemplate extends React.Component {
                     defaultValues={this.buildDefaultValues()}
                     validate={this.buildValidationRules.bind(this)}>
 
-                    {({submitForm}) => {
-                    return (
-                        <form className="formTemplate" onSubmit={submitForm}>
+                    { formApi => (
+                        <form className="formTemplate" onSubmit={formApi.submitForm}>
 
                             { this.props.template.layout ? (
 
@@ -139,7 +137,7 @@ class FormTemplate extends React.Component {
                             </div>
 
                         </form>
-                    )}}
+                    )}
 
                 </Form>
 
@@ -171,34 +169,6 @@ class FormTemplate extends React.Component {
         });
     }
 
-    // updateFormField(fieldName, value) { 
-
-    //     console.log(fieldName, value)
-
-    //     this.setState(function(prevState, props) {
-    //         let currentFormState = prevState.form;
-    //         let currentField = currentFormState[fieldName];
-    //         return {
-    //             ...prevState,
-    //             form: {
-    //                 ...currentFormState,
-    //                 [fieldName]: {
-    //                     ...currentField,
-    //                     value: value
-    //                 }
-    //             }
-    //         };
-    //     });
-    // }
-
-    onValidationFail = () => {
-        console.log('validation failed...');
-    }
-
-    onValidationPass = () => {
-        console.log('validation pas...')
-    }
-
     handleSubmit = (values) => {
 
         let form = this.state.form;
@@ -221,11 +191,7 @@ class FormTemplate extends React.Component {
             
         });
 
-        console.log(form);
-
-        if(this.state.valid) {
-            this.props.onSubmit(form);
-        }
+        this.props.onSubmit(form);
     };
 
 }

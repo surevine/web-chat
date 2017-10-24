@@ -32,10 +32,12 @@ class LayoutForm extends React.Component {
 
                         <TabPanel key={index}>
                         { page.contents.map((formItem, index) => {
+
                             // Skip text layout items as not used
                             if(formItem.text) {
                                 return null;
                             }
+
                             return (
                                 <div className="formItem" key={index}>
                                 { formItem.field ? (
@@ -49,16 +51,15 @@ class LayoutForm extends React.Component {
 
                                         <div className="sectionFields">
 
-                                        {/* TODO: refactor not repeat above... */}
-                                        { formItem.section.contents.map(sectionItem => {
+                                            { formItem.section.contents.map(sectionItem => {
 
-                                            return (
-                                                <FormField key={getFormField(this.props.template, sectionItem.field).name} field={getFormField(this.props.template, sectionItem.field)} form={this.props.form} />
-                                            );
+                                                return (
+                                                    <FormField key={getFormField(this.props.template, sectionItem.field).name} field={getFormField(this.props.template, sectionItem.field)} form={this.props.form} />
+                                                );
 
-                                        })}
+                                            })}
 
-                                        <div className="clearfix"></div>
+                                            <div className="clearfix"></div>
 
                                         </div>                                   
 
