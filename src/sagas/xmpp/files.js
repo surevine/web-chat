@@ -161,7 +161,7 @@ function* sendFile(client) {
                 }
             );  
 
-            yield put(showToast('File uploaded successfully', 'info'));
+            yield put(showToast('File uploaded', 'info'));
 
         }
 

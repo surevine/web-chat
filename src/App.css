@@ -284,6 +284,10 @@ textarea:disabled,
   background-color: #f0f0f0;
 }
 
+input[type='checkbox'] {
+  width: auto;
+}
+
 .formSection {
 
 }

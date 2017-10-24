@@ -7,6 +7,8 @@ import TagField from '../forms/TagField';
 import { saveSettings } from '../../ducks/settings';
 import { showToast } from '../../ducks/toast';
 
+import './SettingsForm.css';
+
 class SettingsForm extends React.Component {
 
     render() {
@@ -20,8 +22,8 @@ class SettingsForm extends React.Component {
                 return (
                     <form onSubmit={submitForm}>
 
-                        <label>
-                            <Checkbox field='userNotifications' />
+                        <label htmlFor="userNotifications">
+                            <Checkbox id="userNotifications" name="userNotifications" field='userNotifications' />
                             Enable notifications when you are mentioned
                         </label>
 

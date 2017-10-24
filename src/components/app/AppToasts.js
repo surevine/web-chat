@@ -39,7 +39,7 @@ class AppToasts extends React.Component {
             <ToastContainer 
                 position="top-right"
                 type="info"
-                autoClose={5000}
+                autoClose={3000000}
                 newestOnTop={true}
                 closeOnClick
                 pauseOnHover

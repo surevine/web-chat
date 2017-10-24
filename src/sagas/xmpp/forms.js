@@ -171,7 +171,7 @@ function* publishForm(client) {
                 form: publishedForm.form
             });
 
-            yield put(showToast('Form published successfully', 'info'));
+            yield put(showToast('Form published', 'info'));
 
         }
 

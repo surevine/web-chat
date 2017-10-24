@@ -2,3 +2,16 @@
     /* display: none; */
     position: absolute;
 }
+
+.AppToasts .toastify__body {
+    padding: 0 10px;
+}
+
+.AppToasts .toastify-content {
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.AppToasts .toastify-content--info {
+    background-color: #007eff;
+}
