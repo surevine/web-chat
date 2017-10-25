@@ -20,7 +20,7 @@ function* watchJoinRoom(client) {
     yield takeEvery(JOINED_ROOM, function* subscribeToRoomFileNodes(action) {
 
         let contentNode = 'snippets/' + action.payload.jid + '/content';
-        let metaNode = 'snippets/' + action.payload.jid + '/summary';
+        let metaNode = 'snippets/' + action.payload.jid + '/metadata';
 
         // TODO refactor this
         let contentNodeExists = yield call(getFileNode, client, contentNode);
@@ -71,7 +71,7 @@ function* watchLeaveRoom(client) {
     yield takeEvery(LEAVE_ROOM, function* unsubscribeFromRoomFileNodes(action) {
 
         let contentNode = 'snippets/' + action.payload.jid + '/content';
-        let metaNode = 'snippets/' + action.payload.jid + '/summary';
+        let metaNode = 'snippets/' + action.payload.jid + '/metadata';
         const userJid = yield select(state => state.client.jid.bare);
         
         client.unsubscribeFromNode('pubsub.'+window.config.xmppDomain, {
@@ -124,7 +124,7 @@ function* sendFile(client) {
     yield takeEvery(SEND_FILE, function* uploadFile(action) {
 
         let contentNode = 'snippets/' + action.payload.roomJid + '/content';
-        let metaNode = 'snippets/' + action.payload.roomJid + '/summary';
+        let metaNode = 'snippets/' + action.payload.roomJid + '/metadata';
 
         yield call([client, client.publish], 
             'pubsub.'+window.config.xmppDomain, 
@@ -199,9 +199,9 @@ function* watchForFiles(client) {
             let roomJid = updateEvent.node.replace("snippets/", "").replace("/content", "");
             yield put(receivedFile(roomJid, updateEvent.published[0].id, updateEvent.published[0].snippet.uri));
 
-        } else if(msg.event.updated.node.endsWith('/summary')) {
+        } else if(msg.event.updated.node.endsWith('/metadata')) {
 
-            let roomJid = msg.event.updated.node.replace("snippets/", "").replace("/summary", "");
+            let roomJid = msg.event.updated.node.replace("snippets/", "").replace("/metadata", "");
             yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].metadata));
 
             // TODO fire a message as well!
