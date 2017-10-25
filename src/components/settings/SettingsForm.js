@@ -4,12 +4,16 @@ import { Form, Checkbox } from 'react-form';
 
 import TagField from '../forms/TagField';
 
-import { saveSettings } from '../../ducks/settings';
+import { loadSettings, saveSettings } from '../../ducks/settings';
 import { showToast } from '../../ducks/toast';
 
 import './SettingsForm.css';
 
 class SettingsForm extends React.Component {
+
+    componentDidMount() {
+        this.props.loadSettings();
+    }
 
     render() {
         return (
@@ -78,6 +82,7 @@ const mapStateToProps = (state, props) => ({
   
   const mapDispatchToProps = (dispatch, props) => {
     return {
+        loadSettings: () => dispatch(loadSettings()),
         saveSettings: (settings) => dispatch(saveSettings(settings)),
         showToast: (message, type) => dispatch(showToast(message, type)),
     };

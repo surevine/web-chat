@@ -10,6 +10,7 @@ import forms from './forms';
 import rooms from './rooms';
 import messages from './messages';
 import presence from './presence';
+import settings from './settings';
 import user from './user';
 
 function* runLoop(client) {
@@ -25,7 +26,8 @@ function* runLoop(client) {
             rooms(client),
             messages(client),
             presence(client),
-            user(client)
+            user(client),
+            settings()
         ]);
     } catch (e) {
       console.error("Caught error in saga, restarting:");

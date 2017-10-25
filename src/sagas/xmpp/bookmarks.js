@@ -33,6 +33,7 @@ function* addBookmark(client) {
 }
 
 function* removeBookmark(client) {
+  // TODO refactor into takeevery
   while(true) {
     const { payload } = yield take(REMOVE_BOOKMARK);
     yield call([client, client.removeBookmark], payload);
