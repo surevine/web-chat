@@ -25,12 +25,12 @@ class SendFormModal extends React.Component {
 
             <ReactModal 
                 isOpen={this.props.isOpen}
-                onRequestClose={this.props.onClose}
+                onRequestClose={this.handleFormClose.bind(this)}
                 className="Modal SendFormModal"
                 overlayClassName="Overlay">
 
                 <div className="header">
-                    <a className="closeModal" onClick={this.props.onClose}>
+                    <a className="closeModal" onClick={this.handleFormClose.bind(this)}>
                         &#x2715;
                     </a>
                     <h3>Publish form to {this.props.roomJid}</h3>
@@ -50,7 +50,7 @@ class SendFormModal extends React.Component {
 
                         <FormTemplate
                             template={template}
-                            onCancel={this.props.onClose}
+                            onCancel={this.handleFormClose.bind(this)}
                             onSubmit={this.handleFormSubmit.bind(this)} />
 
                     ): (
@@ -62,6 +62,17 @@ class SendFormModal extends React.Component {
             </ReactModal>
 
         );
+    }
+
+    handleFormClose() {
+        this.props.onClose();
+
+        this.setState(function(prevState, props) {
+            return {
+                ...prevState,
+                selectedTemplate: ''
+            };
+        });
     }
 
     handleFormSubmit(form) {
