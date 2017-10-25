@@ -26,7 +26,7 @@ class SendFormModal extends React.Component {
             <ReactModal 
                 isOpen={this.props.isOpen}
                 onRequestClose={this.props.onClose}
-                className="Modal"
+                className="Modal SendFormModal"
                 overlayClassName="Overlay">
 
                 <div className="header">
@@ -38,8 +38,7 @@ class SendFormModal extends React.Component {
 
                 <div className="content">
 
-                    {/* Conditionally render these instructions only when not selected! */}
-                    <h3>Select Form Template</h3>
+                    <h3>Form Template</h3>
                     <Select
                         name="template"
                         value={this.state.selectedTemplate}
@@ -47,13 +46,15 @@ class SendFormModal extends React.Component {
                         onChange={this.selectFormTemplate.bind(this)}
                     />
 
-                    { template && (
+                    { template ? (
 
                         <FormTemplate
                             template={template}
                             onCancel={this.props.onClose}
                             onSubmit={this.handleFormSubmit.bind(this)} />
 
+                    ): (
+                        <p className="instructions">Select a form template to complete</p>
                     )}
 
                 </div>

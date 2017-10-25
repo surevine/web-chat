@@ -1,6 +1,17 @@
+.formTemplate {
+
+}
+
 .FormError {
     color: #c00;
     font-style: italic;
     font-size: 14px;
     margin: 4px 0 20px 0;
+}
+
+.formTemplate input,
+.formTemplate textarea,
+.formTemplate .Select-control {
+    width: 100%;
+    box-sizing: border-box;
 }

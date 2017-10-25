@@ -176,6 +176,11 @@ class FormTemplate extends React.Component {
         Object.keys(values).forEach((fieldname) => {
 
             let fieldValue = values[fieldname];
+
+            if(!fieldValue) {
+                return;
+            }
+
             if((typeof fieldValue) === 'object') {
 
                 if(fieldValue.length) {

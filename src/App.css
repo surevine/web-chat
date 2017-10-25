@@ -721,10 +721,10 @@ form .actions {
 
 .Modal {
   position: absolute;
+  min-width: 600px;
   top: 50px;
-  left: 25%;
-  right: 25%;
-  bottom: 50px;
+  left: 35%;
+  right: 35%;
   display: grid;
   grid-template-rows: 62px auto;
   background-color: #fff;
@@ -733,6 +733,10 @@ form .actions {
   overflow-y: hidden;
   -webkit-box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.25);
   box-shadow: 1px 1px 10px 2px rgba(0,0,0,0.25);
+}
+
+.SendFormModal {
+  bottom: 50px;
 }
 
 .Modal .header {
@@ -747,15 +751,13 @@ form .actions {
 }
 
 .Modal .content {
-  min-height: 300px;
-  padding: 20px;
+  padding: 20px 50px;
   box-sizing: border-box;
   overflow-y: scroll;
   grid-row: 2;
 }
 
 .Modal .controls {
-  width: 420px;
   text-align: right;
   margin: 50px 0 20px 0;
   height: 30px;
@@ -773,6 +775,12 @@ form .actions {
 
 .closeModal {
   line-height: 24px;
+}
+
+.SendFormModal .instructions {
+  font-style: italic;
+  font-size: 14px;
+  color: #aaa;
 }
 
 /* Misc */

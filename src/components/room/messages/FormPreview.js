@@ -27,7 +27,7 @@ class FormPreview extends React.Component {
 
                 <div className="formPreview">
                     <FontAwesome name='file-text' className="icon" />
-                    {<p className="reference">{ this.props.publishedForm.template.title } - { this.props.publishedForm.id }</p>  }
+                    {<p className="reference">{ this.props.publishedForm.template.title }</p>  }
                     <Moment format="Do MMMM YYYY, HH:mm">{this.getFormUpdated(this.props.message)}</Moment>
                     
                     <div className="actions">
