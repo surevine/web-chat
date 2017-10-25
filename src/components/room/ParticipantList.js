@@ -2,6 +2,8 @@ import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import ReactTooltip from 'react-tooltip';
 
+import './ParticipantList.css';
+
 class ParticipantList extends React.Component {
 
     render() {

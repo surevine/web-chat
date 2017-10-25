@@ -1,0 +1,42 @@
+.UserInfo .authenticated {
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-template-rows: 50% 50%;
+}
+
+.UserInfo .authenticated .user {
+  grid-row: 1;
+}
+
+.UserInfo .authenticated .presence {
+  grid-row: 2;
+}
+
+.UserInfo a {
+  color: #868fb1;
+  padding: 4px;
+}
+
+.UserInfo a:hover {
+  color: #ffffff;
+}
+
+.UserInfo .username p {
+  margin: 14px 0;
+}
+
+.UserInfo .Select-control {
+  width: 50px;
+  margin: 5px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none !important;
+  float: left;
+}
+
+.UserInfo .Select-menu-outer {
+  width: 200px;
+  margin-top: 40px;
+  margin-left: 5px;
+}

@@ -1,0 +1,13 @@
+.MessageList {
+    grid-row: 1;
+    grid-column: 1;
+    width: 100%;
+    text-align: left;
+    overflow-y: scroll;
+    padding: 0;
+}
+
+.MessageList .Message:last-of-type .topic,
+.MessageList .Message:last-of-type .presence {
+    margin-bottom: 10px;
+}

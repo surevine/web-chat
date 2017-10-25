@@ -1,0 +1,45 @@
+.RoomSidebar {
+  display: grid;
+  grid-template-rows: 71px auto;
+  overflow-y: scroll;
+  grid-column: 2;
+  overflow-y: scroll;
+  background-color: #ffffff;
+  color: #333;
+  border-left: solid 1px #d7d7d7;
+  user-select: none;
+}
+
+.sidebarHeader {
+  grid-row: 1;
+  height: 30px;
+  padding: 20px;
+  border-bottom: solid 1px #d7d7d7;
+}
+
+.sidebarHeader h2 {
+  margin: 0;
+  float: left;
+  font-size: 20px;
+  line-height: 30px;
+}
+
+.sidebarContent {
+  grid-row: 2;
+  padding: 10px 20px;
+  clear: both;
+  overflow-y: scroll;
+}
+
+.closeSidebar,
+.closeModal {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+  color: #777;
+}
+
+.closeSidebar:hover,
+.closeModal:hover {
+  color: #333;
+}

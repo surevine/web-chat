@@ -5,6 +5,8 @@ import Select from 'react-select';
 
 import { setPresence } from '../../ducks/user';
 
+import './UserInfo.css';
+
 class UserInfo extends React.Component {
 
     constructor(props) {

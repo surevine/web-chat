@@ -7,6 +7,8 @@ import Highlighter from 'react-highlight-words';
 import FormPreview from './messages/FormPreview';
 // import FilePreview from './messages/FilePreview';
 
+import './Message.css';
+
 class Message extends React.Component {
 
     render() {

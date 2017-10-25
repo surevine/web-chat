@@ -9,6 +9,8 @@ import { joinRoom } from '../../ducks/rooms';
 
 import history from '../../history';
 
+import './RoomList.css';
+
 class RoomList extends React.Component {
 
     isRoomActive(jid) {

@@ -1,3 +1,27 @@
+.SendDataControl .sendForm {
+    display: block;
+    width: 30px;
+    height: 24px;
+    line-height: 24px;
+    padding: 10px;
+    font-size: 24px;
+    background-color: #fff;
+    border: solid 2px #ccc;
+    border-radius: 6px;
+    text-align: center;
+    cursor: pointer;
+    color: #999;
+}
+
+.SendDataControl .sendForm:hover,
+.SendDataControl .sendForm.active {
+    border-color: #999;
+}
+
+.SendDataControl .sendForm.disabled:hover {
+    border-color: #ccc;
+}
+
 .dd-menu-items {
     position: absolute;
     z-index: 7;

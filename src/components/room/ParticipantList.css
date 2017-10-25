@@ -1,0 +1,25 @@
+.ParticipantList ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    cursor: default;
+    border-radius: 3px;
+}
+
+.ParticipantList ul li {
+    font-size: 14px;
+    padding: 8px;
+}
+
+.ParticipantList h4 {
+    margin-bottom: 10px;
+}
+
+.presenceIcon {
+    margin-right: 8px;
+    font-size: 12px;
+}
+
+.presenceIcon.available { color: #5CD068; }
+.presenceIcon.dnd { color: red; }
+.presenceIcon.away { color: orange; }

@@ -5,6 +5,8 @@ import Message from './Message';
 
 import { getKeywords } from '../../selectors';
 
+import './MessageList.css';
+
 class MessageList extends React.Component {
 
     componentDidUpdate(prev, props) {

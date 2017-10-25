@@ -1,0 +1,9 @@
+.SendFormModal {
+  bottom: 50px;
+}
+
+.SendFormModal .instructions {
+  font-style: italic;
+  font-size: 14px;
+  color: #aaa;
+}

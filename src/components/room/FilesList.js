@@ -3,6 +3,8 @@ import FontAwesome from 'react-fontawesome';
 
 import FileIcon from './files/FileIcon';
 
+import './FilesList.css';
+
 class FilesList extends React.Component {
 
     render() {

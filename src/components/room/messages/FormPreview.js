@@ -10,6 +10,8 @@ import { parseFormIdFromMessage } from '../../../helpers';
 
 import ViewFormModal from '../../modals/ViewFormModal';
 
+import './FormPreview.css';
+
 class FormPreview extends React.Component {
 
     constructor () {

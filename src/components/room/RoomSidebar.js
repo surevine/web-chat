@@ -4,6 +4,8 @@ import ParticipantList from './ParticipantList';
 import FormsList from './FormsList';
 import FilesList from './FilesList';
 
+import './RoomSidebar.css';
+
 class RoomSidebar extends React.Component {
 
     render() {

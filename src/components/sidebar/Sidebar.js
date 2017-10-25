@@ -6,11 +6,9 @@ import FontAwesome from 'react-fontawesome';
 import UserInfo from '../header/UserInfo';
 import RoomList from './RoomList';
 
+import './Sidebar.css';
+
 class Sidebar extends React.Component {
-
-    componentDidMount() {
-
-    }
 
     render() {
 

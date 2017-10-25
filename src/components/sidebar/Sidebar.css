@@ -1,0 +1,38 @@
+.Sidebar {
+  grid-column: 1;
+  background-color: #262e3e;
+  user-select: none;
+  overflow-y: scroll;
+}
+
+.Sidebar .footer {
+  grid-row: 3;
+}
+
+.Sidebar .footer .controls {
+  margin: 0 20px;
+  padding-top: 12px;
+  border-top: solid 1px #3a465b;
+}
+
+.Sidebar .footer a {
+  display: block;
+  margin: 10px;
+  text-decoration: none;
+  color: #8190b0;
+  font-size: 14px;
+}
+
+.Sidebar .footer a:hover {
+  color: #fff;
+}
+
+.Sidebar .footer .icon {
+  margin-right: 5px;
+}
+
+.sidebarWrapper {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 70px auto 110px;
+}

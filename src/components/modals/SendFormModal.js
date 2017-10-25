@@ -8,6 +8,8 @@ import FormTemplate from '../forms/FormTemplate';
 import { getCurrentRoomJid, getTemplateOptions } from '../../selectors';
 import { submitForm } from '../../ducks/forms';
 
+import './SendFormModal.css';
+
 class SendFormModal extends React.Component {
 
     constructor () {
