@@ -18,9 +18,8 @@ class SettingsForm extends React.Component {
             <Form onSubmit={this.handleSubmit}
                 defaultValues={this.props.settings}>
 
-                {({submitForm}) => {
-                return (
-                    <form onSubmit={submitForm}>
+                { formApi => (
+                    <form onSubmit={formApi.submitForm}>
 
                         <label htmlFor="userNotifications">
                             <Checkbox id="userNotifications" name="userNotifications" field='userNotifications' />
@@ -46,7 +45,7 @@ class SettingsForm extends React.Component {
                         </div>
                     </form>
                 )
-                }}
+                }
 
             </Form>
 

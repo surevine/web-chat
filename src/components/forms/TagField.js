@@ -1,10 +1,10 @@
 import React from 'react';
 import Select from 'react-select';
-import { FormInput } from 'react-form'
+import { FormField } from 'react-form'
 
 export default ({field, ...rest}) => {
     return (
-        <FormInput field={field}>
+        <FormField field={field}>
 
             {({ setValue, getValue, setTouched }) => {
 
@@ -20,6 +20,6 @@ export default ({field, ...rest}) => {
 
             }}
             
-        </FormInput>
+        </FormField>
     )
 }

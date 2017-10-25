@@ -43,7 +43,7 @@ class SendDataControl extends React.Component {
                 </span>
             ) : (
                 <a className="sendForm disabled">
-                    <FontAwesome name='share' className="icon" />
+                    <FontAwesome name='upload' className="icon" />
                 </a>
             )}
             </div>

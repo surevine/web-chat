@@ -126,17 +126,6 @@ function* sendFile(client) {
         let contentNode = 'snippets/' + action.payload.roomJid + '/content';
         let metaNode = 'snippets/' + action.payload.roomJid + '/summary';
 
-        // TODO replace json with custom type xml
-        // yield call([client, client.publish], 
-        //     'pubsub.'+window.config.xmppDomain, 
-        //     contentNode, 
-        //     {
-        //         json: {
-        //             data: action.payload.content
-        //         } 
-        //     }
-        // );
-
         yield call([client, client.publish], 
             'pubsub.'+window.config.xmppDomain, 
             contentNode, 
@@ -161,7 +150,6 @@ function* sendFile(client) {
 
             let publishedFile = result.success.event.updated.published[0];
             
-            // TODO replace json with custom type xml
             yield call([client, client.publish], 
                 'pubsub.'+window.config.xmppDomain, 
                 metaNode, 
@@ -185,7 +173,7 @@ function buildContentMeta(meta) {
         size: meta.size,
         type: meta.type,
         lastModified: meta.lastModified,
-        author: 'ME'
+        author: 'ME' // TODO fix this
     };
 }
 
@@ -218,7 +206,7 @@ function* watchForFiles(client) {
 
             // TODO fire a message as well!
             // TODO or falsely receivedMessage()
-            console.log(msg)
+            // console.log(msg)
             // updateEvent.published[0].json.author
 
         }
