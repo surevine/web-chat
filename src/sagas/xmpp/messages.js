@@ -49,11 +49,10 @@ function* watchForMessages(client) {
 function* createNotifications(msg) {
 
   let settings = yield select((state) => state.settings);
+  let currentNickname = yield select((state) => state.rooms[msg.from.bare].nickname);
 
   // Check username mention
   if(settings.userNotifications) {
-
-    let currentNickname = yield select((state) => state.rooms[msg.from.bare].nickname);
 
     if(msg.from.resource !== currentNickname) {
       let room = yield select((state) => state.rooms[msg.from.bare]);
@@ -66,16 +65,24 @@ function* createNotifications(msg) {
 
   // Check if message contains any defined keywords
   if(settings.keywords.length > 0) {
-    let keywords = yield select((state) => state.settings.keywords);
-    let matchedWords = [];
-    keywords.forEach((word) => {
-      if(msg.body.indexOf(word) > -1) {
-        matchedWords.push(word);
-      }
-    });
-    if(matchedWords.length > 0) {
-      yield put(showNotification(msg.from.resource + ' mentioned ' + matchedWords.join(), msg.from.bare));
-    } 
+
+    if(msg.from.resource !== currentNickname) {
+
+      let keywords = yield select((state) => state.settings.keywords);
+
+      let matchedWords = [];
+      keywords.forEach((word) => {
+
+        if(msg.body.indexOf(word.value) > -1) {
+          matchedWords.push(word.value);
+        }
+      });
+      if(matchedWords.length > 0) {
+        yield put(showNotification(msg.from.resource + ' mentioned ' + matchedWords.join(), msg.from.bare));
+      } 
+
+    }
+
   } 
 
 }

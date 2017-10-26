@@ -220,7 +220,7 @@ form .actions {
   grid-template-columns: 75% 25%;
 }
 
-#roomHeader {
+.RoomHeader {
   grid-row: 1;
   grid-column: span 2;
   height: 70px;
@@ -232,29 +232,29 @@ form .actions {
   grid-template-columns: 75% 25%;
 }
 
-#roomHeader .info {
+.RoomHeader .info {
   grid-column: 1;
 }
 
-#roomHeader .actions {
+.RoomHeader .actions {
   grid-column: 2;
   padding-top: 12px;
   color: white;
   user-select: none;
 }
 
-#roomHeader .actions a {
+.RoomHeader .actions a {
   font-size: 18px;
   float: right;
 }
 
-#roomHeader h3 {
+.RoomHeader h3 {
   color: #fff;
   font-weight: normal;
   margin: 10px 0;
 }
 
-#roomHeader .topic {
+.RoomHeader .topic {
   color: #8190b0;
   font-style: italic;
   margin: 0;
@@ -326,7 +326,7 @@ form .actions {
   margin: 0 10px 0 0;
 }
 
-/* Send Form */
+/* Modals */
 
 .Modal {
   position: absolute;

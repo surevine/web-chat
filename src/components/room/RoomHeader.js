@@ -6,7 +6,7 @@ class RoomHeader extends React.Component {
 
     render() {
         return (
-            <div id="roomHeader">
+            <div className="RoomHeader">
                 {/* <RoomInfo /> */}
                 <div className="info">
                     <h3>{ this.props.jid }</h3>

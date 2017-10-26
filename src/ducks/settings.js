@@ -18,7 +18,7 @@ export const saveSettings = (settings, skipLocal) => ({
 });
 
 const initialState = {
-    userNotifications: false,
+    userNotifications: true,
     formNotifications: true,
     keywords: []
 };

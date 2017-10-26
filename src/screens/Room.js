@@ -8,6 +8,7 @@ import { receivedMessage } from '../ducks/messages';
 import { receivedPresenceAvailable, receivedPresenceUnavailable } from '../ducks/presence';
 import { joinRoom, topicUpdated, showRoom, hideRoom, leaveRoom } from '../ducks/rooms';
 import { addBookmark, removeBookmark } from '../ducks/bookmarks';
+import { loadSettings } from '../ducks/settings';
 
 import { 
     getRoomInfo, 
@@ -37,6 +38,8 @@ class Room extends React.Component {
     }
 
     componentDidMount() {
+
+        this.props.loadSettings();
 
         if(this.state.roomJid) {
             this.props.showRoom(this.state.roomJid, this.props.nickname);
@@ -265,6 +268,7 @@ const mapDispatchToProps = (dispatch, props) => {
     hideRoom: (jid) => dispatch(hideRoom(jid)),
     joinRoom: (jid, nickname, password) => dispatch(joinRoom(jid, nickname, password)),
     leaveRoom: (jid) => dispatch(leaveRoom(jid)),
+    loadSettings: () => dispatch(loadSettings()),
     receivedMessage: (msg) => dispatch(receivedMessage(msg)),
     topicUpdated: (msg) => dispatch(topicUpdated(msg)),
     receivedPresenceAvailable: (presence) => dispatch(receivedPresenceAvailable(presence)),
