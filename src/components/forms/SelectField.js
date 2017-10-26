@@ -10,10 +10,10 @@ export default ({field, ...rest}) => {
 
                 return (
                     <Select
-                        {...rest} // Send the rest of your props to React-Select
-                        value={getValue()} // Set the value to the forms value
-                        onChange={val => setValue(val)} // On Change, update the form value
-                        onBlur={() => setTouched()} // And the same goes for touched
+                        {...rest}
+                        value={getValue()}
+                        onChange={val => setValue(val)}
+                        onBlur={() => setTouched()}
                     />
                 )
 

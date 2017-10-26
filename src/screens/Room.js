@@ -21,7 +21,6 @@ import {
 import RoomHeader from '../components/room/RoomHeader';
 import RoomSidebar from '../components/room/RoomSidebar';
 import MessageList from '../components/room/MessageList';
-
 import MessageForm from '../components/room/MessageForm';
 
 class Room extends React.Component {

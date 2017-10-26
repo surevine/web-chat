@@ -72,7 +72,6 @@ function* createNotifications(msg) {
 
       let matchedWords = [];
       keywords.forEach((word) => {
-
         if(msg.body.indexOf(word.value) > -1) {
           matchedWords.push(word.value);
         }

@@ -220,46 +220,6 @@ form .actions {
   grid-template-columns: 75% 25%;
 }
 
-.RoomHeader {
-  grid-row: 1;
-  grid-column: span 2;
-  height: 70px;
-  padding: 0 20px;
-  background-color: #343c4b;
-  user-select: none;
-
-  display: grid;
-  grid-template-columns: 75% 25%;
-}
-
-.RoomHeader .info {
-  grid-column: 1;
-}
-
-.RoomHeader .actions {
-  grid-column: 2;
-  padding-top: 12px;
-  color: white;
-  user-select: none;
-}
-
-.RoomHeader .actions a {
-  font-size: 18px;
-  float: right;
-}
-
-.RoomHeader h3 {
-  color: #fff;
-  font-weight: normal;
-  margin: 10px 0;
-}
-
-.RoomHeader .topic {
-  color: #8190b0;
-  font-style: italic;
-  margin: 0;
-}
-
 .roomContent {
   display: grid;
   grid-template-rows: auto minmax(min-content, 70px);
