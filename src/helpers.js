@@ -16,3 +16,12 @@ export const parseFormIdFromMessage = (message) => {
 
     return id;
 }
+
+export const parseFileIdFromReference = (reference) => {
+    
+    let queryParamStart = "&item=";
+
+    let queryParamStartIndex = reference.uri.indexOf(queryParamStart) + queryParamStart.length;
+
+    return reference.uri.substr(queryParamStartIndex);
+}

@@ -12,9 +12,6 @@ import { makeChannel } from "../_helpers";
 function* watchForMessages(client) {
 
   const messageChannel = makeChannel(client, {
-    chat: (emit, msg) => {
-      emit(msg);
-    },
     groupchat: (emit, msg) => {
       emit(msg);
     },

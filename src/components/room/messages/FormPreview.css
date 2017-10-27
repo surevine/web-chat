@@ -1,13 +1,3 @@
-.FormPreview {
-    width: 80%;
-    min-height: 36px;
-    padding: 20px;
-    margin: 20px 10%;
-    background-color: #fefefe;
-    border: solid 1px #ccc;
-    border-radius: 5px;
-}
-  
 .FormPreview time {
     margin-left: 0;
 }
@@ -16,29 +6,6 @@
     font-size: 36px;
     float: left;
     margin-right: 20px;
-}
-
-.FormPreview .reference {
-    font-weight: 700;
-    margin-top: 0;
-}
-
-.FormPreview a {
-    cursor: pointer;
-}
-
-.FormPreview .actions {
-    float: right;
-    margin-top: -12px;
-    opacity: 0;
-}
-
-.FormPreview:hover .actions {
-    opacity: 1;
-}
-
-.FormPreview .actions a {
-    margin-left: 10px;
 }
 
 .FormPreview .raw {

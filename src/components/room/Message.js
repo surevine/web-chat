@@ -5,7 +5,7 @@ import ReactTooltip from 'react-tooltip'
 import Highlighter from 'react-highlight-words';
 
 import FormPreview from './messages/FormPreview';
-// import FilePreview from './messages/FilePreview';
+import FilePreview from './messages/FilePreview';
 
 import './Message.css';
 
@@ -29,6 +29,8 @@ class Message extends React.Component {
 
         if(msg.form) {
             return this.renderFormPreview();
+        } else if(msg.reference && msg.reference.uri.startsWith("urn:xmpp:snippets:0")) {
+            return this.renderFilePreview();
         } else if(msg.subject) {
             return this.renderTopic();
         } else if(msg.type === 'available' || msg.type === 'unavailable') {
@@ -90,9 +92,6 @@ class Message extends React.Component {
     }
 
     renderFormPreview() {
-
-        // TODO load the form from state...
-
         return (
             <div className="form">
                 <span className="author">{this.props.message.from.resource}</span>
@@ -108,6 +107,23 @@ class Message extends React.Component {
             </div>
         );
     }
+
+    renderFilePreview() {
+        return (
+            <div className="form">
+                <span className="author">{this.props.message.from.resource}</span>
+                <Moment format="h:mm A"
+                        data-tip
+                        data-for={this.props.message.id+'Tip'}>
+                        {this.props.message.time}
+                </Moment>
+                <ReactTooltip id={this.props.message.id+'Tip'} place="top" effect='solid' delayShow={300} offset={{right:20}}>
+                    <span>{this.formatMessageDateTime(this.props.message.time)}</span>
+                </ReactTooltip>
+                <FilePreview message={this.props.message} formatMessageDateTime={this.formatMessageDateTime} />
+            </div>
+        );
+    }    
 
 }
 

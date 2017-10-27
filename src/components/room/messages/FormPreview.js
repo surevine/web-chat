@@ -11,6 +11,7 @@ import { parseFormIdFromMessage } from '../../../helpers';
 import ViewFormModal from '../../modals/ViewFormModal';
 
 import './FormPreview.css';
+import './Preview.css';
 
 class FormPreview extends React.Component {
 
@@ -25,31 +26,28 @@ class FormPreview extends React.Component {
     render() {
 
         return (
-            <div className="FormPreview">
+            <div className="FormPreview preview">
 
-                <div className="formPreview">
-                    <FontAwesome name='file-text' className="icon" />
-                    {<p className="reference">{ this.props.publishedForm.template.title }</p>  }
-                    <Moment format="Do MMMM YYYY, HH:mm">{this.getFormUpdated(this.props.message)}</Moment>
-                    
-                    <div className="actions">
-                        {this.props.message.body && (
-                            <a className="showRaw btn" onClick={this.toggleRaw.bind(this)}>Toggle Raw</a>
-                        )}
-                        <a className="expand btn" onClick={this.showModal.bind(this)}>View</a>
-                    </div>
-
-                    {this.state.showRaw && (
-
-                        <div className="raw">
-                            {this.props.message.body.split('\n').map((item, key) => {
-                                return <span key={key}>{item}<br/></span>
-                            })}
-                        </div>   
-
+                <FontAwesome name='file-text' className="icon" />
+                {<p className="reference">{ this.props.publishedForm.template.title }</p>  }
+                <Moment format="Do MMMM YYYY, HH:mm">{this.getFormUpdated(this.props.message)}</Moment>
+                
+                <div className="actions">
+                    {this.props.message.body && (
+                        <a className="showRaw btn" onClick={this.toggleRaw.bind(this)}>Toggle Raw</a>
                     )}
-                 
+                    <a className="expand btn" onClick={this.showModal.bind(this)}>View</a>
                 </div>
+
+                {this.state.showRaw && (
+
+                    <div className="raw">
+                        {this.props.message.body.split('\n').map((item, key) => {
+                            return <span key={key}>{item}<br/></span>
+                        })}
+                    </div>   
+
+                )}
 
                 {/* TODO maybe make this a single modal for the room, which users can page through forms/files etc  */}
                 <ViewFormModal form={this.props.publishedForm} isOpen={this.state.showModal} onClose={this.hideModal.bind(this)} />

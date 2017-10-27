@@ -83,6 +83,17 @@ export const getPublishedForm = (state, { formId }) => {
 
 }
 
+export const getPublishedFile = (state, { fileId }) => {
+  
+    let roomJid = getCurrentRoomJid(state);
+    let file = find(state.files[roomJid].files, function(file) {
+      return file.id === fileId;
+    });
+  
+    return file;
+  
+  }
+
 export const getKeywords = (state) => {
 
   let parsedKeywords = [];

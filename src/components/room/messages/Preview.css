@@ -1,0 +1,32 @@
+.preview {
+    width: 80%;
+    min-height: 36px;
+    padding: 20px;
+    margin: 20px 10%;
+    background-color: #fefefe;
+    border: solid 1px #ccc;
+    border-radius: 5px;
+}
+
+.preview .reference {
+    font-weight: 700;
+    margin-top: 0;
+}
+
+.preview a {
+    cursor: pointer;
+}
+
+.preview .actions {
+    float: right;
+    margin-top: -12px;
+    opacity: 0;
+}
+
+.preview:hover .actions {
+    opacity: 1;
+}
+
+.preview .actions a {
+    margin-left: 10px;
+}

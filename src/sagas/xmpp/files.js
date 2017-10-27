@@ -204,10 +204,15 @@ function* watchForFiles(client) {
             let roomJid = msg.event.updated.node.replace("snippets/", "").replace("/metadata", "");
             yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].metadata));
 
-            // TODO fire a message as well!
-            // TODO or falsely receivedMessage()
-            // console.log(msg)
-            // updateEvent.published[0].json.author
+            yield call([client, client.sendMessage], {
+                to: roomJid,
+                type: 'groupchat',
+                body: "File shared",
+                references: [{
+                    type: 'data',
+                    uri: "urn:xmpp:snippets:0" + "?node=" + updateEvent.node + '&item=' + updateEvent.published[0].id
+                }]
+            });
 
         }
 
