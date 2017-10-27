@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from "react-redux";
+import { Form, Text } from 'react-form';
 
 import history from '../../history';
 
@@ -8,39 +9,45 @@ import { joinRoom } from '../../ducks/rooms';
 class EnterRoomForm extends React.Component {
 
     componentDidMount() {
-        this._roomJid.focus();
+        // this._roomJid.focus();
     }
+
 
     render() {
         return (
         <div className="EnterRoomForm">
-            <form className="form" onSubmit={this.handleSubmit}>
-                <label htmlFor="roomJid">Room JID</label>
-                <input ref={el => this._roomJid = el} type="text" name="roomJid" id="roomJid" placeholder="Enter room JID" />
-                <label htmlFor="nickname">Nickname <span>(optional)</span></label>
-                <input ref={el => this._nickname = el} type="text" name="nickname" id="nickname" placeholder="Nickname" />
-                <label htmlFor="password">Password <span>(optional)</span></label>
-                <input ref={el => this._password = el} type="password" name="password" id="password" placeholder="Password" />
-                <div className="actions">
-                    <input type="submit" value="Join Room" />
-                </div>
-            </form>
+            <Form onSubmit={this.handleSubmit}>
+                { formApi => (
+                    <form onSubmit={formApi.submitForm}>
+
+                        <label htmlFor="roomJid">Room JID</label>
+                        <Text autoComplete="off" field="roomJid" name="roomJid" id="roomJid" placeholder="Enter room JID" />
+                        
+                        <label htmlFor="nickname">Nickname <span>(optional)</span></label>
+                        <Text autoComplete="off" field="nickname" name="nickname" id="nickname" placeholder="Nickname" />
+                        
+                        <label htmlFor="password">Password <span>(optional)</span></label>
+                        <Text autoComplete="off" field="password" name="password" id="password" placeholder="Password" />
+                                 
+                        <div className="actions">
+                            <input type="submit" value="Join Room" />
+                        </div>
+                    </form>
+                )}
+            </Form>
         </div>
         );
     }
 
-    handleSubmit = e => {
-        e.preventDefault();
+    handleSubmit = (values) => {
 
-        let jid = this._roomJid.value;
-        this._roomJid.value = '';
-
-        let nickname = this._nickname.value;
+        let jid = values.roomJid;
+        let nickname = values.nickname;
         if(!nickname) {
             nickname = this.props.client.jid.local;
         }
 
-        let password = this._password.value;
+        let password = values.password;
         if(!password) {
             password = '';
         }

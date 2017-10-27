@@ -2,6 +2,8 @@ import React from 'react';
 import FontAwesome from 'react-fontawesome';
 import ReactTooltip from 'react-tooltip';
 
+import './RoomHeader.css';
+
 class RoomHeader extends React.Component {
 
     render() {

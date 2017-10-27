@@ -46,22 +46,19 @@ class LayoutForm extends React.Component {
 
                                 ) : (
                                     <div className="formSection">
-                                        {/* TODO ensure section exists */}
-                                        <h4>{formItem.section.label}</h4>
-
-                                        <div className="sectionFields">
-
-                                            { formItem.section.contents.map(sectionItem => {
-
-                                                return (
-                                                    <FormField key={getFormField(this.props.template, sectionItem.field).name} field={getFormField(this.props.template, sectionItem.field)} form={this.props.form} />
-                                                );
-
-                                            })}
-
-                                            <div className="clearfix"></div>
-
-                                        </div>                                   
+                                        {formItem.section && (
+                                            <div>
+                                                <h4>{formItem.section.label}</h4>
+                                                <div className="sectionFields">
+                                                    { formItem.section.contents.map(sectionItem => {
+                                                        return (
+                                                            <FormField key={getFormField(this.props.template, sectionItem.field).name} field={getFormField(this.props.template, sectionItem.field)} form={this.props.form} />
+                                                        );
+                                                    })}
+                                                    <div className="clearfix"></div>
+                                                </div>    
+                                            </div>
+                                        )}                               
 
                                     </div>
                                 )}
