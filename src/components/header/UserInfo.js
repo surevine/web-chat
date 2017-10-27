@@ -62,18 +62,10 @@ class UserInfo extends React.Component {
                                 optionRenderer={this.renderPresenceOption}
                                 valueRenderer={this.renderPresenceValue}
                             />
-
-                            {/* TODO have recent section which sets both presence and status */}
-
                         </div>
 
                         <div className="username">
                             <p>{ this.props.client.jid.local }</p>
-                        </div>
-
-                        <div className="status">
-                            Set your status here...
-                            {/* https://kaivi.github.io/riek/ */}
                         </div>
 
                     </div>

@@ -8,11 +8,6 @@ import { joinRoom } from '../../ducks/rooms';
 
 class EnterRoomForm extends React.Component {
 
-    componentDidMount() {
-        // this._roomJid.focus();
-    }
-
-
     render() {
         return (
         <div className="EnterRoomForm">
@@ -21,7 +16,7 @@ class EnterRoomForm extends React.Component {
                     <form onSubmit={formApi.submitForm}>
 
                         <label htmlFor="roomJid">Room JID</label>
-                        <Text autoComplete="off" field="roomJid" name="roomJid" id="roomJid" placeholder="Enter room JID" />
+                        <Text autoFocus autoComplete="off" field="roomJid" name="roomJid" id="roomJid" placeholder="Enter room JID" />
                         
                         <label htmlFor="nickname">Nickname <span>(optional)</span></label>
                         <Text autoComplete="off" field="nickname" name="nickname" id="nickname" placeholder="Nickname" />
