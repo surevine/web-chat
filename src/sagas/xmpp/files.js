@@ -211,7 +211,7 @@ function* watchForFiles(client) {
                 body: "File shared",
                 references: [{
                     type: 'data',
-                    uri: "urn:xmpp:snippets:0" + "?node=" + updateEvent.node + '&item=' + updateEvent.published[0].id
+                    uri: "urn:xmpp:snippets:0?node=" + updateEvent.node + '&item=' + updateEvent.published[0].id
                 }]
             });
 

@@ -21,6 +21,9 @@ export const INCREMENT_UNREAD = constant("INCREMENT_UNREAD");
 
 export const SAVE_ROOM_DRAFT = constant("SAVE_ROOM_DRAFT");
 
+export const SHOW_FORM_MODAL = constant("SHOW_FORM_MODAL");
+export const HIDE_FORM_MODAL = constant("HIDE_FORM_MODAL");
+
 export const joinRoom = (jid, nickname, password) => ({
   type: JOIN_ROOM,
   payload: { jid, nickname, password }
@@ -76,6 +79,16 @@ export const saveRoomDraft = (jid, msg) => ({
   type: SAVE_ROOM_DRAFT,
   payload: { jid, msg }
 });
+
+export const showFormModal = (jid, form) => ({
+  type: SHOW_FORM_MODAL,
+  payload: { jid, form }
+});
+
+export const hideFormModal = (jid) => ({
+  type: HIDE_FORM_MODAL,
+  payload: { jid }
+})
 
 // reducer
 export default (state = {}, action) => {
@@ -223,6 +236,42 @@ export default (state = {}, action) => {
         [room.jid]: {
           ...room,
           draft: action.payload.msg
+        }
+      };
+
+    }
+
+    case SHOW_FORM_MODAL: {
+
+      const room = state[action.payload.jid];
+      if(!room || !room.isCurrent) {
+        return state;
+      }
+
+      return {
+        ...state,
+        [room.jid]: {
+          ...room,
+          showFormModal: true,
+          activeForm: action.payload.form
+        }
+      };
+
+    }
+
+    case HIDE_FORM_MODAL: {
+
+      const room = state[action.payload.jid];
+      if(!room) {
+        return state;
+      }
+
+      return {
+        ...state,
+        [room.jid]: {
+          ...room,
+          showFormModal: false,
+          activeForm: {}
         }
       };
 

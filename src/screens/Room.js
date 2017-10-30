@@ -6,7 +6,7 @@ import history from '../history';
 
 import { receivedMessage } from '../ducks/messages';
 import { receivedPresenceAvailable, receivedPresenceUnavailable } from '../ducks/presence';
-import { joinRoom, topicUpdated, showRoom, hideRoom, leaveRoom } from '../ducks/rooms';
+import { joinRoom, topicUpdated, showRoom, hideRoom, hideFormModal, leaveRoom } from '../ducks/rooms';
 import { addBookmark, removeBookmark } from '../ducks/bookmarks';
 import { loadSettings } from '../ducks/settings';
 
@@ -22,6 +22,7 @@ import RoomHeader from '../components/room/RoomHeader';
 import RoomSidebar from '../components/room/RoomSidebar';
 import MessageList from '../components/room/MessageList';
 import MessageForm from '../components/room/MessageForm';
+import ViewFormModal from '../components/modals/ViewFormModal';
 
 class Room extends React.Component {
 
@@ -32,7 +33,9 @@ class Room extends React.Component {
             showRoomSidebar: false,
             showParticipantsList: false,
             showFormsList: false,
-            showFilesList: false
+            showFilesList: false,
+            showFormModal: false,
+            showFileModal: false
         };
     }
 
@@ -122,6 +125,8 @@ class Room extends React.Component {
                     forms={this.props.forms}
                     files={this.props.files} />
             )}
+
+            <ViewFormModal form={this.props.room.activeForm} isOpen={this.props.room.showFormModal} onClose={this.hideModal.bind(this)} />
             
         </div>
         );
@@ -240,6 +245,10 @@ class Room extends React.Component {
         });
     };
 
+    hideModal = () => {
+        this.props.hideFormModal(this.props.room.jid);
+    }
+
     leaveRoom = e => {
         e.preventDefault();
         this.props.leaveRoom(this.state.roomJid);
@@ -265,6 +274,7 @@ const mapDispatchToProps = (dispatch, props) => {
     removeBookmark: (jid) => dispatch(removeBookmark(jid)),
     showRoom: (jid, nickname) => dispatch(showRoom(jid, nickname)),
     hideRoom: (jid) => dispatch(hideRoom(jid)),
+    hideFormModal: (jid) => dispatch(hideFormModal(jid)),
     joinRoom: (jid, nickname, password) => dispatch(joinRoom(jid, nickname, password)),
     leaveRoom: (jid) => dispatch(leaveRoom(jid)),
     loadSettings: () => dispatch(loadSettings()),

@@ -5,8 +5,6 @@ import FontAwesome from 'react-fontawesome';
 import { getPublishedFile } from '../../../selectors';
 import { parseFileIdFromReference } from '../../../helpers';
 
-import ViewFormModal from '../../modals/ViewFormModal';
-
 import './FilePreview.css';
 import './Preview.css';
 

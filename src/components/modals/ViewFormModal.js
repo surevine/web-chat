@@ -6,6 +6,10 @@ class ViewFormModal extends React.Component {
 
     render() {
 
+        if(!this.props.form) {
+            return null;
+        }
+
         return (
 
             <ReactModal 
@@ -18,7 +22,7 @@ class ViewFormModal extends React.Component {
                     <a className="closeModal" onClick={this.props.onClose}>
                         &#x2715;
                     </a>
-                    <h3>FORM TITLE HERE</h3>
+                    <h3>FORM TITLE: {this.props.form.id }</h3>
                 </div>
 
                 <div className="content">

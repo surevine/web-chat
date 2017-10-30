@@ -5,10 +5,10 @@ import Moment from 'react-moment';
 import FontAwesome from 'react-fontawesome';
 import find from 'lodash/find';
 
-import { getPublishedForm } from '../../../selectors';
+import { getPublishedForm, getCurrentRoomJid } from '../../../selectors';
 import { parseFormIdFromMessage } from '../../../helpers';
 
-import ViewFormModal from '../../modals/ViewFormModal';
+import { showFormModal } from '../../../ducks/rooms';
 
 import './FormPreview.css';
 import './Preview.css';
@@ -49,20 +49,12 @@ class FormPreview extends React.Component {
 
                 )}
 
-                {/* TODO maybe make this a single modal for the room, which users can page through forms/files etc  */}
-                <ViewFormModal form={this.props.publishedForm} isOpen={this.state.showModal} onClose={this.hideModal.bind(this)} />
-
             </div>
         );
     }
 
     showModal() {
-        this.setState(function(prevState, props) {
-            return {
-                ...prevState,
-                showModal: true
-            };
-        });
+        this.props.showFormModal(this.props.roomJid, this.props.publishedForm);
     }
 
     hideModal() {
@@ -95,16 +87,17 @@ class FormPreview extends React.Component {
 
 }
 
-// export default FormPreview;
-
 const mapStateToProps = (state, props) => ({
+    roomJid: getCurrentRoomJid(state),
     publishedForm: getPublishedForm(state, {
         formId: parseFormIdFromMessage(props.message)
     })
   });
   
   const mapDispatchToProps = (dispatch, props) => {
-    return {};
+    return {
+        showFormModal: (jid, form) => dispatch(showFormModal(jid, form)),
+    };
   };
   
   export default connect(mapStateToProps, mapDispatchToProps)(FormPreview);
