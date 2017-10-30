@@ -18,8 +18,7 @@ class FormPreview extends React.Component {
     constructor () {
         super();
         this.state = {
-            showRaw: false,
-            showModal: false
+            showRaw: false
         };
     }
 
@@ -55,15 +54,6 @@ class FormPreview extends React.Component {
 
     showModal() {
         this.props.showFormModal(this.props.roomJid, this.props.publishedForm);
-    }
-
-    hideModal() {
-        this.setState(function(prevState, props) {
-            return {
-                ...prevState,
-                showModal: false
-            };
-        });
     }
 
     toggleRaw() {

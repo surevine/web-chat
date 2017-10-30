@@ -271,7 +271,7 @@ export default (state = {}, action) => {
         [room.jid]: {
           ...room,
           showFormModal: false,
-          activeForm: {}
+          activeForm: null
         }
       };
 

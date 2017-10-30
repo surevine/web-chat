@@ -1,11 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import find from 'lodash/find';
 import Moment from 'react-moment';
 import FontAwesome from 'react-fontawesome';
 
+import { getCurrentRoomJid } from '../../selectors';
+
+import { showFormModal } from '../../ducks/rooms';
+
 class FormsList extends React.Component {
 
     render() {
+
+        console.log(this.props.forms)
+
         return (
         <div className="FormsList">
 
@@ -19,7 +27,7 @@ class FormsList extends React.Component {
                     { this.props.forms
                         .sort((a, b) => this.getFormUpdated(a) < this.getFormUpdated(b))
                         .map(form => (
-                        <div className="formSubmission" key={form.id}>
+                        <div className="formSubmission" key={form.id} onClick={() => this.showModal(form)}>
                             <FontAwesome name='file-text-o' className="formIcon" />
                             <div className="description">
                                 <h5 className="title">{form.template.title}</h5>
@@ -50,6 +58,19 @@ class FormsList extends React.Component {
         return parseInt(lastUpdateField.value, 10);
     }
 
+    showModal(form) {
+        this.props.showFormModal(this.props.roomJid, form);
+    }
+
 }
 
-export default FormsList;
+const mapStateToProps = (state, props) => ({
+    roomJid: getCurrentRoomJid(state),
+});
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        showFormModal: (jid, form) => dispatch(showFormModal(jid, form)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FormsList);
