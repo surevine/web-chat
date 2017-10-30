@@ -35,8 +35,6 @@ class Room extends React.Component {
             showParticipantsList: false,
             showFormsList: false,
             showFilesList: false,
-            showFormModal: false,
-            showFileModal: false
         };
     }
 
