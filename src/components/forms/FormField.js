@@ -3,8 +3,34 @@ import { Checkbox, Text, Textarea } from 'react-form';
 
 import SelectField from './SelectField';
 import TagField from './TagField';
+import DateTimeField from './DateTimeField';
 
 class FormField extends React.Component {
+
+    render() {
+        
+        let field = this.props.field;
+
+        // TODO move elsewhere
+        let fixedFieldTypes = [
+            "hidden", "fixed"
+        ];
+
+        // Basic render of certain inputs
+        if(fixedFieldTypes.indexOf(field.type) > -1) {
+            return (
+                this.renderField(field)
+            );
+        }
+
+        return (
+            <div className="fieldgroup" key={field.name}>
+                <label htmlFor={field.name}>{field.label}</label>
+                    {this.renderField(field)}
+                <p className="hint">{field.desc}</p>
+            </div>
+        );
+    }
 
     buildFieldProps(field) {
         return {
@@ -27,6 +53,12 @@ class FormField extends React.Component {
                 );
 
             case "text-single":
+
+                if(field.validation && field.validation.dataType === "xs:dateTime") {
+                    return (
+                        <DateTimeField {...fieldProps} />
+                    );
+                }
 
                 return (
                     <Text autoComplete="off" {...fieldProps} />
@@ -95,31 +127,6 @@ class FormField extends React.Component {
 
         }
             
-    }
-
-    render() {
-
-        let field = this.props.field;
-
-        // TODO move elsewhere
-        let fixedFieldTypes = [
-            "hidden", "fixed"
-        ];
-
-        // Basic render of certain inputs
-        if(fixedFieldTypes.indexOf(field.type) > -1) {
-            return (
-                this.renderField(field)
-            );
-        }
-
-        return (
-            <div className="fieldgroup" key={field.name}>
-                <label htmlFor={field.name}>{field.label}</label>
-                    {this.renderField(field)}
-                <p className="hint">{field.desc}</p>
-            </div>
-        );
     }
 
 }

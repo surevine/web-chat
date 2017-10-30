@@ -95,6 +95,7 @@ class FormTemplate extends React.Component {
                     label: field.label,
                     name: field.name,
                     value: "",
+                    validation: field.validation || null
                 };
             }
         });
@@ -128,7 +129,9 @@ class FormTemplate extends React.Component {
         if(validation.dataType) {
 
             if(validation.dataType === "xs:dateTime") {
-                // what is the format?!
+
+                // 2002-10-10T17:00:00Z
+
             }
 
             // xs:integer
@@ -181,6 +184,13 @@ class FormTemplate extends React.Component {
                 return;
             }
 
+            // DateTime
+            if(form[fieldname].validation && form[fieldname].validation.dataType === "xs:dateTime") {
+                form[fieldname].value = fieldValue.format('YYYY-MM-DD[T]HH:mm:ss[Z]');
+                return;
+            }
+
+            // Select(s)
             if((typeof fieldValue) === 'object') {
 
                 if(fieldValue.length) {

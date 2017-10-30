@@ -195,7 +195,6 @@ function* watchForFiles(client) {
 
         if(updateEvent.node.endsWith('/content')) {
 
-            // TODO replace with regex
             let roomJid = updateEvent.node.replace("snippets/", "").replace("/content", "");
             yield put(receivedFile(roomJid, updateEvent.published[0].id, updateEvent.published[0].snippet.uri));
 
@@ -204,6 +203,8 @@ function* watchForFiles(client) {
             let roomJid = msg.event.updated.node.replace("snippets/", "").replace("/metadata", "");
             yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].metadata));
 
+            // TODO this won't be me who sent the file...
+            // ITS IN THE META!!! author....
             yield call([client, client.sendMessage], {
                 to: roomJid,
                 type: 'groupchat',

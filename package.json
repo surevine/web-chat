@@ -8,6 +8,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-autosize-textarea": "^0.4.9",
+    "react-datetime": "^2.10.3",
     "react-dd-menu": "^2.0.2",
     "react-dom": "^15.6.1",
     "react-file-base64": "^1.0.3",
