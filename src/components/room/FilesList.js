@@ -1,7 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 
 import FileIcon from './files/FileIcon';
+
+import { getCurrentRoomJid } from '../../selectors';
+
+import { showFileModal } from '../../ducks/rooms';
 
 import './FilesList.css';
 
@@ -24,7 +29,7 @@ class FilesList extends React.Component {
                             let file = this.props.files[fileId];
                             
                             return (
-                            <div className="fileUpload" key={file.id}>
+                            <div className="fileUpload" key={file.id} onClick={() => this.showModal(file)}>
 
                                 <FileIcon type={file.type} name={file.name} />
 
@@ -36,7 +41,7 @@ class FilesList extends React.Component {
                                     {this.printFileSize(file.size)}
                                 </div>
 
-                                <a href={file.content} download={file.name} className="download">
+                                <a href={file.content} download={file.name} onClick={(e) => { e.stopPropagation(); }} className="download">
                                     <FontAwesome name="download" />
                                 </a>
 
@@ -70,6 +75,19 @@ class FilesList extends React.Component {
         return "1kB"; // Minimum size to report
     }
 
+    showModal(file) {
+        this.props.showFileModal(this.props.roomJid, file);
+    }
+
 }
 
-export default FilesList;
+const mapStateToProps = (state, props) => ({
+    roomJid: getCurrentRoomJid(state),
+});
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        showFileModal: (jid, file) => dispatch(showFileModal(jid, file)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilesList);

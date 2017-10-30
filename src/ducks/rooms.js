@@ -22,7 +22,8 @@ export const INCREMENT_UNREAD = constant("INCREMENT_UNREAD");
 export const SAVE_ROOM_DRAFT = constant("SAVE_ROOM_DRAFT");
 
 export const SHOW_FORM_MODAL = constant("SHOW_FORM_MODAL");
-export const HIDE_FORM_MODAL = constant("HIDE_FORM_MODAL");
+export const SHOW_FILE_MODAL = constant("SHOW_FILE_MODAL");
+export const HIDE_MODAL = constant("HIDE_MODAL");
 
 export const joinRoom = (jid, nickname, password) => ({
   type: JOIN_ROOM,
@@ -46,10 +47,7 @@ export const leftRoom = (jid) => ({
 
 export const failedJoinRoom = (jid, error) => ({
   type: FAILED_JOIN_ROOM,
-  payload: {
-    jid,
-    error
-  }
+  payload: { jid, error }
 })
 
 export const topicUpdated = (message) => ({
@@ -59,10 +57,7 @@ export const topicUpdated = (message) => ({
 
 export const showRoom = (jid, nickname) => ({
   type: SHOW_ROOM,
-  payload: {
-    jid,
-    nickname
-  }
+  payload: { jid, nickname }
 });
 
 export const hideRoom = (jid) => ({
@@ -85,8 +80,13 @@ export const showFormModal = (jid, form) => ({
   payload: { jid, form }
 });
 
-export const hideFormModal = (jid) => ({
-  type: HIDE_FORM_MODAL,
+export const showFileModal = (jid, file) => ({
+  type: SHOW_FILE_MODAL,
+  payload: { jid, file }
+});
+
+export const hideModal = (jid) => ({
+  type: HIDE_MODAL,
   payload: { jid }
 })
 
@@ -108,7 +108,11 @@ export default (state = {}, action) => {
           draft: '',
           unreadMessageCount: 0,
           joined: false,
-          error: undefined
+          error: undefined,
+          showFormModal: false,
+          activeForm: null,
+          showFileModal: false,
+          activeFile: null,
         }
       };
 
@@ -259,7 +263,25 @@ export default (state = {}, action) => {
 
     }
 
-    case HIDE_FORM_MODAL: {
+    case SHOW_FILE_MODAL: {
+      
+      const room = state[action.payload.jid];
+      if(!room || !room.isCurrent) {
+        return state;
+      }
+
+      return {
+        ...state,
+        [room.jid]: {
+          ...room,
+          showFileModal: true,
+          activeFile: action.payload.file
+        }
+      };
+
+    }
+
+    case HIDE_MODAL: {
 
       const room = state[action.payload.jid];
       if(!room) {
@@ -271,6 +293,8 @@ export default (state = {}, action) => {
         [room.jid]: {
           ...room,
           showFormModal: false,
+          showFileModal: false,
+          activeFile: null,
           activeForm: null
         }
       };

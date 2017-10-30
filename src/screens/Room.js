@@ -6,7 +6,7 @@ import history from '../history';
 
 import { receivedMessage } from '../ducks/messages';
 import { receivedPresenceAvailable, receivedPresenceUnavailable } from '../ducks/presence';
-import { joinRoom, topicUpdated, showRoom, hideRoom, hideFormModal, leaveRoom } from '../ducks/rooms';
+import { joinRoom, topicUpdated, showRoom, hideRoom, hideModal, leaveRoom } from '../ducks/rooms';
 import { addBookmark, removeBookmark } from '../ducks/bookmarks';
 import { loadSettings } from '../ducks/settings';
 
@@ -23,6 +23,7 @@ import RoomSidebar from '../components/room/RoomSidebar';
 import MessageList from '../components/room/MessageList';
 import MessageForm from '../components/room/MessageForm';
 import ViewFormModal from '../components/modals/ViewFormModal';
+import ViewFileModal from '../components/modals/ViewFileModal';
 
 class Room extends React.Component {
 
@@ -127,7 +128,8 @@ class Room extends React.Component {
             )}
 
             <ViewFormModal form={this.props.room.activeForm} isOpen={this.props.room.showFormModal} onClose={this.hideModal.bind(this)} />
-            
+            <ViewFileModal file={this.props.room.activeFile} isOpen={this.props.room.showFileModal} onClose={this.hideModal.bind(this)} />
+
         </div>
         );
     }
@@ -246,7 +248,7 @@ class Room extends React.Component {
     };
 
     hideModal = () => {
-        this.props.hideFormModal(this.props.room.jid);
+        this.props.hideModal(this.props.room.jid);
     }
 
     leaveRoom = e => {
@@ -274,7 +276,7 @@ const mapDispatchToProps = (dispatch, props) => {
     removeBookmark: (jid) => dispatch(removeBookmark(jid)),
     showRoom: (jid, nickname) => dispatch(showRoom(jid, nickname)),
     hideRoom: (jid) => dispatch(hideRoom(jid)),
-    hideFormModal: (jid) => dispatch(hideFormModal(jid)),
+    hideModal: (jid) => dispatch(hideModal(jid)),
     joinRoom: (jid, nickname, password) => dispatch(joinRoom(jid, nickname, password)),
     leaveRoom: (jid) => dispatch(leaveRoom(jid)),
     loadSettings: () => dispatch(loadSettings()),
