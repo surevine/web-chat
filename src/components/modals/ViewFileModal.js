@@ -1,5 +1,11 @@
 import React from 'react';
 import ReactModal from 'react-modal';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { github } from 'react-syntax-highlighter/dist/styles';
+
+import { printFileSize } from '../../files';
+
+import './ViewFileModal.css';
 
 class ViewFileModal extends React.Component {
 
@@ -30,7 +36,7 @@ class ViewFileModal extends React.Component {
             <ReactModal 
                 isOpen={this.props.isOpen}
                 onRequestClose={this.props.onClose}
-                className="Modal"
+                className="Modal ViewFileModal"
                 overlayClassName="Overlay">
 
                 <div className="header">
@@ -47,8 +53,8 @@ class ViewFileModal extends React.Component {
                     </div>
 
                     <div className="fileMeta">
-                        <p>{this.props.file.size}</p>
-                        <p>{this.props.file.type}</p>
+                        <p>{this.props.file.type} - {printFileSize(this.props.file.size)}</p>
+                        <p>Uploaded by {this.props.file.author} in {this.props.room.jid}</p>
                     </div>
 
                     <div className="actions">
@@ -81,9 +87,21 @@ class ViewFileModal extends React.Component {
                 let decodedBlob = this.dataURItoBlob(this.props.file.content, this.props.file.type);
                 this.reader.readAsText(decodedBlob);
 
+                let language = '';
+                switch(this.props.file.type) {
+
+                    case "text/xml":
+                        language = 'xml';
+                        break;
+
+                    default: 
+                        language = 'text';
+
+                }
+
                 return (
                     <div className="textWrapper">
-                        {<p>{this.state.textContent}</p>}
+                        <SyntaxHighlighter language={language} style={github}>{this.state.textContent}</SyntaxHighlighter>
                     </div>
                 )
 

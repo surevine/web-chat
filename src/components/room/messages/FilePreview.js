@@ -4,6 +4,7 @@ import FontAwesome from 'react-fontawesome';
 
 import { getPublishedFile, getCurrentRoomJid } from '../../../selectors';
 import { parseFileIdFromReference } from '../../../helpers';
+import { printFileSize } from '../../../files';
 
 import { showFileModal } from '../../../ducks/rooms';
 
@@ -19,7 +20,8 @@ class FilePreview extends React.Component {
 
                 <FontAwesome name='file-image-o' className="icon" />
 
-                {<p className="reference">{ this.props.publishedFile.name }</p>  }
+                <p className="reference">{ this.props.publishedFile.name }</p>
+                <p className="size">{ printFileSize(this.props.publishedFile.size) }</p>
                 
                 <div className="actions">
                     <a href={this.props.publishedFile.content} download={this.props.publishedFile.name} onClick={(e) => { e.stopPropagation(); }} className="download btn">

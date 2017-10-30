@@ -5,6 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import FileIcon from './files/FileIcon';
 
 import { getCurrentRoomJid } from '../../selectors';
+import { printFileSize } from '../../files';
 
 import { showFileModal } from '../../ducks/rooms';
 
@@ -38,10 +39,10 @@ class FilesList extends React.Component {
                                 </h5>
 
                                 <div className="meta">
-                                    {this.printFileSize(file.size)}
+                                    {printFileSize(file.size)}
                                 </div>
 
-                                <a href={file.content} download={file.name} onClick={(e) => { e.stopPropagation(); }} className="download">
+                                <a href={file.content} download={file.name} onClick={(e) => { e.stopPropagation(); }} className="download" title="Download">
                                     <FontAwesome name="download" />
                                 </a>
 
@@ -58,21 +59,6 @@ class FilesList extends React.Component {
 
         </div>
         );
-    }
-
-    printFileSize(size) {
-
-        // MB
-        if(size > 1000000) {
-            return (size / 1000000).toFixed(2) + "MB";
-        }
-
-        // kB
-        if(size > 1000) {
-            return (size / 1000).toFixed(2) + "kB";
-        }
-
-        return "1kB"; // Minimum size to report
     }
 
     showModal(file) {

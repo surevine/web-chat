@@ -12,8 +12,6 @@ class FormsList extends React.Component {
 
     render() {
 
-        console.log(this.props.forms)
-
         return (
         <div className="FormsList">
 

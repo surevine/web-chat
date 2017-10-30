@@ -1,0 +1,33 @@
+.ViewFileModal {
+    bottom: 50px;
+    left: 15%;
+    right: 15%;
+}
+
+.ViewFileModal .imageWrapper {
+    text-align: center;
+    padding: 20px;
+}
+
+.ViewFileModal .textWrapper pre {
+    border-radius: 5px;
+    padding: 20px !important;
+    border: solid 1px rgb(220, 220, 220)
+}
+
+.ViewFileModal .fileMeta {
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 14px;
+    font-style: italic;
+    color: #777;
+}
+
+.ViewFileModal .actions {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.ViewFileModal .actions a {
+    text-decoration: none;
+}

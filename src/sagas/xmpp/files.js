@@ -148,14 +148,15 @@ function* sendFile(client) {
 
         if(result.success) {
 
-            let publishedFile = result.success.event.updated.published[0];
+            const publishedFile = result.success.event.updated.published[0];
+            const userJid = yield select(state => state.client.jid.bare);
             
             yield call([client, client.publish], 
                 'pubsub.'+window.config.xmppDomain, 
                 metaNode, 
                 {
                     id: publishedFile.id,
-                    metadata: buildContentMeta(action.payload.meta)
+                    metadata: buildContentMeta(action.payload.meta, userJid)
                 }
             );  
 
@@ -167,13 +168,13 @@ function* sendFile(client) {
 
 }
 
-function buildContentMeta(meta) {
+function buildContentMeta(meta, userJid) {
     return {
         name: meta.name,
         size: meta.size,
         type: meta.type,
         lastModified: meta.lastModified,
-        author: 'ME' // TODO fix this
+        author: userJid
     };
 }
 
@@ -204,6 +205,8 @@ function* watchForFiles(client) {
             yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].metadata));
 
             // TODO this won't be me who sent the file...
+            // TODO move this to when a file is actually sent!? in success...
+            // Or fake the receivedMessage part...?
             // ITS IN THE META!!! author....
             yield call([client, client.sendMessage], {
                 to: roomJid,

@@ -126,7 +126,7 @@ class Room extends React.Component {
             )}
 
             <ViewFormModal form={this.props.room.activeForm} isOpen={this.props.room.showFormModal} onClose={this.hideModal.bind(this)} />
-            <ViewFileModal file={this.props.room.activeFile} isOpen={this.props.room.showFileModal} onClose={this.hideModal.bind(this)} />
+            <ViewFileModal room={this.props.room} file={this.props.room.activeFile} isOpen={this.props.room.showFileModal} onClose={this.hideModal.bind(this)} />
 
         </div>
         );
