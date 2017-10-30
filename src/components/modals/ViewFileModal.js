@@ -1,28 +1,40 @@
 import React from 'react';
 import ReactModal from 'react-modal';
-import SyntaxHighlighter from 'react-syntax-highlighter';
+import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/dist/light"
+import xml from 'react-syntax-highlighter/dist/languages/xml';
 import { github } from 'react-syntax-highlighter/dist/styles';
 
 import { printFileSize } from '../../files';
 
 import './ViewFileModal.css';
 
+registerLanguage('xml', xml);
+
 class ViewFileModal extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            textContent: ""
+            textContent: "Loading...",
+            textLoaded: false
         };
 
         // File reading for text files
         this.reader = new FileReader();
         this.reader.addEventListener('loadend', (e) => {
             this.setState({
-                textContent: e.srcElement.result
+                textContent: e.srcElement.result,
+                textLoaded: true
             });
         });
         // TODO handle error event, progress etc
+    }
+
+    componentWillUnmount() {
+        this.setState({
+            textContent: "",
+            textLoaded: false
+        });
     }
 
     render() {
@@ -101,7 +113,9 @@ class ViewFileModal extends React.Component {
 
                 return (
                     <div className="textWrapper">
-                        <SyntaxHighlighter language={language} style={github}>{this.state.textContent}</SyntaxHighlighter>
+                        {this.state.textLoaded && (
+                            <SyntaxHighlighter language={language} style={github}>{this.state.textContent}</SyntaxHighlighter>
+                        )}
                     </div>
                 )
 
@@ -120,7 +134,7 @@ class ViewFileModal extends React.Component {
                 return (
                     <div className="unknownFileType">
                         <h3>No preview available</h3>
-                        {/* DOWNLOAD LINK ONLY */}
+                        {/* TODO DOWNLOAD LINK ONLY */}
                     </div>
                 )
 
