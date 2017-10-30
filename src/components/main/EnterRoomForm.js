@@ -47,7 +47,6 @@ class EnterRoomForm extends React.Component {
             password = '';
         }
 
-        // TODO improve validation on jid
         if(jid) {
             this.props.joinRoom(jid, nickname, password);
 

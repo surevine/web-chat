@@ -28,6 +28,7 @@ function* watchJoinRoom(client) {
             let createResponse = yield call(createFileNode, client, contentNode);
             if(createResponse.error) {
                 // TODO handle error
+                // Error toast
             }
         }
         let metaNodeExists = yield call(getFileNode, client, metaNode);

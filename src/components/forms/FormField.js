@@ -10,8 +10,6 @@ class FormField extends React.Component {
     render() {
         
         let field = this.props.field;
-
-        // TODO move elsewhere
         let fixedFieldTypes = [
             "hidden", "fixed"
         ];

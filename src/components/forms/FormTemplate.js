@@ -147,7 +147,6 @@ class FormTemplate extends React.Component {
             let re = new RegExp(validation.regex);
             let found = field.match(re);
             if(!found) {
-                // TODO improve error message
                 return "Invalid format";
             }
         }

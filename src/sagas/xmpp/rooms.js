@@ -2,18 +2,15 @@ import { delay } from "redux-saga";
 import { all, call, race, select, take, takeEvery, takeLatest, put } from "redux-saga/effects";
 
 import { makeChannel } from "../_helpers";
-import { addRecentRoom, getRecentRooms } from '../../localStorage';
 
 import {
   JOIN_ROOM,
-  JOINED_ROOM,
   LEAVE_ROOM,
   joinedRoom,
   leftRoom,
   failedJoinRoom,
   topicUpdated
 } from "../../ducks/rooms";
-import { setRecentRooms } from "../../ducks/local";
 
 function joinRoomWithOpts(client, roomJid, nickname, opts) {
   client.joinRoom(roomJid, nickname, {
@@ -90,26 +87,6 @@ function* leaveRoom(client) {
   
   }
 
-function* watchJoinedRoom(client) {
-
-  yield takeLatest(JOINED_ROOM, function* storeRecentRoom(action) {
-
-    let bareJid = action.payload.jid;
-
-    addRecentRoom({
-      jid: {
-        bare: bareJid,
-        local: bareJid.substr(0, bareJid.indexOf('@'))
-      }
-    });
-
-    let recentRooms = getRecentRooms();
-    yield put(setRecentRooms(recentRooms));
-
-  });
-
-}
-
 function* watchForTopic(client) {
   
     const topicChannel = makeChannel(client, {
@@ -128,5 +105,5 @@ function* watchForTopic(client) {
 }
 
 export default function*(client) {
-  yield all([tryJoinRoom(client), leaveRoom(client), watchJoinedRoom(client), watchForTopic(client)]);
+  yield all([tryJoinRoom(client), leaveRoom(client), watchForTopic(client)]);
 }

@@ -50,8 +50,6 @@ function* subscribeToFormNodes(client) {
     const submissionNodes = yield select(state => state.forms.nodes.submissionNodes);
     const userJid = yield select(state => state.client.jid.bare);
 
-
-    // TODO change to yield all
     submissionNodes.forEach((node) => {
 
         let found = find(subscriptions, function(sub) {

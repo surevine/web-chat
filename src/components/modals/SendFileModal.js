@@ -96,7 +96,6 @@ class SendFileModal extends React.Component {
             return;
         }
 
-        // TODO change meta being provided
         this.props.sendFile(this.props.roomJid, this.state.file.base64, this.state.file.file);
 
         // Clear state for next time

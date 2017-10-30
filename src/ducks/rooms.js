@@ -120,7 +120,6 @@ export default (state = {}, action) => {
  
     case JOINED_ROOM: {
 
-      // TODO ensure it exists
       const room = state[action.payload.jid];
 
       return {

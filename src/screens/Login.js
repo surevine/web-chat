@@ -42,7 +42,6 @@ class Login extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault();
-        // TODO verify valid jid?
         if(this._jid.value.length && this._password.value.length) {
             this.props.login(this._jid.value, this._password.value);
         }
