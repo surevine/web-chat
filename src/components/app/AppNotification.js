@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from "react-redux";
+import Notification  from 'react-web-notification';
+
+import history from '../../history';
 
 import './AppNotification.css';
-import Notification  from 'react-web-notification';
 
 class AppNotification extends React.Component {
 
@@ -29,7 +31,7 @@ class AppNotification extends React.Component {
             options={this.buildNotificationOptions()}
             />
             <audio id='notificationSound' preload='auto'>
-            <source src='/assets/sounds/pop.mp3' type='audio/mpeg' />
+                <source src='/assets/sounds/pop.mp3' type='audio/mpeg' />
             </audio>
         </div>
         )
@@ -54,8 +56,8 @@ class AppNotification extends React.Component {
     }
 
     handleNotificationOnClick(e, tag) {
-        // TODO consider showing the relevant room
-        console.log('clicked', tag);
+        // Navigate to room
+        history.push('/room/' + tag);
     }
 
     handleNotificationOnError(e, tag) {
@@ -75,6 +77,7 @@ class AppNotification extends React.Component {
     buildNotificationOptions() {
         return {
             body: this.props.notification.body,
+            tag: this.props.notification.tag,
             icon: '/assets/images/file-text.png',
             lang: 'en',
             dir: 'ltr',

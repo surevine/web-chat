@@ -45,11 +45,9 @@ class SendFileModal extends React.Component {
                     <p className="hint">Files must not be larger than {printFileSize(UPLOAD_SIZE_LIMIT)}.</p>
 
                     { this.state.error && (
-    
                         <div className="fileError">
                             <p>{ this.state.error }</p>
                         </div>
-
                     )}
 
                     <div className="controls">

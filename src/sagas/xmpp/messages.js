@@ -54,7 +54,7 @@ function* createNotifications(msg) {
     if(msg.from.resource !== currentNickname) {
       let room = yield select((state) => state.rooms[msg.from.bare]);
       if(msg.body.indexOf(room.nickname) > -1) {
-        yield put(showNotification(msg.from.resource + ' mentioned you', msg.from.bare));
+        yield put(showNotification(msg.from.resource + ' mentioned you', msg.from.bare, msg.from.bare));
       }
     }
 
@@ -74,7 +74,7 @@ function* createNotifications(msg) {
         }
       });
       if(matchedWords.length > 0) {
-        yield put(showNotification(msg.from.resource + ' mentioned ' + matchedWords.join(), msg.from.bare));
+        yield put(showNotification(msg.from.resource + ' mentioned ' + matchedWords.join(), msg.from.bare, msg.from.bare));
       } 
 
     }

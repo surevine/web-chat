@@ -12,7 +12,8 @@ export const showNotification = (title, body, tag) => ({
 
 const initialState = {
     title: '',
-    body: ''
+    body: '',
+    tag: ''
 };
 
 // reducer
@@ -23,7 +24,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         title: action.payload.title,
-        body: action.payload.body
+        body: action.payload.body,
+        tag: action.payload.tag
       };
     }
 
