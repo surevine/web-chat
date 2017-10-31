@@ -1,11 +1,13 @@
+export const UPLOAD_SIZE_LIMIT = 1000000; // 1MB Limit
+
 export const printFileSize = (size) => {
     // MB
-    if(size > 1000000) {
+    if(size >= 1000000) {
         return (size / 1000000).toFixed(2) + "MB";
     }
 
     // kB
-    if(size > 1000) {
+    if(size >= 1000) {
         return (size / 1000).toFixed(2) + "kB";
     }
 

@@ -4,6 +4,7 @@ import ReactModal from 'react-modal';
 import FileBase64 from 'react-file-base64';
 
 import { getCurrentRoomJid } from '../../selectors';
+import { UPLOAD_SIZE_LIMIT, printFileSize } from '../../files';
 import { sendFile } from '../../ducks/files';
 
 class SendFileModal extends React.Component {
@@ -39,7 +40,7 @@ class SendFileModal extends React.Component {
                         multiple={ false }
                         onDone={ this.getFile.bind(this) } />
 
-                    <p className="hint">Files must be smaller than LIMIT.</p>
+                    <p className="hint">Files must not be larger than {printFileSize(UPLOAD_SIZE_LIMIT)}.</p>
 
                     { this.state.error && (
     
@@ -67,14 +68,12 @@ class SendFileModal extends React.Component {
 
     getFile(file){
 
-        // TODO set to actual limit + refactor
-        const SIZE_LIMIT = 1000000; // 1MB Limit
-        if(file.file.size > SIZE_LIMIT) {
+        if(file.file.size > UPLOAD_SIZE_LIMIT) {
 
             this.setState(function(prevState, props) {
                 return {
                     ...prevState,
-                    error: "The file selected was too large. Files must not exceed LIMIT."
+                    error: "The file selected was too large. Files must not exceed " + printFileSize(UPLOAD_SIZE_LIMIT) + "."
                 };
             });
 

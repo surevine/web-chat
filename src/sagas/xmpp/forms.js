@@ -113,7 +113,7 @@ function* watchForForms(client) {
 
 function buildFormMessage(formData, template, node, formId) {
 
-    // TODO replace / remove below when form id delivered
+    // Remove below when form id delivered
     // BUILD hyperlink consistent with existing jchat client
     let message = "<a href='jchat://pubsub.localhost?select-form" + 
                     "&node=" + node.replace("fdp/submitted/", "") + 
