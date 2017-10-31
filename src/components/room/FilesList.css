@@ -15,7 +15,11 @@
   opacity: 1;
 }
 
-.FilesList .fileUpload .download:hover {
+.FilesList .fileUpload a {
   cursor: pointer;
+  color: #999;
+}
+
+.FilesList .fileUpload .download:hover {
   color: #666;
 }

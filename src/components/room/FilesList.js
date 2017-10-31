@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import FontAwesome from 'react-fontawesome';
 
 import FileIcon from './files/FileIcon';
+import FileMeta from './files/FileMeta';
 
 import { getCurrentRoomJid } from '../../selectors';
-import { printFileSize } from '../../files';
 
 import { showFileModal } from '../../ducks/rooms';
 
@@ -38,9 +38,7 @@ class FilesList extends React.Component {
                                     {file.name}
                                 </h5>
 
-                                <div className="meta">
-                                    {printFileSize(file.size)}
-                                </div>
+                                <FileMeta file={ file } />
 
                                 <a href={file.content} download={file.name} onClick={(e) => { e.stopPropagation(); }} className="download" title="Download">
                                     <FontAwesome name="download" />

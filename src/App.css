@@ -258,9 +258,10 @@ form .actions {
 }
 
 .formSubmission .meta,
-.fileUpload .meta {
+.fileUpload .FileMeta {
   margin: 0;
   font-size: 14px;
+  color: #999;
 }
 
 .formSubmission .author,

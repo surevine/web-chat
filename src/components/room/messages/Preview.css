@@ -13,6 +13,20 @@
     margin-top: 0;
 }
 
+.preview .FileMeta {
+    display: inline-block;
+    margin-top: 0;
+    cursor: default;
+    font-size: 12px;
+    color: #999;
+}
+
+.preview .fileIcon {
+    font-size: 36px;
+    float: left;
+    margin-right: 20px;
+}
+
 .preview a {
     cursor: pointer;
 }
