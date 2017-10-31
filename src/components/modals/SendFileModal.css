@@ -1,0 +1,10 @@
+.SendFileModal .hint {
+    font-size: 14px;
+    font-style: italic;
+    color: #999;
+}
+
+.SendFileModal input[type="file"] {
+    font-size: 14px;
+    line-height: 14px;
+}

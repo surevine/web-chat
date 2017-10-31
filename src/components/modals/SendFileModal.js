@@ -7,6 +7,8 @@ import { getCurrentRoomJid } from '../../selectors';
 import { UPLOAD_SIZE_LIMIT, printFileSize } from '../../files';
 import { sendFile } from '../../ducks/files';
 
+import './SendFileModal.css';
+
 class SendFileModal extends React.Component {
 
     constructor() {
@@ -24,14 +26,14 @@ class SendFileModal extends React.Component {
             <ReactModal 
                 isOpen={this.props.isOpen}
                 onRequestClose={this.props.onClose}
-                className="Modal"
+                className="Modal SendFileModal"
                 overlayClassName="Overlay">
 
                 <div className="header">
                     <a className="closeModal" onClick={this.props.onClose}>
                         &#x2715;
                     </a>
-                    <h3>Send file to {this.props.roomJid}</h3>
+                    <h3>Upload file to {this.props.roomJid}</h3>
                 </div>
 
                 <div className="content">

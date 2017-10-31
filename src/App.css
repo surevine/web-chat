@@ -386,8 +386,13 @@ input[type="submit"]:active,
 
 input[type="submit"].disabled,
 .primary-btn.disabled {
-  background-color: #666;
+  background-color: #ccc;
   color: #f3f3f3;
+}
+
+input[type="submit"].disabled:hover,
+.primary-btn.disabled:hover {
+  box-shadow: none;
 }
 
 /* Tabs */
