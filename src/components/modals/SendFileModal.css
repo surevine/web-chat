@@ -4,6 +4,12 @@
     color: #999;
 }
 
+.SendFileModal .fileError {
+    color: #c00;
+    font-style: italic;
+    font-size: 14px;
+}
+
 .SendFileModal input[type="file"] {
     font-size: 14px;
     line-height: 14px;

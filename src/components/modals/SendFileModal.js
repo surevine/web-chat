@@ -75,7 +75,7 @@ class SendFileModal extends React.Component {
             this.setState(function(prevState, props) {
                 return {
                     ...prevState,
-                    error: "The file selected was too large. Files must not exceed " + printFileSize(UPLOAD_SIZE_LIMIT) + "."
+                    error: "The file selected was too large."
                 };
             });
 
