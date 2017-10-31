@@ -9,6 +9,10 @@
     padding: 20px;
 }
 
+.ViewFileModal .imageWrapper img {
+    max-width: 100%;
+}
+
 .ViewFileModal .textWrapper pre {
     border-radius: 5px;
     padding: 20px !important;
