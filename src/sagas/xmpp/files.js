@@ -151,6 +151,7 @@ function* sendFile(client) {
 
             const publishedFile = result.success.event.updated.published[0];
             const userJid = yield select(state => state.client.jid.bare);
+            const roomJid = result.success.event.updated.node.replace("snippets/", "").replace("/content", "");
             
             yield call([client, client.publish], 
                 'pubsub.'+window.config.xmppDomain, 
@@ -160,6 +161,16 @@ function* sendFile(client) {
                     metadata: buildContentMeta(action.payload.meta, userJid)
                 }
             );  
+
+            yield call([client, client.sendMessage], {
+                to: roomJid,
+                type: 'groupchat',
+                body: "File shared",
+                references: [{
+                    type: 'data',
+                    uri: "urn:xmpp:snippets:0?node=" + metaNode + '&item=' + publishedFile.id
+                }]
+            });
 
             yield put(showToast('File uploaded', 'info'));
 
@@ -204,20 +215,6 @@ function* watchForFiles(client) {
 
             let roomJid = msg.event.updated.node.replace("snippets/", "").replace("/metadata", "");
             yield put(receivedFileMeta(roomJid, updateEvent.published[0].id, updateEvent.published[0].metadata));
-
-            // TODO this won't be me who sent the file...
-            // TODO move this to when a file is actually sent!? in success...
-            // Or fake the receivedMessage part...?
-            // ITS IN THE META!!! author....
-            yield call([client, client.sendMessage], {
-                to: roomJid,
-                type: 'groupchat',
-                body: "File shared",
-                references: [{
-                    type: 'data',
-                    uri: "urn:xmpp:snippets:0?node=" + updateEvent.node + '&item=' + updateEvent.published[0].id
-                }]
-            });
 
         }
 

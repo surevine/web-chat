@@ -1,4 +1,8 @@
-.FormPreview time {
+.FormPreview .metadata {
+    display: inline-block;
+}
+
+.FormPreview .metadata time {
     margin-left: 0;
 }
 
