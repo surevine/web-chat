@@ -31,3 +31,13 @@
 .ViewFileModal .actions a {
     text-decoration: none;
 }
+
+.ViewFileModal .unknownFileType {
+    margin: 50px 0;
+    text-align: center;
+    color: #333;
+}
+
+.ViewFileModal .unknownFileType .icon {
+    font-size: 50px;
+}

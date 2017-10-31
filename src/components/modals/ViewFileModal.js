@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactModal from 'react-modal';
+import FontAwesome from 'react-fontawesome';
 import SyntaxHighlighter, { registerLanguage } from "react-syntax-highlighter/dist/light"
 import xml from 'react-syntax-highlighter/dist/languages/xml';
 import { github } from 'react-syntax-highlighter/dist/styles';
@@ -133,8 +134,8 @@ class ViewFileModal extends React.Component {
             
                 return (
                     <div className="unknownFileType">
+                        <FontAwesome name="eye-slash" className="icon" />
                         <h3>No preview available</h3>
-                        {/* TODO DOWNLOAD LINK ONLY */}
                     </div>
                 )
 
