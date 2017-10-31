@@ -107,7 +107,21 @@ function* getFileNode(client, node) {
 
 function* createFileNode(client, node) {
     try {
-        return yield call([client, client.createNode], 'pubsub.'+window.config.xmppDomain, node);
+        return yield call([client, client.createNode], 
+            'pubsub.'+window.config.xmppDomain, 
+            node,
+            {
+                'type': 'submit',
+                'fields' : [{
+                        name: 'FORM_TYPE',
+                        type: 'hidden',
+                        value: 'http://jabber.org/protocol/pubsub#node_config'
+                    }, 
+                    { name: 'pubsub#access_model', value: 'open' },
+                    { name: 'pubsub#publish_model', value: 'open' },
+                ]
+            }
+        );
     }
     catch(error) {
         return error;
