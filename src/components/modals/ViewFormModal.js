@@ -1,5 +1,13 @@
 import React from 'react';
 import ReactModal from 'react-modal';
+import { Form } from 'react-form';
+
+import BasicForm from '../forms/BasicForm';
+import LayoutForm from '../forms/LayoutForm';
+
+import { getFormField } from '../../forms';
+
+import './ViewFormModal.css';
 
 class ViewFormModal extends React.Component {
 
@@ -14,7 +22,7 @@ class ViewFormModal extends React.Component {
             <ReactModal 
                 isOpen={this.props.isOpen}
                 onRequestClose={this.props.onClose}
-                className="Modal"
+                className="Modal ViewFormModal"
                 overlayClassName="Overlay">
 
                 <div className="header">
@@ -26,17 +34,47 @@ class ViewFormModal extends React.Component {
 
                 <div className="content">
 
-                    {/* this.props.form.form.fields */}
+                    <p className="metadata">Published by {this.props.form.from}</p>
 
-                    FORM FIELDS TO BE RENDERED HERE!
-                    
-                    {/* TODO re-use form template but with edit disabled */}
+                    <Form defaultValues={this.buildFormValues()}>
+
+                    { formApi => (
+
+                        <form className="formTemplate viewForm" onSubmit={formApi.submitForm}>
+
+                            { this.props.form.template.layout ? (
+
+                                <LayoutForm template={this.props.form.template} readOnly={true} />
+
+                            ) : (
+
+                                <BasicForm template={this.props.form.template} readOnly={true} />
+
+                            ) }
+
+                        </form>
+
+                    )}
+
+                    </Form>
 
                 </div>
 
             </ReactModal>
 
         );
+    }
+
+    buildFormValues() {
+
+        let defaults = {};
+        this.props.form.form.fields.forEach(field => {
+            if(field.type !== 'fixed') {
+                defaults[field.name] = field.value;
+            }
+        });
+
+        return defaults;
     }
 
 }

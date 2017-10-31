@@ -24,8 +24,10 @@ class FormField extends React.Component {
         return (
             <div className="fieldgroup" key={field.name}>
                 <label htmlFor={field.name}>{field.label}</label>
-                    {this.renderField(field)}
-                <p className="hint">{field.desc}</p>
+                {this.renderField(field)}
+                { !this.props.disabled && (
+                    <p className="hint">{field.desc}</p>
+                )}
             </div>
         );
     }
@@ -35,6 +37,7 @@ class FormField extends React.Component {
             field: field.name,
             name: field.name,
             id: field.name,
+            disabled: this.props.disabled
         };
     }
 

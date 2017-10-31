@@ -44,15 +44,11 @@ class FormTemplate extends React.Component {
 
                             { this.props.template.layout ? (
 
-                                <LayoutForm 
-                                    template={this.props.template}
-                                    form={this.state.form} />
+                                <LayoutForm template={this.props.template} />
 
                             ) : (
 
-                                <BasicForm 
-                                    template={this.props.template}
-                                    form={this.state.form} />
+                                <BasicForm template={this.props.template} />
 
                             ) }
 

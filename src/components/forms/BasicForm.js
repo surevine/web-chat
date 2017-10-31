@@ -11,7 +11,7 @@ class BasicForm extends React.Component {
             
             { this.props.template.fields.map(field => {
                 return (
-                    <FormField key={field.name} field={field} form={this.props.form} />
+                    <FormField key={field.name} field={field} disabled={this.props.readOnly} />
                 )
             })}
 

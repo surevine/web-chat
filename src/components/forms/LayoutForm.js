@@ -42,7 +42,10 @@ class LayoutForm extends React.Component {
                                 <div className="formItem" key={index}>
                                 { formItem.field ? (
 
-                                    <FormField key={getFormField(this.props.template, formItem.field).name} field={getFormField(this.props.template, formItem.field)} form={this.props.form} />
+                                    <FormField 
+                                        key={getFormField(this.props.template, formItem.field).name} 
+                                        field={getFormField(this.props.template, formItem.field)}
+                                        disabled={this.props.readOnly} />
 
                                 ) : (
                                     <div className="formSection">
@@ -52,7 +55,10 @@ class LayoutForm extends React.Component {
                                                 <div className="sectionFields">
                                                     { formItem.section.contents.map(sectionItem => {
                                                         return (
-                                                            <FormField key={getFormField(this.props.template, sectionItem.field).name} field={getFormField(this.props.template, sectionItem.field)} form={this.props.form} />
+                                                            <FormField 
+                                                                key={getFormField(this.props.template, sectionItem.field).name} 
+                                                                field={getFormField(this.props.template, sectionItem.field)}
+                                                                disabled={this.props.readOnly} />
                                                         );
                                                     })}
                                                     <div className="clearfix"></div>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import FontAwesome from 'react-fontawesome';
 
 import { getPublishedFile, getCurrentRoomJid } from '../../../selectors';
 import { parseFileIdFromReference } from '../../../helpers';
