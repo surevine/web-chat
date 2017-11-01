@@ -3,6 +3,7 @@ import find from "lodash/find";
 import filter from "lodash/filter";
 
 import { makeConstant } from "./_helpers";
+import { convertSubmissionToTemplateNode } from "../forms";
 
 const constant = makeConstant("jchat/forms");
 
@@ -104,71 +105,64 @@ export default (state = initialState, action) => {
 
         // Ignore forms not received in realtime
         if(form.delay) {
-            console.log('skipping old form..')
             return;
         }
 
-        // TODO ensure field exists..
+        // Only process if form has been sent to a particular room
         const roomField = find(form.event.updated.published[0].form.fields, function(field) {
             return field.name === 'room';
         });
+        if(!roomField) {
+            return state;
+        }
 
-        // Only process if form has been sent to a particular room
-        if(roomField) {
+        const peerJid = roomField.value[0];
+        const peer = state[peerJid] || {
+            jid: peerJid,
+            forms: []
+        };
 
-            const peerJid = roomField.value[0];
-            const peer = state[peerJid] || {
-                jid: peerJid,
-                forms: []
-            };
+        let publisherField = find(form.event.updated.published[0].form.fields, function(field) {
+            return field.name === 'userid';
+        });
 
-            let publisherField = find(form.event.updated.published[0].form.fields, function(field) {
-                return field.name === 'userid';
+        const templateNode = convertSubmissionToTemplateNode(form.event.updated.node);
+
+        let newForm = {
+            form: form.event.updated.published[0].form,
+            id: form.event.updated.published[0].id,
+            node: form.event.updated.node,
+            template: state.templates[templateNode],
+            from: publisherField.value[0]
+        };
+
+        if(state[peer.jid] && state[peer.jid].forms) {
+
+            let currentForms = filter(state[peer.jid].forms, function(form) {
+                return form.id !== newForm.id;
             });
+            currentForms.push(newForm);
 
-            // TODO refactor into helper
-            const templateNode = form.event.updated.node.replace("fdp/submitted", "fdp/template");
-    
-            let newForm = {
-                form: form.event.updated.published[0].form,
-                id: form.event.updated.published[0].id,
-                node: form.event.updated.node,
-                template: state.templates[templateNode],
-                from: publisherField.value[0]
-            };
-
-            if(state[peer.jid] && state[peer.jid].forms) {
-
-                // TODO double check that publish time of form is newer
-                let currentForms = filter(state[peer.jid].forms, function(form) {
-                    return form.id !== newForm.id;
-                });
-                currentForms.push(newForm);
-
-                return {
-                    ...state,
-                    [peer.jid]: {
-                        ...peer,
-                        forms: uniqBy(currentForms, 'id')
-                    }
-                };
-    
-            } 
-    
             return {
                 ...state,
                 [peer.jid]: {
-                ...peer,
-                forms: [
-                    ...peer.forms,
-                    newForm
-                    ]
+                    ...peer,
+                    forms: uniqBy(currentForms, 'id')
                 }
             };
 
-        }
+        } 
 
-        break;
+        return {
+            ...state,
+            [peer.jid]: {
+            ...peer,
+            forms: [
+                ...peer.forms,
+                newForm
+                ]
+            }
+        };
 
     default:
       return state;

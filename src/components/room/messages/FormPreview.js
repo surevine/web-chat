@@ -24,6 +24,10 @@ class FormPreview extends React.Component {
 
     render() {
 
+        if(!this.props.publishedForm) {
+            return null;
+        }
+
         return (
             <div className="FormPreview preview">
 

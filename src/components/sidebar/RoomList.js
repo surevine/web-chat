@@ -96,7 +96,7 @@ class RoomList extends React.Component {
                 <span>Join a room</span>
             </ReactTooltip>
 
-            {/* TODO DRY... */}
+            {/* TODO DRY */}
 
             { this.props.rooms && rooms.length ? (
                 <ul>

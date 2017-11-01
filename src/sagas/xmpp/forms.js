@@ -86,7 +86,7 @@ function* watchForForms(client) {
 
     yield takeEvery(channel, function* eachForm(msg) {
 
-        if(!msg.event.updated.node.startsWith('fdp/submitted')) {
+        if(!msg.event.updated || !msg.event.updated.node.startsWith('fdp/submitted')) {
             return;
         }
 

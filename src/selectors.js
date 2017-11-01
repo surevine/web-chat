@@ -75,6 +75,10 @@ export const getTemplateOptions = (state) => {
 export const getPublishedForm = (state, { formId }) => {
 
   let roomJid = getCurrentRoomJid(state);
+  if(!roomJid) {
+    return null;
+  }
+
   let form = find(state.forms[roomJid].forms, function(form) {
     return form.id === formId;
   });

@@ -3,43 +3,34 @@ import { all, call, put, race, select, take, takeEvery } from "redux-saga/effect
 import find from "lodash/find";
 
 import { makeChannel } from "../_helpers";
+import { buildFileContentNode, buildFileMetaNode } from '../../files';
 
 import { 
     SEND_FILE,
     receivedFile,
     receivedFileMeta
 } from '../../ducks/files';
+
 import {
     JOINED_ROOM,
     LEAVE_ROOM
 } from '../../ducks/rooms';
+
 import { showToast } from '../../ducks/toast';
 
 function* watchJoinRoom(client) {
 
     yield takeEvery(JOINED_ROOM, function* subscribeToRoomFileNodes(action) {
 
-        let contentNode = 'snippets/' + action.payload.jid + '/content';
-        let metaNode = 'snippets/' + action.payload.jid + '/metadata';
+        let contentNode = buildFileContentNode(action.payload.jid);
+        let metaNode = buildFileMetaNode(action.payload.jid);
 
-        // TODO refactor this
-        let contentNodeExists = yield call(getFileNode, client, contentNode);
-        if(!contentNodeExists) {
-            let createResponse = yield call(createFileNode, client, contentNode);
-            if(createResponse.error) {
-                // TODO handle error
-                // Error toast
-            }
-        }
-        let metaNodeExists = yield call(getFileNode, client, metaNode);
-        if(!metaNodeExists) {
-            let createResponse = yield call(createFileNode, client, metaNode);
-            if(createResponse.error) {
-                // TODO handle error
-            }
-        }
+        yield call(createNodeIfNotExists, client, contentNode);
+        yield call(createNodeIfNotExists, client, metaNode);
 
         const subscriptions = yield fetchSubscriptions(client);
+
+        // TODO refactor
         let alreadySubscribedContent = find(subscriptions, function(sub) {
             return sub.node === contentNode;
         });
@@ -71,8 +62,8 @@ function* watchLeaveRoom(client) {
 
     yield takeEvery(LEAVE_ROOM, function* unsubscribeFromRoomFileNodes(action) {
 
-        let contentNode = 'snippets/' + action.payload.jid + '/content';
-        let metaNode = 'snippets/' + action.payload.jid + '/metadata';
+        let contentNode = buildFileContentNode(action.payload.jid);
+        let metaNode = buildFileMetaNode(action.payload.jid);
         const userJid = yield select(state => state.client.jid.bare);
         
         client.unsubscribeFromNode('pubsub.'+window.config.xmppDomain, {
@@ -94,14 +85,13 @@ function* fetchSubscriptions(client) {
     return response.pubsub.subscriptions.list;
 }
 
-function* getFileNode(client, node) {
-    try {
-        let response = yield call([client, client.getItem], 'pubsub.'+window.config.xmppDomain, node);
-        return response.pubsub.retrieve.node;
-    }
-    catch(error) {
-        console.log('error retrieving node', error);
-        return null;
+function* createNodeIfNotExists(client, node) {
+    let nodeExists = yield call(getFileNode, client, node);
+    if(!nodeExists) {
+        let createResponse = yield call(createFileNode, client, node);
+        if(createResponse.error) {
+            console.log('Failed to create file snippet node', createResponse.error);
+        }
     }
 }
 
@@ -128,6 +118,19 @@ function* createFileNode(client, node) {
     }  
 }
 
+function* getFileNode(client, node) {
+    try {
+        let response = yield call([client, client.getItem], 'pubsub.'+window.config.xmppDomain, node);
+        return response.pubsub.retrieve.node;
+    }
+    catch(error) {
+        if(error.error.code !== "404") {
+            console.log('error retrieving node', error);
+        }
+        return null;
+    }
+}
+
 function* sendFile(client) {
 
     const successChannel = makeChannel(client, {
@@ -138,8 +141,8 @@ function* sendFile(client) {
 
     yield takeEvery(SEND_FILE, function* uploadFile(action) {
 
-        let contentNode = 'snippets/' + action.payload.roomJid + '/content';
-        let metaNode = 'snippets/' + action.payload.roomJid + '/metadata';
+        let contentNode = buildFileContentNode(action.payload.roomJid);
+        let metaNode = buildFileMetaNode(action.payload.roomJid);
 
         yield call([client, client.publish], 
             'pubsub.'+window.config.xmppDomain, 
@@ -212,11 +215,11 @@ function* watchForFiles(client) {
         }
     });
 
-    yield takeEvery(channel, function* eachForm(msg) {
+    yield takeEvery(channel, function* eachFile(msg) {
 
         let updateEvent = msg.event.updated;
 
-        if(!updateEvent.node.startsWith('snippets/')) {
+        if(!updateEvent || !updateEvent.node.startsWith('snippets/')) {
             return;
         }
 
