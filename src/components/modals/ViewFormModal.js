@@ -5,8 +5,6 @@ import { Form } from 'react-form';
 import BasicForm from '../forms/BasicForm';
 import LayoutForm from '../forms/LayoutForm';
 
-import { getFormField } from '../../forms';
-
 import './ViewFormModal.css';
 
 class ViewFormModal extends React.Component {

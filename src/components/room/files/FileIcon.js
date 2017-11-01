@@ -24,8 +24,6 @@ class FileIcon extends React.Component {
                 icon = "file-code-o";
                 break;
 
-            // TODO support other types
-
             default:
                 icon = "file-text-o";
 

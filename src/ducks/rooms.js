@@ -96,7 +96,10 @@ export default (state = {}, action) => {
 
     case JOIN_ROOM: {
 
-      // TODO check whether the room is already in state...
+      const room = state[action.payload.jid];
+      if(room) {
+        return state;
+      }
 
       return {
         ...state,
@@ -140,8 +143,10 @@ export default (state = {}, action) => {
 
     case FAILED_JOIN_ROOM: {
 
-      // TODO ensure it exists
       const room = state[action.payload.jid];
+      if(!room) {
+        return state;
+      }
       
       return {
         ...state,
@@ -156,9 +161,10 @@ export default (state = {}, action) => {
     case TOPIC_UPDATED: {
 
       const message = action.payload.message;
-
-      // TODO ensure it exists
       const room = state[message.from.bare];
+      if(!room) {
+        return state;
+      }
 
       return {
           ...state,

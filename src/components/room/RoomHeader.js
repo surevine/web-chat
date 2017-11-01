@@ -27,7 +27,7 @@ class RoomHeader extends React.Component {
                     </ReactTooltip>
 
                     <a className="filesMenu iconButton"
-                        onClick={this.props.toggleFiles}
+                        onClick={() => this.props.toggleSidebarSection('files')}
                         data-tip
                         data-for="filesTip">
                         <FontAwesome name='file-image-o' /> { Object.keys(this.props.files).length }
@@ -37,7 +37,7 @@ class RoomHeader extends React.Component {
                     </ReactTooltip>
 
                     <a className="formsMenu iconButton"
-                        onClick={this.props.toggleForms}
+                    onClick={() => this.props.toggleSidebarSection('forms')}
                         data-tip
                         data-for="formsTip">
                         <FontAwesome name='file-text-o' /> { this.props.forms.length }
@@ -47,7 +47,7 @@ class RoomHeader extends React.Component {
                     </ReactTooltip>
 
                     <a className="participantsMenu iconButton" 
-                        onClick={this.props.toggleParticipants}
+                    onClick={() => this.props.toggleSidebarSection('participants')}
                         data-tip
                         data-for="membersTip">
                         <FontAwesome name='user-o' /> { this.props.members.length }

@@ -61,8 +61,6 @@ class Room extends React.Component {
                 this.hideSidebar();
             }
 
-            // TODO also need to change the isCurrent?!
-
             this.setState(function(prevState, props) {
                 return {
                     ...prevState,
@@ -86,9 +84,7 @@ class Room extends React.Component {
                 forms={this.props.forms}
                 files={this.props.files}
                 toggleBookmark={this.toggleBookmark}
-                toggleParticipants={this.toggleParticipants}
-                toggleForms={this.toggleForms}
-                toggleFiles={this.toggleFiles}
+                toggleSidebarSection={this.toggleSidebarSection}
                 leaveRoom={this.leaveRoom} />
 
             <div className="roomContent">
@@ -167,83 +163,47 @@ class Room extends React.Component {
         }
     };
 
-    toggleParticipants = e => {
-        e.preventDefault();
+    toggleSidebarSection = section => {
 
-        // don't allow toggling if not connected
         if(!this.props.room.joined) {
             return;
         }
 
-        this.setState(function(prevState, props) {
+        let sectionProperty = '';
+        switch(section) {
+            case "files":
+                sectionProperty = 'showFilesList';
+                break;
+            case "forms":
+                sectionProperty = 'showFormsList';
+                break;
+            case "participants":
+                sectionProperty = 'showParticipantsList';
+                break;
+            default:
+                return;
+        }
 
-            // TODO refactor this...
+        this.setState(function(prevState, props) {
+            
             let showSidebar = false;
-            if(!prevState.showParticipantsList) {
+            if(!prevState[sectionProperty]) {
                 showSidebar = true;
             }
 
-            return {
+            let sidebarState = {
                 ...prevState,
                 showRoomSidebar: showSidebar,
-                showParticipantsList: !prevState.showParticipantsList,
+                showParticipantsList: false,
                 showFormsList: false,
                 showFilesList: false
             };
+            sidebarState[sectionProperty] = !prevState[sectionProperty];
+
+            return sidebarState;
         });
-    };
 
-    toggleForms = e => {
-        e.preventDefault();
-
-        // don't allow toggling if not connected
-        if(!this.props.room.joined) {
-            return;
-        }
-
-        this.setState(function(prevState, props) {
-
-            // TODO refactor this...
-            let showSidebar = false;
-            if(!prevState.showFormsList) {
-                showSidebar = true;
-            }
-
-            return {
-                ...prevState,
-                showRoomSidebar: showSidebar,
-                showParticipantsList: false,
-                showFilesList: false,
-                showFormsList: !prevState.showFormsList
-            };
-        });
-    };
-
-    toggleFiles = e => {
-        e.preventDefault();
-
-        // don't allow toggling if not connected
-        if(!this.props.room.joined) {
-            return;
-        }
-
-        this.setState(function(prevState, props) {
-
-            // TODO refactor this...
-            let showSidebar = false;
-            if(!prevState.showFilesList) {
-                showSidebar = true;
-            }
-
-            return {
-                ...prevState,
-                showRoomSidebar: showSidebar,
-                showParticipantsList: false,
-                showFormsList: false,
-                showFilesList: !prevState.showFilesList,
-            };
-        });
-    };
+    }
 
     hideModal = () => {
         this.props.hideModal(this.props.room.jid);

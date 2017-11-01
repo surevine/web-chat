@@ -8,7 +8,6 @@ class About extends React.Component {
         return (
         <div className="About Page">
             <h2>About JChat</h2>
-            {/* TODO version, info etc */}
             <p>Built by Surevine</p>
         </div>
         );

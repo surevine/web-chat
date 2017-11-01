@@ -83,7 +83,7 @@ class ViewFileModal extends React.Component {
         );
     }
 
-    // TODO move to worker?
+    // TODO move this to worker thread
     dataURItoBlob(dataURI, dataType) {
         var binary = atob(dataURI.split(',')[1]), array = [];
         for(var i = 0; i < binary.length; i++) array.push(binary.charCodeAt(i));

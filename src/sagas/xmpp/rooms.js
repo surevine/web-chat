@@ -52,7 +52,6 @@ function* tryJoinRoom(client) {
   
       if (result.error) {
         yield put(failedJoinRoom(action.payload.jid, result.error.error));
-        // or we have a currentRoomJoining state object which tracks the WIP join, then updates accordingly
       }
   
       if (result.success) {
@@ -77,15 +76,13 @@ function* tryJoinRoom(client) {
 function* leaveRoom(client) {
   
     yield takeLatest(LEAVE_ROOM, function* leaveRoom(action) {
-  
+
       yield client.leaveRoom(action.payload.jid);
-  
-      // TODO handle if not successful?
       yield put(leftRoom(action.payload.jid));
-  
+
     });
   
-  }
+}
 
 function* watchForTopic(client) {
   

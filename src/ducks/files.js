@@ -66,8 +66,6 @@ export default (state = initialState, action) => {
             }
         };
 
-        // break;
-
     case RECEIVED_FILE_META:
     
         let roomObj = state[action.payload.roomJid] || {
@@ -76,9 +74,11 @@ export default (state = initialState, action) => {
         };
 
         let currentFiles = state[roomObj.jid].files;
-
         let fileContent = currentFiles[action.payload.id];
-        // TODO ensure exists
+
+        if(!fileContent) {
+            return state;
+        }
 
         let augmentedObject = Object.assign(fileContent, action.payload.meta);
 
@@ -92,8 +92,6 @@ export default (state = initialState, action) => {
                 }
             }
         };
-    
-        // break;
 
     default:
       return state;

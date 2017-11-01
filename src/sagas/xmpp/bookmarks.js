@@ -1,4 +1,4 @@
-import { all, call, take, takeLatest, put } from "redux-saga/effects";
+import { all, call, takeEvery, takeLatest, put } from "redux-saga/effects";
 
 import {
   ADD_BOOKMARK,
@@ -13,8 +13,6 @@ function* fetchBookmarks(client) {
 
   yield put(receivedBookmarks(bookmarks));
 
-  return;
-
 }
 
 function* watchGetBookmarks(client) {
@@ -22,24 +20,21 @@ function* watchGetBookmarks(client) {
 }
 
 function* addBookmark(client) {
-  while(true) {
-    const { payload } = yield take(ADD_BOOKMARK);
-    yield call([client, client.addBookmark], {
-      jid: payload
-    });
-  
+
+  yield takeEvery(ADD_BOOKMARK, function* eachBookmark(action) {
+    yield call([client, client.addBookmark], { jid: action.payload });
     yield fetchBookmarks(client);
-  }
+  });
+
 }
 
 function* removeBookmark(client) {
-  // TODO refactor into takeevery
-  while(true) {
-    const { payload } = yield take(REMOVE_BOOKMARK);
-    yield call([client, client.removeBookmark], payload);
 
-    yield fetchBookmarks(client);
-  }
+  yield takeEvery(REMOVE_BOOKMARK, function* eachBookmark(action) {
+      yield call([client, client.removeBookmark], action.payload);
+      yield fetchBookmarks(client);
+  });
+
 }
 
 export default function*(client) {

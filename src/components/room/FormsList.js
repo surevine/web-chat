@@ -41,7 +41,6 @@ class FormsList extends React.Component {
             ) : (
                 <div>
                     Loading...
-                    {/* TODO no forms message  */}
                 </div>
             )}
 
