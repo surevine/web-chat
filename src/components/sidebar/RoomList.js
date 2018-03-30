@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import find from 'lodash/find';
 import FontAwesome from 'react-fontawesome';
 import ReactTooltip from 'react-tooltip';
+import RoomListEntry from './RoomListEntry';
 
 import { joinRoom } from '../../ducks/rooms';
 
@@ -70,17 +71,8 @@ class RoomList extends React.Component {
                     <ul>
                         { this.props.bookmarks.conferences
                             .sort((a, b) => a.jid.bare > b.jid.bare)
-                            .map(room => (
-                            <li key={room.jid.bare}>
-                                <a onClick={() => this.goToRoom(room.jid.bare)} className={(this.isRoomActive(room.jid.bare)) ? "active" : ""}>
-                                    <FontAwesome name='hashtag' /><span className="local">{room.jid.local}</span>
-                                    { this.isRoomUnread(room.jid.bare) && (
-                                        <span className="unread badge">{this.getRoomUnread(room.jid.bare)}</span>
-                                    )}
-                                    {/* <span className="domain">@{room.jid.domain}</span> */}
-                                </a>
-                            </li>
-                        ))}
+                            .map(room => { return <RoomListEntry key={room.jid.bare} roomJid={room.jid.bare} roomLocal={room.jid.local} active={this.isRoomActive(room.jid.bare)} unread={this.getRoomUnread(room.jid.bare)} onclick={() => this.goToRoom(room.jid.bare)}/> })
+                        }
                     </ul>
                 </div>
             ) : ("")}
@@ -96,22 +88,12 @@ class RoomList extends React.Component {
                 <span>Join a room</span>
             </ReactTooltip>
 
-            {/* TODO DRY */}
-
             { this.props.rooms && rooms.length ? (
                 <ul>
                     { rooms
                         .sort((a, b) => a > b)
-                        .map(roomJid => (
-                        <li key={roomJid}>
-                            <a onClick={() => this.goToRoom(roomJid)} className={(this.isRoomActive(roomJid)) ? "active" : ""}>
-                                <FontAwesome name='hashtag' /><span className="local">{roomJid.substr(0, roomJid.indexOf('@'))}</span>
-                                { this.isRoomUnread(roomJid) && (
-                                    <span className="unread badge">{this.getRoomUnread(roomJid)}</span>
-                                )}
-                            </a>
-                        </li>                        
-                    ))}
+                        .map(roomJid => (<RoomListEntry key={roomJid} roomJid={roomJid} roomLocal={roomJid.substr(0, roomJid.indexOf('@'))} unread={this.getRoomUnread(roomJid)} active={this.isRoomActive(roomJid)} onclick={() => this.goToRoom(roomJid)} />))
+                    }
                 </ul>
 
             ) : (
