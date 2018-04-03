@@ -36,8 +36,12 @@ export default (state = initialState, action) => {
 
     case RECEIVED_BOOKMARKS: {
       if(action.payload) {
+        var conferences = {}
+        action.payload.privateStorage.bookmarks.conferences.forEach(element => {
+          conferences[element.jid.bare] = element
+        });
         return {
-          ...state, conferences: action.payload.privateStorage.bookmarks.conferences
+          ...state, conferences: Object.values(conferences)
         };
       }
       break;

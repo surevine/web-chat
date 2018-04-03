@@ -55,7 +55,6 @@ class RoomList extends React.Component {
     };
 
     render() {
-
         let rooms = Object.keys(this.props.rooms)
                     .filter(roomJid => {
                         return !this.isRoomBookmarked(roomJid)
@@ -71,7 +70,7 @@ class RoomList extends React.Component {
                     <ul>
                         { this.props.bookmarks.conferences
                             .sort((a, b) => a.jid.bare > b.jid.bare)
-                            .map(room => { return <RoomListEntry key={room.jid.bare} roomJid={room.jid.bare} roomLocal={room.jid.local} active={this.isRoomActive(room.jid.bare)} unread={this.getRoomUnread(room.jid.bare)} onclick={() => this.goToRoom(room.jid.bare)}/> })
+                            .map(room => { return <RoomListEntry key={room.jid.bare} roomJid={room.jid.bare} roomLocal={room.name ? room.name : room.jid.local} active={this.isRoomActive(room.jid.bare)} unread={this.getRoomUnread(room.jid.bare)} onclick={() => this.goToRoom(room.jid.bare)}/> })
                         }
                     </ul>
                 </div>
