@@ -2,7 +2,7 @@
   grid-column: 1;
   background-color: #262e3e;
   user-select: none;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .Sidebar .footer {
